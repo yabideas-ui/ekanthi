@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1f4e79">
+<title>Ekanthi — Learning & Coaching</title>
+<style>
+:root{--bg:#f5f4ef;--card:#fff;--ink:#1b2230;--muted:#667085;--line:#e4e2db;--brand:#1f4e79;--brand2:#2b6aa3;--soft:#e8eff7;--ok:#1f8a5b;--okbg:#e6f4ec;--warn:#b7791f;--warnbg:#fdf3dc;--bad:#b23a3a;--badbg:#fbe9e9;--r:14px}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans","Noto Sans Malayalam",sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+.hidden{display:none!important}
+a{color:var(--brand2)}
+/* generic */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.stack>*+*{margin-top:12px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.between{justify-content:space-between}
+.muted{color:var(--muted);font-size:13px}
+.small{font-size:12.5px}
+h1,h2,h3{margin:0}
+h2{font-size:16px}
+h3{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+.btn{border:0;background:var(--brand);color:#fff;border-radius:10px;padding:10px 16px;font-weight:700;cursor:pointer;font-size:14px}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.ghost{background:transparent;color:var(--brand);border:1px solid #c9d6e5}
+.btn.danger{background:transparent;color:var(--bad);border:1px solid #e6bcbc}
+.btn.sm{padding:6px 11px;font-size:13px;border-radius:8px}
+.btn.block{width:100%}
+input[type=text],input[type=password],input[type=number],input[type=date],input[type=tel],select,textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--brand2);box-shadow:0 0 0 3px #dbe7f3}
+textarea{resize:vertical;min-height:70px}
+label.f{display:block;font-size:13px;font-weight:600;color:#3b4456;margin-bottom:5px}
+.pill{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12px;font-weight:700;white-space:nowrap}
+.p0{background:#eef0f3;color:#5b6474}.p1{background:var(--warnbg);color:#8a5a00}.p2{background:var(--okbg);color:#16683f}.p3{background:var(--soft);color:var(--brand)}
+.pr-A{background:#fde8e8;color:#9b2c2c}.pr-B{background:#fdf3dc;color:#8a5a00}.pr-C{background:#e8eef7;color:#2c4a75}
+.alert{background:var(--badbg);color:var(--bad)}
+.good{background:var(--okbg);color:#16683f}
+.bar{height:8px;background:#ebe9e3;border-radius:99px;overflow:hidden}
+.bar>span{display:block;height:100%;border-radius:99px;background:var(--brand2)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:700;background:#faf9f6}
+tr.click{cursor:pointer}tr.click:hover td{background:#f7f9fc}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#1b2230;color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;z-index:100;box-shadow:0 8px 24px rgba(0,0,0,.2);max-width:90vw}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid #c9d6e5;border-top-color:var(--brand);border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+/* login */
+#login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(160deg,#1f4e79 0%,#183d5f 55%,#f5f4ef 55%)}
+.login-box{width:100%;max-width:400px}
+.brand{color:#fff;text-align:center;margin-bottom:18px}
+.brand .logo{font-size:34px;font-weight:800;letter-spacing:.01em}
+.brand .tag{opacity:.85;font-size:14px}
+.seg{display:flex;background:#eef0f3;border-radius:10px;padding:4px;margin-bottom:14px}
+.seg button{flex:1;border:0;background:transparent;border-radius:8px;padding:9px;font-weight:700;cursor:pointer;color:var(--muted)}
+.seg button.on{background:#fff;color:var(--brand);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.err{color:var(--bad);font-size:13px;min-height:18px}
+/* student */
+#student{max-width:560px;margin:0 auto;min-height:100vh;padding-bottom:80px}
+.s-head{background:var(--brand);color:#fff;padding:16px 16px 18px;border-radius:0 0 18px 18px}
+.s-head .hi{font-size:20px;font-weight:800}
+.s-head .sub{opacity:.85;font-size:13px}
+.s-head .icon{background:rgba(255,255,255,.14);border:0;color:#fff;border-radius:10px;padding:7px 11px;font-size:13px;font-weight:700;cursor:pointer}
+.s-main{padding:14px}
+.navbar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:center;z-index:40;padding-bottom:env(safe-area-inset-bottom)}
+.navbar .in{display:flex;max-width:560px;width:100%}
+.navbar button{flex:1;border:0;background:transparent;padding:10px 4px 9px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
+.navbar button svg{width:22px;height:22px}
+.navbar button.on{color:var(--brand)}
+.streak{display:flex;gap:12px;align-items:center}
+.streak .n{font-size:30px;font-weight:800;color:var(--brand)}
+.task{display:flex;gap:12px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;cursor:pointer}
+.task .dot{width:26px;height:26px;border-radius:50%;border:2px solid #c9d6e5;flex:none;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#fff}
+.task.done .dot{background:var(--ok);border-color:var(--ok)}
+.task .t{font-weight:700}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:#fff;border-radius:99px;padding:7px 13px;font-size:13.5px;font-weight:600;cursor:pointer;white-space:nowrap;flex:none}
+.chip.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.exam{flex:1;min-width:100px;border-radius:12px;padding:10px 12px;color:#fff}
+.exam b{display:block;font-size:20px;white-space:nowrap}
+.days{display:grid;grid-template-columns:repeat(14,1fr);gap:4px}
+.days span{aspect-ratio:1;border-radius:5px;background:#e9e7e0}
+.days span.on{background:var(--ok)}
+.days span.today{outline:2px solid var(--brand2);outline-offset:1px}
+.q{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff}
+.q .qt{font-weight:700;margin-bottom:10px}
+.opt{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:7px;cursor:pointer;background:#fff}
+.opt.sel{border-color:var(--brand2);background:var(--soft)}
+.opt.right{border-color:var(--ok);background:var(--okbg)}
+.opt.wrong{border-color:var(--bad);background:var(--badbg)}
+.opt .l{font-weight:800;color:var(--muted);width:18px;flex:none}
+.explain{margin-top:10px;font-size:14px;background:#f7f6f2;border-radius:10px;padding:10px 12px}
+.score{font-size:42px;font-weight:800;color:var(--brand)}
+/* chat */
+.chat{display:flex;flex-direction:column;height:calc(100vh - 230px);min-height:380px}
+.msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:4px 2px 10px}
+.msg{max-width:86%;padding:9px 12px;border-radius:14px;font-size:14.5px;line-height:1.55;word-wrap:break-word}
+.msg.u{align-self:flex-end;background:var(--brand);color:#fff;border-bottom-right-radius:4px}
+.msg.m{align-self:flex-start;background:#fff;border:1px solid var(--line);border-bottom-left-radius:4px}
+.msg.sys{align-self:center;color:var(--muted);font-size:12px;text-align:center;background:none}
+.msg .say{background:none;border:0;color:var(--brand2);font-size:12px;font-weight:700;cursor:pointer;padding:4px 0 0}
+.composer{display:flex;gap:6px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:6px}
+.composer textarea{border:0;min-height:40px;max-height:110px;resize:none;box-shadow:none!important;padding:8px}
+.composer button{border:0;border-radius:10px;padding:0 12px;cursor:pointer;background:var(--soft);color:var(--brand);font-size:17px}
+.composer .send{background:var(--brand);color:#fff;font-size:14px;font-weight:700}
+.rec{background:var(--badbg)!important;color:var(--bad)!important;animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.55}}
+.wa{background:#25D366;color:#fff;border:0;border-radius:10px;padding:7px 12px;font-weight:700;font-size:13px;text-decoration:none}
+/* tutor */
+#tutor{min-height:100vh}
+.t-head{background:var(--brand);color:#fff}
+.t-head .in{max-width:1180px;margin:0 auto;padding:14px 20px 0}
+.t-head .logo{font-size:20px;font-weight:800}
+.tabs{display:flex;gap:4px;margin-top:12px;overflow-x:auto}
+.tabs button{border:0;background:transparent;color:#cfdced;font-weight:700;padding:10px 14px;border-radius:10px 10px 0 0;cursor:pointer;white-space:nowrap}
+.tabs button.on{background:var(--bg);color:var(--brand)}
+.t-main{max-width:1180px;margin:0 auto;padding:20px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi b{display:block;font-size:28px;font-weight:800;margin-top:4px}
+@media(max-width:800px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:800px){.grid2,.grid3{grid-template-columns:1fr}}
+.subtabs{display:flex;gap:6px;flex-wrap:wrap}
+.subtabs button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:7px 14px;font-weight:700;cursor:pointer;font-size:13px}
+.subtabs button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal>div{border-radius:8px;padding:6px;min-height:58px;background:#f1efe9;font-size:11.5px}
+.cal>div .d{font-weight:700;color:var(--muted)}
+.cal>div.l1{background:#dcefe3}.cal>div.l2{background:#b5dfc4}.cal>div.l3{background:#7cc79a}
+.cal>div.fut{background:transparent;border:1px dashed var(--line)}
+.creds{background:var(--okbg);border:1px solid #bfe3cd;border-radius:12px;padding:14px}
+.creds code{font-size:18px;font-weight:800;background:#fff;padding:2px 8px;border-radius:6px}
+.scroll{overflow-x:auto}
+.inline input,.inline select{padding:6px 8px;border-radius:8px}
+</style>
+</head>
+<body>
+
+<!-- ================= LOGIN ================= -->
+<section id="login" class="hidden">
+  <div class="login-box">
+    <div class="brand"><div class="logo">Ekanthi</div><div class="tag">പഠിക്കാം, മുന്നേറാം · Learn daily, grow daily</div></div>
+    <div class="card stack">
+      <div class="seg"><button data-role="student" class="on">Student</button><button data-role="tutor">Tutor</button></div>
+      <div><label class="f" for="lgUser">Username</label><input id="lgUser" type="text" autocomplete="username" autocapitalize="none" spellcheck="false"></div>
+      <div id="pinWrap"><label class="f" for="lgPin">PIN (6 digits)</label><input id="lgPin" type="password" inputmode="numeric" maxlength="6" autocomplete="current-password"></div>
+      <div id="passWrap" class="hidden"><label class="f" for="lgPass">Password</label><input id="lgPass" type="password" autocomplete="current-password"></div>
+      <div class="err" id="lgErr"></div>
+      <button class="btn block" id="lgBtn">Log in</button>
+      <div class="muted small" style="text-align:center">Login details are given by your tutor. Don't share your PIN — logging in on another phone signs out this one.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STUDENT ================= -->
+<section id="student" class="hidden">
+  <div class="s-head">
+    <div class="row between">
+      <div><div class="hi" id="sHi">Hi!</div><div class="sub" id="sSub"></div></div>
+      <button class="icon" id="sLogout">Log out</button>
+    </div>
+  </div>
+  <div class="s-main">
+    <div id="sv-today" class="stack"></div>
+    <div id="sv-quiz" class="stack hidden"></div>
+    <div id="sv-progress" class="stack hidden"></div>
+    <div id="sv-assist" class="hidden">
+      <div class="row between" style="margin-bottom:10px">
+        <h2>Ekanthi Assist</h2>
+        <div class="row" style="gap:6px">
+          <button class="btn ghost sm" id="chLang">മലയാളം</button>
+          <button class="btn ghost sm" id="chSpeak">🔊 Auto</button>
+          <a class="wa hidden" id="waBtn" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+      </div>
+      <div class="chat">
+        <div class="msgs" id="chMsgs"></div>
+        <div class="chips" id="chChips" style="margin:6px 0 8px;flex-wrap:nowrap;overflow-x:auto"></div>
+        <div class="composer">
+          <button id="chMic" title="Speak" aria-label="Speak">🎤</button>
+          <textarea id="chInput" placeholder="സംശയം ചോദിക്കൂ… (type or speak)"></textarea>
+          <button class="send" id="chSend">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav class="navbar"><div class="in" id="sNav">
+    <button data-v="today" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Today</button>
+    <button data-v="quiz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>Quiz</button>
+    <button data-v="progress"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Progress</button>
+    <button data-v="assist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>Assist</button>
+  </div></nav>
+</section>
+
+<!-- ================= TUTOR ================= -->
+<section id="tutor" class="hidden">
+  <div class="t-head"><div class="in">
+    <div class="row between"><div><div class="logo">Ekanthi · Tutor</div><div class="muted" style="color:#cfdced" id="tToday"></div></div><button class="btn ghost sm" style="color:#fff;border-color:rgba(255,255,255,.4)" id="tLogout">Log out</button></div>
+    <div class="tabs" id="tTabs"><button data-t="students" class="on">Students</button><button data-t="classes">Classes</button></div>
+  </div></div>
+  <div class="t-main" id="tMain"></div>
+</section>
+
+<script>
+(function(){
+"use strict";
+// ===================== SETTINGS =====================
+var API_URL = "https://ekanthi-tutor.yabideas.workers.dev";
+var WHATSAPP_NUMBER = "96893376228";
+var SITE_URL = "https://ekanthi.cyberkalari.com";
+// ====================================================
+
+var TOKEN_KEY = "ekanthi_token", ROLE_KEY = "ekanthi_role";
+function ls(k, v){ try{ if(v===undefined) return localStorage.getItem(k); if(v===null) localStorage.removeItem(k); else localStorage.setItem(k, v); }catch(e){ return null; } }
+var token = ls(TOKEN_KEY), role = ls(ROLE_KEY);
+var $ = function(id){ return document.getElementById(id); };
+function esc(t){ return String(t==null?"":t).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
+function toast(m){ var d=document.createElement("div"); d.className="toast"; d.textContent=m; document.body.appendChild(d); setTimeout(function(){d.remove();},2600); }
+var STATUS = ["Not started","Learning","Done","Revised"];
+function fmtDate(d){ if(!d) return "—"; var t=new Date(d.length===10? d+"T00:00:00" : d); return t.toLocaleDateString("en-IN",{day:"numeric",month:"short"}); }
+function fmtDT(d){ if(!d) return "—"; var t=new Date(d); return t.toLocaleDateString("en-IN",{day:"numeric",month:"short"})+" "+t.toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit"}); }
+function addDays(d,n){ var t=new Date(d+"T00:00:00Z"); t.setUTCDate(t.getUTCDate()+n); return t.toISOString().slice(0,10); }
+function daysBetween(a,b){ return Math.round((new Date(b+"T00:00:00Z")-new Date(a+"T00:00:00Z"))/86400000); }
+function pct(a,b){ return b? Math.round(a*100/b) : 0; }
+function md(t){ var h=esc(t).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>"); return h.split("\n").map(function(l){ return /^\s*[-*]\s+/.test(l)? "• "+l.replace(/^\s*[-*]\s+/,"") : l; }).join("<br>"); }
+function uaShort(ua){ ua=ua||""; var os=/Android/.test(ua)?"Android":/iPhone|iPad/.test(ua)?"iPhone/iPad":/Windows/.test(ua)?"Windows":/Mac OS/.test(ua)?"Mac":/Linux/.test(ua)?"Linux":"Device";
+  var br=/Edg\//.test(ua)?"Edge":/SamsungBrowser/.test(ua)?"Samsung":/Chrome\//.test(ua)?"Chrome":/Firefox\//.test(ua)?"Firefox":/Safari\//.test(ua)?"Safari":""; return os+(br?" · "+br:""); }
+
+function api(path, body){
+  var opt = {method: body===undefined?"GET":"POST", headers:{}};
+  if(token) opt.headers.Authorization = "Bearer "+token;
+  if(body!==undefined){ opt.headers["Content-Type"]="application/json"; opt.body=JSON.stringify(body); }
+  return fetch(API_URL+path, opt).then(function(r){
+    return r.json().catch(function(){return {};}).then(function(d){
+      if(r.status===401 && path!=="/api/login"){ logout(true); throw new Error(d.error||"Please log in again"); }
+      if(!r.ok){ var e=new Error(d.error||("Error "+r.status)); e.status=r.status; throw e; }
+      return d;
+    });
+  });
+}
+function show(id){ ["login","student","tutor"].forEach(function(x){ $(x).classList.toggle("hidden", x!==id); }); window.scrollTo(0,0); }
+function logout(silent){
+  if(token && !silent) api("/api/logout",{}).catch(function(){});
+  token=null; role=null; ls(TOKEN_KEY,null); ls(ROLE_KEY,null);
+  if(window.speechSynthesis) speechSynthesis.cancel();
+  show("login");
+}
+
+// ===================== LOGIN =====================
+var loginRole = "student";
+document.querySelector("#login .seg").addEventListener("click", function(e){
+  var b=e.target.closest("button"); if(!b) return; loginRole=b.dataset.role;
+  document.querySelectorAll("#login .seg button").forEach(function(x){x.classList.toggle("on",x===b);});
+  $("pinWrap").classList.toggle("hidden", loginRole!=="student"); $("passWrap").classList.toggle("hidden", loginRole!=="tutor"); $("lgErr").textContent="";
+});
+function doLogin(){
+  var u=$("lgUser").value.trim(), body={role:loginRole, username:u};
+  if(loginRole==="student"){ body.pin=$("lgPin").value.trim(); if(!/^\d{6}$/.test(body.pin)){ $("lgErr").textContent="PIN must be 6 digits"; return; } }
+  else body.password=$("lgPass").value;
+  if(!u){ $("lgErr").textContent="Enter username"; return; }
+  $("lgBtn").disabled=true; $("lgErr").textContent="";
+  api("/api/login", body).then(function(d){
+    token=d.token; role=d.role; ls(TOKEN_KEY,token); ls(ROLE_KEY,role);
+    $("lgPin").value=""; $("lgPass").value="";
+    start();
+  }).catch(function(e){ $("lgErr").textContent=e.message; }).then(function(){ $("lgBtn").disabled=false; });
+}
+$("lgBtn").addEventListener("click", doLogin);
+["lgUser","lgPin","lgPass"].forEach(function(id){ $(id).addEventListener("keydown",function(e){ if(e.key==="Enter") doLogin(); }); });
+
+// ===================== STUDENT =====================
+var S = null, sView = "today", ciSel = {subject:null, chapter:null, minutes:30, understood:2};
+$("sLogout").addEventListener("click", function(){ logout(); });
+$("sNav").addEventListener("click", function(e){ var b=e.target.closest("button"); if(!b) return; setSView(b.dataset.v); });
+function setSView(v){
+  sView=v;
+  document.querySelectorAll("#sNav button").forEach(function(x){x.classList.toggle("on",x.dataset.v===v);});
+  ["today","quiz","progress","assist"].forEach(function(x){ $("sv-"+x).classList.toggle("hidden", x!==v); });
+  if(v==="today") renderToday(); if(v==="progress") renderProgress(); if(v==="quiz") loadQuiz(); if(v==="assist") openAssist();
+  window.scrollTo(0,0);
+}
+function loadMe(){ return api("/api/me").then(function(d){ S=d; $("sHi").textContent="നമസ്കാരം, "+d.student.name.split(" ")[0]+"!"; $("sSub").textContent=(d.cls? d.cls.board+" "+d.cls.name : "")+(d.week? " · Week "+d.week : ""); }); }
+function subj(id){ return (S.subjects.filter(function(s){return s.id===id;})[0])||{name:"",color:"#1f4e79"}; }
+
+function renderToday(){
+  if(!S) return;
+  var t=S.today, todayCi=S.checkins.filter(function(c){return c.date===t;}), mins=todayCi.reduce(function(a,c){return a+(c.minutes||0);},0);
+  var qz=S.quizzes.filter(function(q){return q.date===t;})[0], qDone=qz&&qz.completed_at;
+  var h='';
+  h+='<div class="card streak"><div class="n">'+S.streak+'</div><div><b>day study streak</b><div class="muted">'+((todayCi.length||qDone)? "Today done ✓ — നാളെയും തുടരൂ!" : S.streak? "Study today to make it "+(S.streak+1)+" days!" : "Do a check-in or quiz today to start your streak.")+'</div></div></div>';
+  var ex=S.subjects.filter(function(s){return s.exam_date;});
+  if(ex.length){ h+='<div class="row" style="gap:8px">'+ex.map(function(s){ var n=daysBetween(t,s.exam_date); return '<div class="exam" style="background:'+esc(s.color)+'"><span class="small">'+esc(s.name)+'</span><b>'+(n>0?n+" days":n===0?"Today":"Done")+'</b></div>'; }).join("")+'</div>'; }
+  h+='<div class="card stack"><h3>Today\'s tasks</h3>'+
+    '<div class="task'+(todayCi.length?' done':'')+'" data-go="checkin"><div class="dot">'+(todayCi.length?'✓':'')+'</div><div><div class="t">Study check-in</div><div class="muted">'+(todayCi.length? mins+" min logged today" : "What did you study today?")+'</div></div></div>'+
+    '<div class="task'+(qDone?' done':'')+'" data-go="quiz"><div class="dot">'+(qDone?'✓':'')+'</div><div><div class="t">Daily quiz</div><div class="muted">'+(qDone? "Score "+qz.score+"/"+qz.total : "5 questions · 5 minutes")+'</div></div></div>'+
+    '<div class="task" data-go="assist"><div class="dot" style="border-style:dashed"></div><div><div class="t">Ask a doubt</div><div class="muted">Ekanthi Assist · Malayalam / English · voice</div></div></div></div>';
+  var wk = S.week ? S.chapters.filter(function(c){return c.week===S.week;}) : [];
+  var learning = S.chapters.filter(function(c){return c.status===1;});
+  var focus = learning.length? learning : wk;
+  if(focus.length){ h+='<div class="card stack"><h3>'+(learning.length?"Now learning":"This week's plan")+'</h3>'+focus.map(function(c){ var s=subj(c.subject_id); return '<div class="row between"><div><span class="pill" style="background:'+esc(s.color)+';color:#fff">'+esc(s.name)+'</span> '+esc(c.name)+'</div><span class="pill p'+c.status+'">'+STATUS[c.status]+'</span></div>'; }).join("")+'</div>'; }
+  // check-in form
+  if(!ciSel.subject && S.subjects[0]) ciSel.subject=S.subjects[0].id;
+  var chs=S.chapters.filter(function(c){return c.subject_id===ciSel.subject;});
+  if(ciSel.chapter && !chs.some(function(c){return c.id===ciSel.chapter;})) ciSel.chapter=null;
+  if(!ciSel.chapter){ var pre=chs.filter(function(c){return c.status===1;})[0]||chs.filter(function(c){return c.week===S.week;})[0]; ciSel.chapter=pre?pre.id:(chs[0]?chs[0].id:null); }
+  h+='<div class="card stack" id="ciCard"><h3>Study check-in</h3>'+
+    '<div><label class="f">Subject</label><div class="chips" id="ciSubj">'+S.subjects.map(function(s){return '<button class="chip'+(s.id===ciSel.subject?' on':'')+'" data-id="'+s.id+'">'+esc(s.name)+'</button>';}).join("")+'</div></div>'+
+    '<div><label class="f" for="ciChap">Chapter</label><select id="ciChap">'+(chs.length? chs.map(function(c){return '<option value="'+c.id+'"'+(c.id===ciSel.chapter?' selected':'')+'>'+esc(c.name)+'</option>';}).join("") : '<option value="">(no chapters yet)</option>')+'</select></div>'+
+    '<div><label class="f">How long?</label><div class="chips" id="ciMin">'+[15,30,45,60,90].map(function(m){return '<button class="chip'+(m===ciSel.minutes?' on':'')+'" data-m="'+m+'">'+m+' min</button>';}).join("")+'</div></div>'+
+    '<div><label class="f">How well did you understand?</label><div class="chips" id="ciUnd">'+[[1,"Hard / മനസ്സിലായില്ല"],[2,"OK / കുറച്ച്"],[3,"Easy / നന്നായി"]].map(function(u){return '<button class="chip'+(u[0]===ciSel.understood?' on':'')+'" data-u="'+u[0]+'">'+u[1]+'</button>';}).join("")+'</div></div>'+
+    '<div><label class="f" for="ciNote">Note (optional)</label><input id="ciNote" type="text" maxlength="300" placeholder="e.g. did 10 questions, doubt in Q5"></div>'+
+    '<button class="btn block" id="ciSave">Save check-in</button>'+
+    (todayCi.length? '<div class="stack">'+todayCi.map(function(c){ return '<div class="row between small"><span>✓ '+esc(subj(c.subject_id).name)+' · '+(c.minutes||0)+' min</span><span class="muted">'+esc(c.note||"")+'</span></div>'; }).join("")+'</div>' : '')+
+  '</div>';
+  // 14 days
+  var set={}; S.activeDays.forEach(function(d){set[d]=1;});
+  var cells=''; for(var i=13;i>=0;i--){ var d=addDays(t,-i); cells+='<span class="'+(set[d]?'on':'')+(i===0?' today':'')+'" title="'+d+'"></span>'; }
+  h+='<div class="card stack"><div class="row between"><h3>Last 14 days</h3><span class="muted small">green = studied</span></div><div class="days">'+cells+'</div></div>';
+  $("sv-today").innerHTML=h;
+}
+$("sv-today").addEventListener("click", function(e){
+  var go=e.target.closest("[data-go]"); if(go){ if(go.dataset.go==="checkin"){ $("ciCard").scrollIntoView({behavior:"smooth"}); } else setSView(go.dataset.go); return; }
+  var b=e.target.closest("button"); if(!b) return;
+  if(b.parentNode.id==="ciSubj"){ ciSel.subject=Number(b.dataset.id); ciSel.chapter=null; renderToday(); $("ciCard").scrollIntoView(); return; }
+  if(b.parentNode.id==="ciMin"){ ciSel.minutes=Number(b.dataset.m); b.parentNode.querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x===b);}); return; }
+  if(b.parentNode.id==="ciUnd"){ ciSel.understood=Number(b.dataset.u); b.parentNode.querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x===b);}); return; }
+  if(b.id==="ciSave"){
+    b.disabled=true;
+    api("/api/checkin",{subject_id:ciSel.subject, chapter_id:Number($("ciChap").value)||null, minutes:ciSel.minutes, understood:ciSel.understood, note:$("ciNote").value})
+      .then(function(d){ S=d; toast("Saved! നന്നായി ✓"); renderToday(); }).catch(function(er){ toast(er.message); b.disabled=false; });
+  }
+});
+$("sv-today").addEventListener("change", function(e){ if(e.target.id==="ciChap") ciSel.chapter=Number(e.target.value)||null; });
+
+// ----- quiz -----
+var Q=null, qAns=[];
+function loadQuiz(){
+  $("sv-quiz").innerHTML='<div class="card empty"><span class="spinner"></span> Preparing today\'s quiz…</div>';
+  api("/api/quiz/today",{}).then(function(d){ Q=d; qAns=d.questions.map(function(){return -1;}); renderQuiz(); })
+  .catch(function(e){ $("sv-quiz").innerHTML='<div class="card empty">'+(e.status===429? "Quiz server is busy. Try again in a minute." : esc(e.message))+'<br><br><button class="btn sm" id="qRetry">Try again</button></div>'; });
+}
+function renderQuiz(){
+  var h='', done=Q.completed;
+  if(done){ var p=pct(Q.score,Q.total); h+='<div class="card" style="text-align:center"><h3>Today\'s score</h3><div class="score">'+Q.score+' / '+Q.total+'</div><div class="pill '+(p>=60?'good':p>=40?'p1':'alert')+'">'+p+'%</div><div class="muted" style="margin-top:8px">'+(p>=80?"മികച്ചത്! Excellent!":p>=60?"നല്ലത്! Good work.":p>=40?"കുറച്ചുകൂടി practice ചെയ്യാം.":"Don't worry — read the explanations below and ask Assist.")+'</div><div class="muted small" style="margin-top:6px">New quiz tomorrow.</div></div>'; }
+  else h+='<div class="card"><h2>Daily quiz</h2><div class="muted">'+Q.total+' questions · choose one answer each</div></div>';
+  Q.questions.forEach(function(q,i){
+    h+='<div class="q"><div class="muted small">Q'+(i+1)+(q.chapter?' · '+esc(q.chapter):'')+'</div><div class="qt">'+esc(q.q)+'</div>';
+    q.options.forEach(function(o,j){
+      var cls='opt';
+      if(done){ if(j===q.answer) cls+=' right'; else if(j===q.chosen) cls+=' wrong'; }
+      else if(qAns[i]===j) cls+=' sel';
+      h+='<div class="'+cls+'" data-q="'+i+'" data-o="'+j+'"><span class="l">'+"ABCD"[j]+'</span><span>'+esc(o)+'</span></div>';
+    });
+    if(done && q.explain) h+='<div class="explain">'+(q.chosen===q.answer?'✓ ':'✗ ')+esc(q.explain)+'</div>';
+    h+='</div>';
+  });
+  if(!done) h+='<button class="btn block" id="qSubmit">Submit answers</button>';
+  var past=(S?S.quizzes:[]).filter(function(q){return q.completed_at && q.date!==Q.date;}).slice(0,7);
+  if(past.length) h+='<div class="card stack"><h3>Recent scores</h3>'+past.map(function(q){return '<div class="row between"><span>'+fmtDate(q.date)+'</span><b>'+q.score+'/'+q.total+'</b></div>';}).join("")+'</div>';
+  $("sv-quiz").innerHTML=h;
+}
+$("sv-quiz").addEventListener("click", function(e){
+  if(e.target.id==="qRetry"){ loadQuiz(); return; }
+  var o=e.target.closest(".opt"); if(o && Q && !Q.completed){ qAns[Number(o.dataset.q)]=Number(o.dataset.o); renderQuiz(); return; }
+  if(e.target.id==="qSubmit"){
+    var miss=qAns.filter(function(a){return a<0;}).length;
+    if(miss && !confirm(miss+" question(s) not answered. Submit anyway?")) return;
+    e.target.disabled=true;
+    api("/api/quiz/submit",{id:Q.id, answers:qAns}).then(function(d){ Q=d; renderQuiz(); window.scrollTo(0,0); return loadMe(); }).catch(function(er){ toast(er.message); e.target.disabled=false; });
+  }
+});
+
+// ----- progress -----
+function renderProgress(){
+  if(!S) return;
+  var h='';
+  S.subjects.forEach(function(s){
+    var ch=S.chapters.filter(function(c){return c.subject_id===s.id;}), done=ch.filter(function(c){return c.status>=2;}).length;
+    h+='<div class="card stack"><div class="row between"><h2>'+esc(s.name)+'</h2><b>'+pct(done,ch.length)+'%</b></div><div class="bar"><span style="width:'+pct(done,ch.length)+'%;background:'+esc(s.color)+'"></span></div>'+
+      (ch.length? ch.map(function(c){ return '<div class="row between small"><span>'+esc(c.name)+'</span><span class="pill p'+c.status+'">'+STATUS[c.status]+'</span></div>'; }).join("") : '<div class="muted">Chapters will be added by your tutor.</div>')+'</div>';
+  });
+  var qz=S.quizzes.filter(function(q){return q.completed_at;}).slice(0,14).reverse();
+  if(qz.length>1) h+='<div class="card stack"><h3>Daily quiz trend</h3>'+lineChart(qz.map(function(q){return {x:fmtDate(q.date), y:pct(q.score,q.total)};}))+'</div>';
+  h+='<div class="card stack"><h3>Tests</h3>'+(S.tests.length? S.tests.map(function(x){ var p=pct(x.marks,x.max_marks); return '<div class="row between"><span>'+esc(subj(x.subject_id).name)+' · '+esc(x.title||"Test")+' <span class="muted small">'+fmtDate(x.date)+'</span></span><span><b>'+x.marks+'/'+x.max_marks+'</b> <span class="pill '+(p>=60?'good':p>=33?'p1':'alert')+'">'+p+'%</span></span></div>'; }).join("") : '<div class="muted">No tests yet.</div>')+'</div>';
+  $("sv-progress").innerHTML=h;
+}
+function lineChart(pts){
+  var W=520,H=170,L=34,R=10,T=10,B=26,n=pts.length;
+  var x=function(i){return L+(n<2?0:i*(W-L-R)/(n-1));}, y=function(v){return T+(100-v)*(H-T-B)/100;};
+  var s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Score trend">';
+  [0,50,100].forEach(function(v){ s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="#ebe9e3"/><text x="'+(L-6)+'" y="'+(y(v)+4)+'" font-size="10" fill="#667085" text-anchor="end">'+v+'%</text>'; });
+  s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(33)+'" y2="'+y(33)+'" stroke="#b23a3a" stroke-dasharray="4 4"/>';
+  s+='<polyline fill="none" stroke="#2b6aa3" stroke-width="2.5" points="'+pts.map(function(p,i){return x(i)+','+y(p.y);}).join(" ")+'"/>';
+  pts.forEach(function(p,i){ s+='<circle cx="'+x(i)+'" cy="'+y(p.y)+'" r="3.5" fill="#fff" stroke="#2b6aa3" stroke-width="2"><title>'+esc(p.x)+': '+p.y+'%</title></circle>'; if(n<=8||i%2===0) s+='<text x="'+x(i)+'" y="'+(H-8)+'" font-size="10" fill="#667085" text-anchor="middle">'+esc(p.x)+'</text>'; });
+  return s+'</svg>';
+}
+
+// ----- assist chat -----
+var chatLang="ml", autoSpeak=true, chatBusy=false, chatLoaded=false, chatMsgs=[];
+if(WHATSAPP_NUMBER){ var wb=$("waBtn"); wb.href="https://wa.me/"+WHATSAPP_NUMBER.replace(/\D/g,"")+"?text="+encodeURIComponent("Hi, Ekanthi doubt: "); wb.classList.remove("hidden"); }
+var CHIPS=[["എന്റെ progress?","എന്റെ ഇപ്പോഴത്തെ progress നോക്കി, ഇന്ന് എന്ത് പഠിക്കണം എന്ന് പറയൂ."],["Exam tip","ഇന്നത്തേക്ക് ഒരു board exam tip തരൂ."],["Explain simply","ഇപ്പോൾ പഠിക്കുന്ന chapter ലളിതമായി ഒന്നുകൂടി പറഞ്ഞു തരൂ."],["Formulas","ഇപ്പോഴത്തെ Maths chapter-ലെ important formulas പറഞ്ഞു തരൂ."]];
+$("chChips").innerHTML=CHIPS.map(function(c,i){return '<button class="chip" data-c="'+i+'">'+esc(c[0])+'</button>';}).join("");
+$("chChips").addEventListener("click",function(e){ var b=e.target.closest("button"); if(b) sendChat(CHIPS[Number(b.dataset.c)][1]); });
+function bubble(role,text,i){ var d=document.createElement("div"); d.className="msg "+role; d.innerHTML= role==="m"? md(text)+'<br><button class="say" data-i="'+i+'">🔊 കേൾക്കാം</button>' : role==="u"? esc(text) : text; $("chMsgs").appendChild(d); $("chMsgs").scrollTop=$("chMsgs").scrollHeight; return d; }
+function renderChat(){
+  $("chMsgs").innerHTML="";
+  if(!chatMsgs.length) bubble("m","നമസ്കാരം! ഞാൻ **Ekanthi Assist**. Maths, Science, Social — ഏത് സംശയവും ചോദിക്കാം. 🎤 അമർത്തി മലയാളത്തിൽ സംസാരിക്കാം.",-1);
+  chatMsgs.forEach(function(m,i){ bubble(m.role==="user"?"u":"m", m.text, i); });
+}
+function openAssist(){
+  if(chatLoaded){ renderChat(); return; }
+  $("chMsgs").innerHTML='<div class="msg sys"><span class="spinner"></span></div>';
+  api("/api/chat/history").then(function(d){ chatMsgs=d.messages; chatLoaded=true; renderChat(); }).catch(function(){ chatLoaded=true; renderChat(); });
+}
+function sendChat(text){
+  text=(text||"").trim(); if(!text||chatBusy) return;
+  chatMsgs.push({role:"user",text:text}); bubble("u",text); $("chInput").value="";
+  chatBusy=true; var w=bubble("sys",'<span class="spinner"></span> Ekanthi ആലോചിക്കുന്നു…');
+  api("/api/chat",{text:text}).then(function(d){
+    w.remove(); chatMsgs.push({role:"model",text:d.text}); bubble("m",d.text,chatMsgs.length-1);
+    if(d.left!==undefined && d.left<=3) bubble("sys","ഇന്ന് "+d.left+" ചോദ്യങ്ങൾ കൂടി ബാക്കി.");
+    if(autoSpeak) speak(d.text);
+  }).catch(function(e){ w.remove(); chatMsgs.pop();
+    bubble("sys", e.status===429? (e.message==="limit"? "ഇന്നത്തെ limit കഴിഞ്ഞു. നാളെ വീണ്ടും ചോദിക്കാം, അല്ലെങ്കിൽ WhatsApp-ൽ tutor-നോട് ചോദിക്കൂ." : "ഇപ്പോൾ തിരക്കാണ്. ഒരു മിനിറ്റ് കഴിഞ്ഞ് ചോദിക്കൂ.") : esc(e.message));
+  }).then(function(){ chatBusy=false; });
+}
+$("chSend").addEventListener("click",function(){ sendChat($("chInput").value); });
+$("chInput").addEventListener("keydown",function(e){ if(e.key==="Enter"&&!e.shiftKey){ e.preventDefault(); sendChat($("chInput").value); } });
+// voice out
+var voices=[], warned=false;
+function loadVoices(){ try{ voices=window.speechSynthesis? speechSynthesis.getVoices():[]; }catch(e){ voices=[]; } }
+loadVoices(); if(window.speechSynthesis) speechSynthesis.onvoiceschanged=loadVoices;
+function speak(text){
+  if(!window.speechSynthesis) return;
+  var clean=text.replace(/\*\*/g,"").replace(/^\s*[-*]\s+/gm,"").replace(/[#`_]/g,""), isMl=/[ഀ-ൿ]/.test(clean);
+  var v=voices.filter(function(x){return isMl? /^ml/i.test(x.lang) : /^en[-_]IN/i.test(x.lang);})[0] || (!isMl? voices.filter(function(x){return /^en/i.test(x.lang);})[0] : null);
+  if(isMl && !v){ if(!warned){ warned=true; bubble("sys","ഈ device-ൽ Malayalam voice ഇല്ല. Android: Settings → Text-to-speech → Google → Malayalam install ചെയ്യൂ."); } return; }
+  try{ speechSynthesis.cancel(); var u=new SpeechSynthesisUtterance(clean); if(v){u.voice=v;u.lang=v.lang;} else u.lang=isMl?"ml-IN":"en-IN"; u.rate=.95; speechSynthesis.speak(u); }catch(e){}
+}
+$("chMsgs").addEventListener("click",function(e){ var b=e.target.closest(".say"); if(!b) return; var i=Number(b.dataset.i); speak(i<0? b.parentNode.textContent.replace("🔊 കേൾക്കാം","") : chatMsgs[i].text); });
+$("chSpeak").addEventListener("click",function(){ autoSpeak=!autoSpeak; this.textContent=autoSpeak?"🔊 Auto":"🔇 Off"; if(!autoSpeak&&window.speechSynthesis) speechSynthesis.cancel(); });
+$("chLang").addEventListener("click",function(){ chatLang=chatLang==="ml"?"en":"ml"; this.textContent=chatLang==="ml"?"മലയാളം":"English"; });
+// voice in
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition, rec=null, recOn=false;
+$("chMic").addEventListener("click",function(){
+  var mic=this;
+  if(!SR){ bubble("sys","Voice input-ന് Chrome browser ഉപയോഗിക്കൂ."); return; }
+  if(recOn&&rec){ rec.stop(); return; }
+  rec=new SR(); rec.lang=chatLang==="ml"?"ml-IN":"en-IN"; rec.interimResults=true;
+  var fin="";
+  rec.onresult=function(ev){ var t=""; for(var i=0;i<ev.results.length;i++){ t+=ev.results[i][0].transcript; if(ev.results[i].isFinal) fin=t; } $("chInput").value=t; };
+  rec.onerror=function(ev){ if(ev.error==="not-allowed") bubble("sys","Microphone permission അനുവദിക്കൂ (address bar-ലെ lock icon)."); };
+  rec.onend=function(){ recOn=false; mic.classList.remove("rec"); if(fin.trim()) sendChat(fin); };
+  try{ if(window.speechSynthesis) speechSynthesis.cancel(); rec.start(); recOn=true; mic.classList.add("rec"); }catch(e){}
+});
+
+function startStudent(){
+  show("student");
+  $("sv-today").innerHTML='<div class="card empty"><span class="spinner"></span></div>';
+  loadMe().then(function(){ setSView("today"); }).catch(function(e){ $("sv-today").innerHTML='<div class="card empty">'+esc(e.message)+'</div>'; });
+}
+
+// ===================== TUTOR =====================
+var T={view:"students", overview:null, detail:null, dTab:"activity", classes:null, clsSel:null, newCreds:null, adding:false};
+$("tLogout").addEventListener("click",function(){ logout(); });
+$("tTabs").addEventListener("click",function(e){ var b=e.target.closest("button"); if(!b) return; tGo(b.dataset.t); });
+function tGo(v, id){
+  T.view=v; document.querySelectorAll("#tTabs button").forEach(function(x){x.classList.toggle("on", x.dataset.t===(v==="detail"?"students":v));});
+  if(v==="students") loadOverview(); if(v==="classes") loadClasses(); if(v==="detail") loadDetail(id);
+  window.scrollTo(0,0);
+}
+function loading(){ $("tMain").innerHTML='<div class="card empty"><span class="spinner"></span></div>'; }
+function loadOverview(){ loading(); api("/api/admin/overview").then(function(d){ T.overview=d; $("tToday").textContent="Today: "+fmtDate(d.today); renderOverview(); }).catch(showErr); }
+function showErr(e){ $("tMain").innerHTML='<div class="card empty">'+esc(e.message)+'</div>'; }
+
+function renderOverview(){
+  var d=T.overview, st=d.students, act=st.filter(function(s){return s.active;});
+  var today=act.filter(function(s){return s.lastActive===d.today;}).length, att=act.filter(function(s){return s.alerts.length;}).length;
+  var qa=act.filter(function(s){return s.quizAvg7!==null;}), avg=qa.length? Math.round(qa.reduce(function(a,s){return a+s.quizAvg7;},0)/qa.length) : null;
+  var h='<div class="kpis"><div class="card kpi"><h3>Active students</h3><b>'+act.length+'</b></div><div class="card kpi"><h3>Studied today</h3><b>'+today+'</b></div><div class="card kpi"><h3>Need attention</h3><b style="color:'+(att?'var(--bad)':'inherit')+'">'+att+'</b></div><div class="card kpi"><h3>Avg quiz (7 days)</h3><b>'+(avg===null?'—':avg+'%')+'</b></div></div>';
+  h+='<div class="card" style="margin-top:14px"><div class="row between" style="margin-bottom:10px"><h2>Students</h2><button class="btn sm" id="addStu">+ Add student</button></div>';
+  if(T.newCreds) h+=credsCard(T.newCreds);
+  if(T.adding){
+    h+='<div class="card stack" style="background:#faf9f6;margin-bottom:12px"><div class="grid2"><div><label class="f">Full name</label><input id="nsName" type="text" maxlength="80"></div><div><label class="f">Class</label><select id="nsClass">'+d.classes.map(function(c){return '<option value="'+c.id+'">'+esc(c.board+" "+c.name)+'</option>';}).join("")+'</select></div><div><label class="f">Username (for login)</label><input id="nsUser" type="text" placeholder="e.g. arjun10" autocapitalize="none"></div><div><label class="f">PIN (leave empty = auto 6-digit)</label><input id="nsPin" type="tel" maxlength="6" inputmode="numeric"></div></div><div class="row"><button class="btn sm" id="nsSave">Create student</button><button class="btn ghost sm" id="nsCancel">Cancel</button><span class="err" id="nsErr"></span></div></div>';
+  }
+  if(!st.length) h+='<div class="empty">No students yet. Click “Add student”.</div>';
+  else{
+    h+='<div class="scroll"><table><thead><tr><th>Student</th><th>Today</th><th>Streak</th><th>Quiz 7d</th><th>Last test</th><th>Chapters</th><th>Last active</th><th>Alerts</th></tr></thead><tbody>';
+    st.forEach(function(s){
+      var lt=s.lastTest? pct(s.lastTest.marks,s.lastTest.max) : null;
+      h+='<tr class="click" data-sid="'+s.id+'"><td><b>'+esc(s.name)+'</b>'+(s.active?'':' <span class="pill p0">Paused</span>')+'<div class="muted small">'+esc(s.class_name||"")+' · '+esc(s.username)+'</div></td>'+
+        '<td>'+(s.todayMinutes? s.todayMinutes+' min' : '<span class="muted">—</span>')+(s.quizToday? '<div class="muted small">Quiz '+s.quizToday+'</div>':'')+'</td>'+
+        '<td>'+(s.streak? '<b>'+s.streak+'</b> day'+(s.streak>1?'s':'') : '<span class="muted">0</span>')+'</td>'+
+        '<td>'+(s.quizAvg7===null? '<span class="muted">—</span>' : '<span class="pill '+(s.quizAvg7>=60?'good':s.quizAvg7>=40?'p1':'alert')+'">'+s.quizAvg7+'%</span>')+'</td>'+
+        '<td>'+(lt===null? '<span class="muted">—</span>' : s.lastTest.marks+'/'+s.lastTest.max+' <span class="muted small">('+lt+'%)</span>')+'</td>'+
+        '<td>'+s.chaptersDone+'/'+s.chaptersTotal+'</td>'+
+        '<td>'+(s.lastActive? fmtDate(s.lastActive) : '<span class="muted">never</span>')+'</td>'+
+        '<td>'+(s.alerts.length? s.alerts.map(function(a){return '<span class="pill alert">'+esc(a)+'</span>';}).join(" ") : '<span class="pill good">OK</span>')+'</td></tr>';
+    });
+    h+='</tbody></table></div>';
+  }
+  $("tMain").innerHTML=h+'</div>';
+}
+function credsCard(c){
+  var msg="Ekanthi login 📚\nLink: "+SITE_URL+"\nUsername: "+c.username+"\nPIN: "+c.pin+"\n\nPIN ആരോടും share ചെയ്യരുത്. മറ്റൊരു phone-ൽ login ചെയ്താൽ ഈ phone-ൽ നിന്ന് logout ആകും.";
+  return '<div class="creds stack" style="margin-bottom:12px"><div><b>Login for '+esc(c.name||c.username)+'</b> — save or send now. The PIN is shown only once.</div><div>Username: <code>'+esc(c.username)+'</code> &nbsp; PIN: <code>'+esc(c.pin)+'</code></div><div class="row"><button class="btn sm" id="copyCreds" data-msg="'+esc(msg)+'">Copy message</button><a class="wa" target="_blank" rel="noopener" href="https://wa.me/?text='+encodeURIComponent(msg)+'">Send on WhatsApp</a><button class="btn ghost sm" id="hideCreds">Done</button></div></div>';
+}
+$("tMain").addEventListener("click",function(e){
+  var tr=e.target.closest("tr[data-sid]"); if(tr){ T.newCreds=null; T.dTab="activity"; tGo("detail", Number(tr.dataset.sid)); return; }
+  var b=e.target.closest("button"); if(!b) return;
+  var id=b.id;
+  if(id==="addStu"){ T.adding=true; T.newCreds=null; renderOverview(); $("nsName").focus(); return; }
+  if(id==="nsCancel"){ T.adding=false; renderOverview(); return; }
+  if(id==="hideCreds"){ T.newCreds=null; T.view==="detail"? renderDetail() : renderOverview(); return; }
+  if(id==="copyCreds"){ copy(b.dataset.msg); return; }
+  if(id==="nsSave"){
+    b.disabled=true; var nm=$("nsName").value.trim();
+    api("/api/admin/student/create",{name:nm, class_id:Number($("nsClass").value), username:$("nsUser").value.trim(), pin:$("nsPin").value.trim()})
+      .then(function(d){ T.adding=false; T.newCreds={name:nm, username:d.username, pin:d.pin}; loadOverview(); })
+      .catch(function(er){ $("nsErr").textContent=er.message; b.disabled=false; });
+    return;
+  }
+  if(T.view==="detail") detailClick(b, e);
+  if(T.view==="classes") classClick(b, e);
+});
+$("tMain").addEventListener("change",function(e){ if(T.view==="detail") detailChange(e); if(T.view==="classes") classChange(e); });
+function copy(t){ (navigator.clipboard? navigator.clipboard.writeText(t) : Promise.reject()).then(function(){toast("Copied");}).catch(function(){ prompt("Copy this:", t); }); }
+
+// ----- student detail -----
+function loadDetail(id){ loading(); api("/api/admin/student?id="+id).then(function(d){ T.detail=d; renderDetail(); }).catch(showErr); }
+function renderDetail(){
+  var d=T.detail, a=d.account, t=d.today, sname=function(id){ return (d.subjects.filter(function(s){return s.id===id;})[0]||{}).name||""; };
+  var done=d.chapters.filter(function(c){return c.status>=2;}).length;
+  var q7=d.quizzes.filter(function(q){return q.completed_at && q.date>=addDays(t,-6);}), qa=q7.length? Math.round(q7.reduce(function(x,q){return x+q.score/(q.total||1);},0)/q7.length*100) : null;
+  var min7=d.checkins.filter(function(c){return c.date>=addDays(t,-6);}).reduce(function(x,c){return x+(c.minutes||0);},0);
+  var h='<div class="row between" style="margin-bottom:12px"><a href="#" id="backList">← All students</a><div class="row" style="gap:6px"><button class="btn ghost sm" data-a="reset">Reset PIN</button><button class="btn ghost sm" data-a="logout">Sign out devices</button><button class="btn ghost sm" data-a="toggle">'+(a.active?'Pause access':'Activate')+'</button><button class="btn danger sm" data-a="delete">Delete</button></div></div>';
+  if(T.newCreds) h+=credsCard(T.newCreds);
+  h+='<div class="card"><div class="row between"><div><h2 style="font-size:20px">'+esc(a.name)+(a.active?'':' <span class="pill p0">Paused</span>')+'</h2><div class="muted">'+esc(d.cls?d.cls.board+" "+d.cls.name:"")+' · username <b>'+esc(a.username)+'</b> · last login '+fmtDT(a.last_login)+'</div></div><div class="inline"><select data-ch="class">'+(T.overview?T.overview.classes:[]).map(function(c){return '<option value="'+c.id+'"'+(c.id===a.class_id?' selected':'')+'>'+esc(c.board+" "+c.name)+'</option>';}).join("")+'</select></div></div></div>';
+  h+='<div class="kpis" style="margin-top:12px"><div class="card kpi"><h3>Streak</h3><b>'+d.streak+'</b></div><div class="card kpi"><h3>Study (7 days)</h3><b>'+min7+' min</b></div><div class="card kpi"><h3>Quiz avg (7 days)</h3><b>'+(qa===null?'—':qa+'%')+'</b></div><div class="card kpi"><h3>Chapters done</h3><b>'+done+'/'+d.chapters.length+'</b></div></div>';
+  var tabs=[["activity","Activity"],["chapters","Chapters"],["tests","Tests & marks"],["quizzes","Quizzes"],["chats","Assist chats"],["logins","Logins"]];
+  h+='<div class="subtabs" style="margin:16px 0 12px">'+tabs.map(function(x){return '<button data-dt="'+x[0]+'" class="'+(T.dTab===x[0]?'on':'')+'">'+x[1]+'</button>';}).join("")+'</div>';
+  var body='';
+  if(T.dTab==="activity"){
+    var byDay={}; d.checkins.forEach(function(c){ (byDay[c.date]=byDay[c.date]||{m:0,n:0}).m+=c.minutes||0; byDay[c.date].n++; });
+    var qByDay={}; d.quizzes.forEach(function(q){ if(q.completed_at) qByDay[q.date]=q; });
+    var start=addDays(t,-27), dow=(new Date(start+"T00:00:00Z").getUTCDay()+6)%7; start=addDays(start,-dow);
+    var cal=''; ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].forEach(function(x){cal+='<div style="background:none;min-height:0;padding:0 6px" class="muted small">'+x+'</div>';});
+    for(var i=0;i<35;i++){ var dd=addDays(start,i); if(dd>t){ cal+='<div class="fut"></div>'; continue; } var m=(byDay[dd]||{}).m||0, q=qByDay[dd]; var lv=m>=60?3:m>=30?2:(m>0||q)?1:0;
+      cal+='<div class="l'+lv+'"><span class="d">'+Number(dd.slice(8))+'</span>'+(m?'<br>'+m+' min':'')+(q?'<br>Quiz '+q.score+'/'+q.total:'')+'</div>'; }
+    body+='<div class="card stack"><h3>Last 4 weeks</h3><div class="cal">'+cal+'</div></div>';
+    body+='<div class="card" style="margin-top:12px"><h3 style="margin-bottom:8px">Study check-ins</h3>'+(d.checkins.length? '<div class="scroll"><table><thead><tr><th>Date</th><th>Subject / chapter</th><th>Time</th><th>Understood</th><th>Note</th></tr></thead><tbody>'+d.checkins.map(function(c){ var ch=d.chapters.filter(function(x){return x.id===c.chapter_id;})[0]; return '<tr><td>'+fmtDate(c.date)+'</td><td>'+esc(sname(c.subject_id))+(ch?'<div class="muted small">'+esc(ch.name)+'</div>':'')+'</td><td>'+(c.minutes||0)+' min</td><td><span class="pill '+(c.understood===3?'good':c.understood===1?'alert':'p1')+'">'+["","Hard","OK","Easy"][c.understood||2]+'</span></td><td class="small">'+esc(c.note||"")+'</td></tr>'; }).join("")+'</tbody></table></div>' : '<div class="empty">No check-ins yet.</div>')+'</div>';
+  }
+  if(T.dTab==="chapters"){
+    d.subjects.forEach(function(s){
+      var ch=d.chapters.filter(function(c){return c.subject_id===s.id;});
+      body+='<div class="card" style="margin-bottom:12px"><h2 style="margin-bottom:8px">'+esc(s.name)+'</h2>'+(ch.length? '<table><thead><tr><th>Chapter</th><th>Priority</th><th>Week</th><th>Status</th></tr></thead><tbody>'+ch.map(function(c){ var late=d.week&&c.week&&c.week<d.week&&c.status<2; return '<tr><td>'+esc(c.name)+(late?' <span class="pill alert">behind</span>':'')+'</td><td><span class="pill pr-'+c.priority+'">'+c.priority+'</span></td><td class="muted">'+(c.week?'W'+c.week:'—')+'</td><td class="inline"><select data-ch="status" data-id="'+c.id+'">'+STATUS.map(function(x,i){return '<option value="'+i+'"'+(i===c.status?' selected':'')+'>'+x+'</option>';}).join("")+'</select></td></tr>'; }).join("")+'</tbody></table>' : '<div class="muted">No chapters. Add them in Classes.</div>')+'</div>';
+    });
+  }
+  if(T.dTab==="tests"){
+    body+='<div class="card stack"><h3>Add test marks</h3><div class="grid3"><div><label class="f">Subject</label><select id="tsSubj">'+d.subjects.map(function(s){return '<option value="'+s.id+'">'+esc(s.name)+'</option>';}).join("")+'</select></div><div><label class="f">Date</label><input id="tsDate" type="date" value="'+t+'"></div><div><label class="f">Title</label><input id="tsTitle" type="text" placeholder="Weekly test / Unit test"></div><div><label class="f">Marks</label><input id="tsMarks" type="number" min="0" step="0.5"></div><div><label class="f">Out of</label><input id="tsMax" type="number" min="1" value="25"></div><div><label class="f">Weak topics / note</label><input id="tsNote" type="text"></div></div><div class="row"><button class="btn sm" data-a="addtest">Save marks</button><span class="err" id="tsErr"></span></div></div>';
+    body+='<div class="card" style="margin-top:12px">'+(d.tests.length? '<table><thead><tr><th>Date</th><th>Subject</th><th>Test</th><th>Marks</th><th>%</th><th>Note</th><th></th></tr></thead><tbody>'+d.tests.map(function(x){ var p=pct(x.marks,x.max_marks); return '<tr><td>'+fmtDate(x.date)+'</td><td>'+esc(sname(x.subject_id))+'</td><td>'+esc(x.title||"")+'</td><td><b>'+x.marks+'/'+x.max_marks+'</b></td><td><span class="pill '+(p>=60?'good':p>=33?'p1':'alert')+'">'+p+'%</span></td><td class="small">'+esc(x.note||"")+'</td><td><button class="btn danger sm" data-a="deltest" data-id="'+x.id+'">✕</button></td></tr>'; }).join("")+'</tbody></table>' : '<div class="empty">No tests yet.</div>')+'</div>';
+  }
+  if(T.dTab==="quizzes"){
+    var qs=d.quizDetails;
+    if(qs.length>1) body+='<div class="card stack" style="margin-bottom:12px"><h3>Score trend</h3>'+lineChart(qs.slice().reverse().map(function(q){return {x:fmtDate(q.date), y:pct(q.score,q.total)};}))+'</div>';
+    body+=qs.length? qs.map(function(q){ return '<details class="card" style="margin-bottom:8px"><summary class="row between" style="cursor:pointer;list-style:none"><b>'+fmtDate(q.date)+'</b><span class="pill '+(pct(q.score,q.total)>=60?'good':pct(q.score,q.total)>=40?'p1':'alert')+'">'+q.score+'/'+q.total+'</span></summary><div class="stack" style="margin-top:10px">'+q.questions.map(function(x,i){ var ok=x.chosen===x.answer; return '<div class="small"><b>Q'+(i+1)+'. '+esc(x.q)+'</b><div>'+(ok?'✓':'✗')+' Chose: '+(x.chosen>=0? esc(x.options[x.chosen]) : '<i>skipped</i>')+(ok?'':' · Correct: <b>'+esc(x.options[x.answer])+'</b>')+'</div><div class="muted">'+esc(x.chapter||"")+'</div></div>'; }).join("")+'</div></details>'; }).join("") : '<div class="card empty">No quizzes completed yet.</div>';
+  }
+  if(T.dTab==="chats"){
+    body+='<div class="card">'+(d.chats.length? '<div class="stack">'+d.chats.map(function(m){ return '<div style="'+(m.role==='user'?'':'padding-left:18px;border-left:3px solid var(--soft)')+'"><div class="muted small">'+(m.role==='user'?'<b>Student</b>':'Assist')+' · '+fmtDT(m.created_at)+'</div><div class="small">'+md(m.text)+'</div></div>'; }).join("")+'</div>' : '<div class="empty">No questions asked yet.</div>')+'</div>';
+  }
+  if(T.dTab==="logins"){
+    var dv={}; d.logins.forEach(function(l){ if(l.ok) dv[uaShort(l.ua)]=1; });
+    body+='<div class="card"><div class="muted" style="margin-bottom:8px">Only one device can be logged in at a time. Many different devices may mean the login is shared. Devices seen: <b>'+Object.keys(dv).length+'</b></div>'+(d.logins.length? '<table><thead><tr><th>Time</th><th>Device</th><th>Country</th><th>Result</th></tr></thead><tbody>'+d.logins.map(function(l){return '<tr><td>'+fmtDT(l.at)+'</td><td>'+esc(uaShort(l.ua))+'</td><td>'+esc(l.country||"")+'</td><td>'+(l.ok?'<span class="pill good">OK</span>':'<span class="pill alert">Wrong PIN</span>')+'</td></tr>';}).join("")+'</tbody></table>' : '<div class="empty">No logins yet.</div>')+'</div>';
+  }
+  $("tMain").innerHTML=h+body;
+}
+function detailClick(b){
+  var d=T.detail, a=d.account;
+  if(b.dataset.dt){ T.dTab=b.dataset.dt; renderDetail(); return; }
+  var act=b.dataset.a; if(!act) return;
+  if(act==="reset"){ if(!confirm("Make a new PIN for "+a.name+"? The old PIN stops working and they are signed out.")) return; api("/api/admin/student/update",{id:a.id, reset_pin:true}).then(function(r){ T.newCreds={name:a.name, username:r.username, pin:r.pin}; renderDetail(); window.scrollTo(0,0); }).catch(function(e){toast(e.message);}); }
+  if(act==="logout"){ api("/api/admin/student/update",{id:a.id, logout:true}).then(function(){ toast("Signed out from all devices"); }).catch(function(e){toast(e.message);}); }
+  if(act==="toggle"){ api("/api/admin/student/update",{id:a.id, active:!a.active}).then(function(){ toast(a.active?"Access paused":"Activated"); loadDetail(a.id); }).catch(function(e){toast(e.message);}); }
+  if(act==="delete"){ if(prompt("This deletes "+a.name+" and ALL their data. Type DELETE to confirm.")!=="DELETE") return; api("/api/admin/student/delete",{id:a.id}).then(function(){ toast("Deleted"); tGo("students"); }).catch(function(e){toast(e.message);}); }
+  if(act==="addtest"){ b.disabled=true; api("/api/admin/test/add",{student_id:a.id, subject_id:Number($("tsSubj").value), date:$("tsDate").value, title:$("tsTitle").value, marks:$("tsMarks").value, max_marks:$("tsMax").value, note:$("tsNote").value}).then(function(){ toast("Marks saved"); loadDetail(a.id); }).catch(function(e){ $("tsErr").textContent=e.message; b.disabled=false; }); }
+  if(act==="deltest"){ if(!confirm("Delete this test entry?")) return; api("/api/admin/test/delete",{id:Number(b.dataset.id)}).then(function(){ loadDetail(a.id); }); }
+}
+function detailChange(e){
+  var el=e.target, a=T.detail.account;
+  if(el.dataset.ch==="status"){ api("/api/admin/progress",{student_id:a.id, chapter_id:Number(el.dataset.id), status:Number(el.value)}).then(function(){ var c=T.detail.chapters.filter(function(x){return x.id===Number(el.dataset.id);})[0]; if(c) c.status=Number(el.value); toast("Updated"); }).catch(function(er){toast(er.message);}); }
+  if(el.dataset.ch==="class"){ if(!confirm("Move "+a.name+" to this class?")){ el.value=a.class_id; return; } api("/api/admin/student/update",{id:a.id, class_id:Number(el.value)}).then(function(){ toast("Class changed"); loadDetail(a.id); }); }
+}
+$("tMain").addEventListener("click",function(e){ if(e.target.id==="backList"){ e.preventDefault(); T.newCreds=null; tGo("students"); } });
+
+// ----- classes -----
+function loadClasses(){ loading(); api("/api/admin/classes").then(function(d){ T.classes=d.classes; if(!T.clsSel || !d.classes.some(function(c){return c.id===T.clsSel;})) T.clsSel=d.classes[0]?d.classes[0].id:null; renderClasses(); }).catch(showErr); }
+function renderClasses(){
+  var cs=T.classes, c=cs.filter(function(x){return x.id===T.clsSel;})[0];
+  var h='<div class="row between" style="margin-bottom:12px"><div class="subtabs">'+cs.map(function(x){return '<button data-cls="'+x.id+'" class="'+(x.id===T.clsSel?'on':'')+'">'+esc(x.board+" "+x.name)+' <span class="muted small">('+x.students+')</span></button>';}).join("")+'</div><button class="btn sm" data-ca="newclass">+ New class</button></div>';
+  if(!c){ $("tMain").innerHTML=h+'<div class="card empty">No classes yet.</div>'; return; }
+  h+='<div class="card stack"><h3>Class details</h3><div class="grid3"><div><label class="f">Name</label><input id="ccName" type="text" value="'+esc(c.name)+'"></div><div><label class="f">Board</label><input id="ccBoard" type="text" value="'+esc(c.board||"")+'"></div><div><label class="f">Plan start (week 1 Monday)</label><input id="ccStart" type="date" value="'+esc(c.plan_start||"")+'"></div></div><div class="row"><button class="btn sm" data-ca="saveclass">Save class</button><button class="btn danger sm" data-ca="delclass">Delete class</button></div></div>';
+  c.subjects.forEach(function(s){
+    h+='<div class="card stack" style="margin-top:12px"><div class="grid3 inline" style="align-items:end"><div><label class="f">Subject</label><input type="text" data-sf="name" data-sid="'+s.id+'" value="'+esc(s.name)+'"></div><div><label class="f">Exam date</label><input type="date" data-sf="exam_date" data-sid="'+s.id+'" value="'+esc(s.exam_date||"")+'"></div><div class="row"><input type="color" data-sf="color" data-sid="'+s.id+'" value="'+esc(s.color||"#1f4e79")+'" style="width:46px;height:38px;padding:2px"><button class="btn ghost sm" data-ca="savesub" data-id="'+s.id+'">Save</button><button class="btn danger sm" data-ca="delsub" data-id="'+s.id+'">Delete</button></div></div>';
+    h+='<div class="scroll"><table><thead><tr><th>Chapter</th><th>Priority</th><th>Week</th><th></th></tr></thead><tbody>'+s.chapters.map(function(ch){ return '<tr class="inline"><td><input type="text" data-cf="name" data-cid="'+ch.id+'" value="'+esc(ch.name)+'"></td><td style="width:90px"><select data-cf="priority" data-cid="'+ch.id+'">'+["A","B","C"].map(function(p){return '<option'+(p===ch.priority?' selected':'')+'>'+p+'</option>';}).join("")+'</select></td><td style="width:90px"><input type="number" min="1" max="60" data-cf="week" data-cid="'+ch.id+'" value="'+(ch.week||"")+'"></td><td style="width:50px"><button class="btn danger sm" data-ca="delch" data-id="'+ch.id+'">✕</button></td></tr>'; }).join("")+
+      '<tr class="inline"><td><input type="text" id="nc-'+s.id+'" placeholder="New chapter name"></td><td><select id="ncp-'+s.id+'"><option>A</option><option selected>B</option><option>C</option></select></td><td><input type="number" id="ncw-'+s.id+'" min="1" max="60" placeholder="wk"></td><td><button class="btn sm" data-ca="addch" data-id="'+s.id+'">+</button></td></tr></tbody></table></div>';
+    h+='<details><summary class="muted small" style="cursor:pointer">Paste many chapters at once</summary><div class="stack" style="margin-top:8px"><textarea id="bulk-'+s.id+'" placeholder="One chapter per line. Optional: Name | A | 3  (priority | week)"></textarea><button class="btn ghost sm" data-ca="bulk" data-id="'+s.id+'">Add all</button></div></details></div>';
+  });
+  h+='<div class="card row" style="margin-top:12px"><input id="nsubName" type="text" placeholder="New subject (e.g. English)" style="max-width:280px"><button class="btn ghost sm" data-ca="addsub">+ Add subject</button></div>';
+  $("tMain").innerHTML=h;
+}
+function classClick(b){
+  if(b.dataset.cls){ T.clsSel=Number(b.dataset.cls); renderClasses(); return; }
+  var a=b.dataset.ca, id=Number(b.dataset.id); if(!a) return;
+  var done=function(msg){ return function(){ toast(msg||"Saved"); loadClasses(); }; }, fail=function(e){ toast(e.message); };
+  if(a==="newclass"){ var n=prompt("New class name (e.g. Class 9)"); if(n) api("/api/admin/class/save",{name:n, board:"CBSE"}).then(function(){ api("/api/admin/classes").then(function(d){ T.classes=d.classes; var c=d.classes.filter(function(x){return x.name===n;}).pop(); if(c){ T.clsSel=c.id; } renderClasses(); }); }).catch(fail); }
+  if(a==="saveclass") api("/api/admin/class/save",{id:T.clsSel, name:$("ccName").value, board:$("ccBoard").value, plan_start:$("ccStart").value}).then(done()).catch(fail);
+  if(a==="delclass"){ if(confirm("Delete this class with all its subjects and chapters?")) api("/api/admin/class/delete",{id:T.clsSel}).then(done("Deleted")).catch(fail); }
+  if(a==="savesub"){ var g=function(f){ return document.querySelector('[data-sf="'+f+'"][data-sid="'+id+'"]').value; }; api("/api/admin/subject/save",{id:id, name:g("name"), exam_date:g("exam_date"), color:g("color")}).then(done()).catch(fail); }
+  if(a==="delsub"){ if(confirm("Delete this subject and its chapters?")) api("/api/admin/subject/delete",{id:id}).then(done("Deleted")).catch(fail); }
+  if(a==="addsub"){ var sn=$("nsubName").value.trim(); if(sn) api("/api/admin/subject/save",{class_id:T.clsSel, name:sn}).then(done("Subject added")).catch(fail); }
+  if(a==="addch"){ var nm=$("nc-"+id).value.trim(); if(nm) api("/api/admin/chapter/save",{subject_id:id, name:nm, priority:$("ncp-"+id).value, week:$("ncw-"+id).value}).then(done("Chapter added")).catch(fail); }
+  if(a==="delch"){ if(confirm("Delete this chapter?")) api("/api/admin/chapter/delete",{id:id}).then(done("Deleted")).catch(fail); }
+  if(a==="bulk"){ var tx=$("bulk-"+id).value; if(tx.trim()) api("/api/admin/chapters/bulk",{subject_id:id, text:tx}).then(function(r){ toast(r.added+" chapters added"); loadClasses(); }).catch(fail); }
+}
+function classChange(e){
+  var el=e.target; if(!el.dataset.cid) return;
+  var id=Number(el.dataset.cid), g=function(f){ return document.querySelector('[data-cf="'+f+'"][data-cid="'+id+'"]').value; };
+  api("/api/admin/chapter/save",{id:id, name:g("name"), priority:g("priority"), week:g("week")}).then(function(){ toast("Saved"); }).catch(function(er){ toast(er.message); });
+}
+
+function startTutor(){ show("tutor"); tGo("students"); }
+
+// ===================== START =====================
+function start(){ if(!token) return show("login"); if(role==="tutor") startTutor(); else startStudent(); }
+start();
+})();
+</script>
+</body>
+</html>
