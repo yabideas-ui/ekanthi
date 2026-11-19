@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Class 10 Coaching Tracker — Board 2027</title>
+<style>
+  :root{
+    --bg:#f6f5f1; --card:#ffffff; --ink:#1d2330; --muted:#677084; --line:#e3e1da;
+    --brand:#1f4e79; --brand-soft:#e7eef6;
+    --maths:#2563a8; --science:#1f8a5b; --social:#c2620f;
+    --ok:#1f8a5b; --warn:#b7791f; --bad:#b23a3a;
+    --radius:12px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans",sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.45}
+  header{background:var(--brand);color:#fff;padding:18px 20px 0}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between}
+  h1{font-size:20px;margin:0 0 2px}
+  .sub{opacity:.8;font-size:13px}
+  .student{display:flex;gap:8px;align-items:center;font-size:13px}
+  header #studentName{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:8px;padding:6px 10px;font-size:14px;width:200px}
+  header #studentName::placeholder{color:rgba(255,255,255,.6)}
+  nav{display:flex;gap:4px;margin-top:16px;overflow-x:auto}
+  nav button{background:transparent;color:#cfdced;border:0;padding:10px 14px;font-size:14px;font-weight:600;border-radius:10px 10px 0 0;cursor:pointer;white-space:nowrap}
+  nav button.active{background:var(--bg);color:var(--brand)}
+  main{padding:20px}
+  section{display:none}
+  section.active{display:block}
+  .grid{display:grid;gap:14px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  @media (max-width:760px){.g3,.g2{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+  .card h2{font-size:15px;margin:0 0 10px}
+  .card h3{font-size:13px;margin:0;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+  .big{font-size:30px;font-weight:700;margin:4px 0 2px}
+  .muted{color:var(--muted);font-size:13px}
+  .bar{height:8px;background:#eceae4;border-radius:99px;overflow:hidden;margin:8px 0 4px}
+  .bar span{display:block;height:100%;border-radius:99px}
+  .pill{display:inline-block;padding:2px 8px;border-radius:99px;font-size:12px;font-weight:600}
+  .pA{background:#fde8e8;color:#9b2c2c}.pB{background:#fdf3dc;color:#8a5a00}.pC{background:#e8eef7;color:#2c4a75}
+  .behind{color:var(--bad);font-weight:600}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:middle}
+  th{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:600}
+  tr.late td:first-child{border-left:3px solid var(--bad)}
+  select,input[type=text],input[type=number],input[type=date],textarea{font:inherit;border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:#fff;color:var(--ink);width:100%}
+  input[type=number]{width:70px}
+  textarea{min-height:60px;resize:vertical}
+  .st0{color:var(--muted)}.st1{color:var(--warn)}.st2{color:var(--ok)}.st3{color:var(--brand)}
+  .btn{background:var(--brand);color:#fff;border:0;border-radius:8px;padding:8px 14px;font-weight:600;font-size:14px;cursor:pointer}
+  .btn.ghost{background:transparent;color:var(--brand);border:1px solid var(--brand)}
+  .btn.small{padding:4px 10px;font-size:13px}
+  .btn.danger{background:transparent;color:var(--bad);border:1px solid var(--bad)}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .subtabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+  .subtabs button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 14px;font-weight:600;cursor:pointer;font-size:13px}
+  .subtabs button.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .legend{display:flex;gap:16px;font-size:13px;margin-top:6px;flex-wrap:wrap}
+  .legend i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle}
+  .formgrid{display:grid;grid-template-columns:140px 130px 1fr;gap:8px;margin-bottom:8px}
+  @media (max-width:760px){.formgrid{grid-template-columns:1fr}}
+  .entry{border-bottom:1px solid var(--line);padding:10px 0}
+  .entry:last-child{border-bottom:0}
+  .entry .meta{font-size:12px;color:var(--muted);margin-bottom:2px}
+  .fixed{text-decoration:line-through;color:var(--muted)}
+  .chip-subj{font-size:11px;font-weight:700;padding:1px 7px;border-radius:99px;color:#fff}
+  .note{background:var(--brand-soft);border-radius:10px;padding:10px 12px;font-size:13px;color:#24415f}
+  footer{max-width:1080px;margin:0 auto;padding:0 20px 30px;color:var(--muted);font-size:12px}
+  @media print{header nav,.noprint{display:none!important} section{display:block!important;page-break-after:always} body{background:#fff}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <a href="../" style="color:#cfdced;font-size:13px;text-decoration:none">&larr; Ekanthi</a>
+        <h1>Class 10 Coaching Tracker</h1>
+        <div class="sub">CBSE Board 2027 · Maths · Science · Social Science</div>
+      </div>
+      <label class="student">Student
+        <input id="studentName" type="text" placeholder="Student name" autocomplete="off">
+      </label>
+    </div>
+    <nav id="nav">
+      <button data-tab="dash" class="active">Dashboard</button>
+      <button data-tab="chapters">Chapters</button>
+      <button data-tab="tests">Weekly Tests</button>
+      <button data-tab="mistakes">Mistake Log</button>
+      <button data-tab="sessions">Session Log</button>
+      <button data-tab="data">Backup</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- DASHBOARD -->
+  <section id="dash" class="active">
+    <div class="grid g3" id="countdowns"></div>
+    <div class="card" style="margin-top:14px">
+      <div class="row" style="justify-content:space-between">
+        <h2 style="margin:0">This week</h2>
+        <span class="muted" id="weekLabel"></span>
+      </div>
+      <div id="thisWeek" style="margin-top:10px"></div>
+    </div>
+    <div class="grid g3" id="progressCards" style="margin-top:14px"></div>
+    <div class="card" style="margin-top:14px">
+      <h2>Weekly test marks (out of 25)</h2>
+      <div id="chartDash"></div>
+    </div>
+    <div class="grid g2" style="margin-top:14px">
+      <div class="card"><h2>Behind schedule</h2><div id="behindList"></div></div>
+      <div class="card"><h2>Open mistakes to revise</h2><div id="openMistakes"></div></div>
+    </div>
+  </section>
+
+  <!-- CHAPTERS -->
+  <section id="chapters">
+    <div class="subtabs" id="chapSubtabs"></div>
+    <div class="card">
+      <div class="note noprint" style="margin-bottom:10px">Priority A = easy marks, do first. Red edge = planned week has passed but chapter is not Done yet.</div>
+      <div style="overflow-x:auto"><table id="chapTable"></table></div>
+    </div>
+  </section>
+
+  <!-- TESTS -->
+  <section id="tests">
+    <div class="card">
+      <h2>Weekly test marks</h2>
+      <p class="muted" style="margin-top:0">Enter Saturday test marks out of 25. Below 9 (36%) two weeks in a row = slow down and re-teach.</p>
+      <div style="overflow-x:auto"><table id="testTable"></table></div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h2>Trend</h2>
+      <div id="chartTests"></div>
+    </div>
+  </section>
+
+  <!-- MISTAKES -->
+  <section id="mistakes">
+    <div class="card noprint">
+      <h2>Add a mistake</h2>
+      <div class="formgrid">
+        <input type="date" id="mDate">
+        <select id="mSubj"></select>
+        <input type="text" id="mChap" placeholder="Chapter / topic">
+      </div>
+      <textarea id="mText" placeholder="What went wrong, and the correct method"></textarea>
+      <div class="row" style="margin-top:8px"><button class="btn" id="mAdd">Add</button></div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <div class="row" style="justify-content:space-between"><h2 style="margin:0">Mistake log</h2>
+        <label class="muted noprint"><input type="checkbox" id="mHideFixed"> Hide fixed</label></div>
+      <div id="mList" style="margin-top:8px"></div>
+    </div>
+  </section>
+
+  <!-- SESSIONS -->
+  <section id="sessions">
+    <div class="card noprint">
+      <h2>Log a session</h2>
+      <div class="formgrid">
+        <input type="date" id="sDate">
+        <select id="sSubj"></select>
+        <input type="text" id="sTopic" placeholder="Topic taught">
+      </div>
+      <div class="grid g2">
+        <input type="text" id="sHw" placeholder="Homework given">
+        <select id="sRating">
+          <option value="">How did he do?</option>
+          <option value="3">Good — understood</option>
+          <option value="2">Okay — needs practice</option>
+          <option value="1">Struggled — re-teach</option>
+        </select>
+      </div>
+      <textarea id="sNotes" placeholder="Notes (optional)" style="margin-top:8px"></textarea>
+      <div class="row" style="margin-top:8px"><button class="btn" id="sAdd">Add</button></div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h2>Session history <span class="muted" id="sCount"></span></h2>
+      <div id="sList"></div>
+    </div>
+  </section>
+
+  <!-- DATA -->
+  <section id="data">
+    <div class="card">
+      <h2>Backup and restore</h2>
+      <p class="muted" style="margin-top:0">Data is saved only in this browser on this device. Download a backup every Saturday. To use another device, download here and restore there.</p>
+      <div class="row">
+        <button class="btn" id="exportBtn">Download backup (.json)</button>
+        <label class="btn ghost" style="cursor:pointer">Restore from backup<input type="file" id="importFile" accept="application/json,.json" hidden></label>
+        <button class="btn ghost" onclick="window.print()">Print / Save as PDF</button>
+      </div>
+      <p class="muted" id="saveStatus" style="margin-bottom:0"></p>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h2>Reset</h2>
+      <p class="muted" style="margin-top:0">Clears everything on this device and restores the default chapter plan. Download a backup first.</p>
+      <button class="btn danger" id="resetBtn">Reset all data</button>
+    </div>
+  </section>
+</main>
+<footer>Exam dates: CBSE Class 10 date sheet 2027 (Phase 1). Week 1 starts Mon 23 Nov 2026.</footer>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "class10-tracker-v1";
+  var WEEK1 = new Date(2026, 10, 23); // Mon 23 Nov 2026
+  var EXAMS = { maths: new Date(2027,1,17), science: new Date(2027,1,22), social: new Date(2027,2,8) };
+  var SUBJ = {
+    maths:   { name:"Maths",          color:"var(--maths)",   hex:"#2563a8" },
+    science: { name:"Science",        color:"var(--science)", hex:"#1f8a5b" },
+    social:  { name:"Social Science", color:"var(--social)",  hex:"#c2620f" }
+  };
+  var SUBJ_KEYS = ["maths","science","social"];
+  var STATUS = ["Not started","Teaching","Done","Revised"];
+  var TEST_WEEKS = 12;
+
+  function ch(name, pri, week, book){ return { name:name, pri:pri, week:week, book:book||"", status:0 }; }
+  function defaults(){
+    return {
+      student:"",
+      chapters:{
+        maths:[
+          ch("5. Arithmetic Progressions","A",1), ch("13. Statistics","A",2), ch("14. Probability","A",3),
+          ch("7. Coordinate Geometry","A",3), ch("3. Pair of Linear Equations","A",4), ch("4. Quadratic Equations","A",5),
+          ch("1. Real Numbers","B",6), ch("2. Polynomials","B",6), ch("8. Introduction to Trigonometry","B",7),
+          ch("11. Areas Related to Circles","B",8), ch("12. Surface Areas and Volumes","B",8),
+          ch("9. Some Applications of Trigonometry","C",9), ch("6. Triangles","C",9), ch("10. Circles","C",10)
+        ],
+        science:[
+          ch("1. Chemical Reactions and Equations","A",1), ch("2. Acids, Bases and Salts","A",2),
+          ch("13. Our Environment","A",3), ch("5. Life Processes","A",4), ch("7. How do Organisms Reproduce?","A",5),
+          ch("3. Metals and Non-metals","B",6), ch("6. Control and Coordination","B",7), ch("11. Electricity","B",8),
+          ch("9. Light: Reflection and Refraction","B",9), ch("4. Carbon and its Compounds","C",10),
+          ch("8. Heredity","C",10), ch("10. Human Eye and Colourful World","C",11), ch("12. Magnetic Effects of Current","C",11)
+        ],
+        social:[
+          ch("Map work (History + Geography)","A",1,"Maps"),
+          ch("Development","A",1,"Economics"), ch("Sectors of the Indian Economy","A",2,"Economics"),
+          ch("Money and Credit","A",3,"Economics"), ch("Power Sharing","A",3,"Political Science"),
+          ch("Federalism","A",4,"Political Science"), ch("Globalisation and the Indian Economy","A",4,"Economics"),
+          ch("Consumer Rights","A",5,"Economics"), ch("Gender, Religion and Caste","A",5,"Political Science"),
+          ch("Political Parties","A",6,"Political Science"), ch("Outcomes of Democracy","A",6,"Political Science"),
+          ch("Resources and Development","B",7,"Geography"), ch("Water Resources","B",7,"Geography"),
+          ch("Agriculture","B",7,"Geography"), ch("Forest and Wildlife Resources","B",8,"Geography"),
+          ch("Minerals and Energy Resources","B",8,"Geography"), ch("Manufacturing Industries","B",8,"Geography"),
+          ch("Lifelines of the National Economy","B",8,"Geography"), ch("Nationalism in India","C",9,"History"),
+          ch("The Rise of Nationalism in Europe","C",10,"History"), ch("The Making of a Global World","C",10,"History"),
+          ch("The Age of Industrialisation","C",11,"History"), ch("Print Culture and the Modern World","C",11,"History")
+        ]
+      },
+      tests: (function(){ var a=[]; for(var i=1;i<=TEST_WEEKS;i++) a.push({week:i, maths:"", science:"", social:"", note:""}); return a; })(),
+      mistakes:[], sessions:[]
+    };
+  }
+
+  var state;
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var s = JSON.parse(raw); if(valid(s)) return s; }
+    }catch(e){}
+    return defaults();
+  }
+  function valid(s){
+    return s && typeof s==="object" && s.chapters && s.tests && Array.isArray(s.tests) &&
+      SUBJ_KEYS.every(function(k){ return Array.isArray(s.chapters[k]); }) &&
+      Array.isArray(s.mistakes||[]) && Array.isArray(s.sessions||[]);
+  }
+  var saveMsg = "";
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(state)); saveMsg = "Saved on this device · " + new Date().toLocaleTimeString(); }
+    catch(e){ saveMsg = "Could not save in this browser. Use Download backup."; }
+    var el = document.getElementById("saveStatus"); if(el) el.textContent = saveMsg;
+  }
+
+  function esc(t){ return String(t==null?"":t).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
+  function today(){ var d=new Date(); d.setHours(0,0,0,0); return d; }
+  function isoToday(){ var d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+  function currentWeek(){ var diff = Math.floor((today()-WEEK1)/86400000); return Math.floor(diff/7)+1; }
+  function weekStart(w){ var d=new Date(WEEK1); d.setDate(d.getDate()+(w-1)*7); return d; }
+  function fmt(d){ return d.toLocaleDateString("en-IN",{day:"numeric",month:"short"}); }
+  function daysTo(d){ return Math.round((d-today())/86400000); }
+  function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+  function subjChip(k){ return '<span class="chip-subj" style="background:'+SUBJ[k].hex+'">'+esc(SUBJ[k].name)+'</span>'; }
+
+  // ---------- NAV ----------
+  document.getElementById("nav").addEventListener("click", function(e){
+    var b = e.target.closest("button"); if(!b) return;
+    document.querySelectorAll("nav button").forEach(function(x){x.classList.toggle("active", x===b);});
+    document.querySelectorAll("main section").forEach(function(s){s.classList.toggle("active", s.id===b.dataset.tab);});
+    renderAll();
+  });
+
+  // ---------- STUDENT ----------
+  var nameEl = document.getElementById("studentName");
+  nameEl.addEventListener("input", function(){ state.student = nameEl.value; save(); });
+
+  // ---------- DASHBOARD ----------
+  function renderDash(){
+    var cd = "";
+    SUBJ_KEYS.forEach(function(k){
+      var n = daysTo(EXAMS[k]);
+      cd += '<div class="card" style="border-top:4px solid '+SUBJ[k].hex+'"><h3>'+SUBJ[k].name+' exam</h3>'+
+            '<div class="big">'+(n>0? n+' days' : n===0? 'Today' : 'Done')+'</div>'+
+            '<div class="muted">'+EXAMS[k].toLocaleDateString("en-IN",{weekday:"short",day:"numeric",month:"short",year:"numeric"})+' · 10:30 am</div></div>';
+    });
+    document.getElementById("countdowns").innerHTML = cd;
+
+    var w = currentWeek();
+    var lbl = w<1 ? "Starts Mon 23 Nov" : w>TEST_WEEKS+1 ? "Final revision" : "Week "+w+" · from "+fmt(weekStart(w));
+    document.getElementById("weekLabel").textContent = lbl;
+    var wk = Math.max(1,w), html = '<div class="grid g3">';
+    SUBJ_KEYS.forEach(function(k){
+      var items = state.chapters[k].filter(function(c){return c.week===wk;});
+      html += '<div><div style="margin-bottom:6px">'+subjChip(k)+'</div>'+
+        (items.length? items.map(function(c){ return '<div>'+(c.status>=2?'✓ ':'○ ')+esc(c.name)+'</div>'; }).join("") : '<div class="muted">Revision / sample papers</div>')+'</div>';
+    });
+    document.getElementById("thisWeek").innerHTML = html+'</div>';
+
+    var pc = "";
+    SUBJ_KEYS.forEach(function(k){
+      var list = state.chapters[k], done = list.filter(function(c){return c.status>=2;}).length;
+      var pct = list.length? Math.round(done*100/list.length) : 0;
+      var last = lastScore(k);
+      pc += '<div class="card"><h3>'+SUBJ[k].name+'</h3><div class="big">'+pct+'%</div>'+
+            '<div class="bar"><span style="width:'+pct+'%;background:'+SUBJ[k].hex+'"></span></div>'+
+            '<div class="muted">'+done+' of '+list.length+' chapters done · Last test: '+(last==null?'—':last+'/25')+'</div></div>';
+    });
+    document.getElementById("progressCards").innerHTML = pc;
+
+    document.getElementById("chartDash").innerHTML = chartSVG();
+
+    var behind = [];
+    SUBJ_KEYS.forEach(function(k){ state.chapters[k].forEach(function(c){ if(c.week<w && c.status<2) behind.push({k:k,c:c}); }); });
+    document.getElementById("behindList").innerHTML = behind.length ?
+      behind.map(function(b){ return '<div class="entry">'+subjChip(b.k)+' '+esc(b.c.name)+' <span class="muted">· planned week '+b.c.week+'</span></div>'; }).join("") :
+      '<div class="muted">On track. Nothing pending from earlier weeks.</div>';
+
+    var open = (state.mistakes||[]).filter(function(m){return !m.fixed;}).slice(-6).reverse();
+    document.getElementById("openMistakes").innerHTML = open.length ?
+      open.map(function(m){ return '<div class="entry">'+subjChip(m.subject)+' <b>'+esc(m.chapter)+'</b><div>'+esc(m.text)+'</div></div>'; }).join("") :
+      '<div class="muted">No open mistakes.</div>';
+  }
+  function lastScore(k){
+    for(var i=state.tests.length-1;i>=0;i--){ var v=state.tests[i][k]; if(v!=="" && v!=null) return Number(v); }
+    return null;
+  }
+
+  // ---------- CHART ----------
+  function chartSVG(){
+    var W=760,H=260,L=40,R=16,T=14,B=34, n=TEST_WEEKS;
+    var x=function(i){ return L + (i-1)*(W-L-R)/(n-1); };
+    var y=function(v){ return T + (25-v)*(H-T-B)/25; };
+    var s = '<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Weekly test marks chart" style="max-height:300px">';
+    [0,5,10,15,20,25].forEach(function(v){
+      s += '<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="#ebe9e3"/>';
+      s += '<text x="'+(L-8)+'" y="'+(y(v)+4)+'" font-size="11" fill="#677084" text-anchor="end">'+v+'</text>';
+    });
+    var pass = 25*0.33;
+    s += '<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(pass)+'" y2="'+y(pass)+'" stroke="#b23a3a" stroke-dasharray="5 4"/>';
+    s += '<text x="'+(W-R)+'" y="'+(y(pass)-5)+'" font-size="11" fill="#b23a3a" text-anchor="end">Pass line 33%</text>';
+    for(var i=1;i<=n;i++) s += '<text x="'+x(i)+'" y="'+(H-12)+'" font-size="11" fill="#677084" text-anchor="middle">W'+i+'</text>';
+    SUBJ_KEYS.forEach(function(k){
+      var pts = state.tests.map(function(t){ return (t[k]===""||t[k]==null)? null : {i:t.week, v:Math.max(0,Math.min(25,Number(t[k])))}; }).filter(Boolean);
+      if(pts.length>1) s += '<polyline fill="none" stroke="'+SUBJ[k].hex+'" stroke-width="2.5" stroke-linejoin="round" points="'+pts.map(function(p){return x(p.i)+','+y(p.v);}).join(" ")+'"/>';
+      pts.forEach(function(p){ s += '<circle cx="'+x(p.i)+'" cy="'+y(p.v)+'" r="4" fill="#fff" stroke="'+SUBJ[k].hex+'" stroke-width="2"><title>'+SUBJ[k].name+' W'+p.i+': '+p.v+'/25</title></circle>'; });
+    });
+    s += '</svg>';
+    s += '<div class="legend">'+SUBJ_KEYS.map(function(k){return '<span><i style="background:'+SUBJ[k].hex+'"></i>'+SUBJ[k].name+'</span>';}).join("")+'</div>';
+    var any = state.tests.some(function(t){ return SUBJ_KEYS.some(function(k){return t[k]!=="" && t[k]!=null;}); });
+    if(!any) s += '<p class="muted">No marks yet. Enter test marks in the Weekly Tests tab.</p>';
+    return s;
+  }
+
+  // ---------- CHAPTERS ----------
+  var chapSubj = "maths";
+  function renderChapters(){
+    document.getElementById("chapSubtabs").innerHTML = SUBJ_KEYS.map(function(k){
+      return '<button data-s="'+k+'" class="'+(k===chapSubj?'active':'')+'">'+SUBJ[k].name+'</button>';
+    }).join("");
+    var w = currentWeek(), list = state.chapters[chapSubj], isSoc = chapSubj==="social";
+    var h = '<thead><tr><th>Chapter</th>'+(isSoc?'<th>Book</th>':'')+'<th>Priority</th><th>Week</th><th>Status</th></tr></thead><tbody>';
+    list.forEach(function(c,i){
+      var late = c.week<w && c.status<2;
+      h += '<tr class="'+(late?'late':'')+'"><td>'+esc(c.name)+(late?' <span class="behind">· behind</span>':'')+'</td>'+
+        (isSoc?'<td class="muted">'+esc(c.book)+'</td>':'')+
+        '<td><span class="pill p'+c.pri+'">'+c.pri+'</span></td>'+
+        '<td><span class="muted">W'+c.week+' · '+fmt(weekStart(c.week))+'</span></td>'+
+        '<td><select data-i="'+i+'" class="st'+c.status+'" style="width:auto">'+
+          STATUS.map(function(s,si){return '<option value="'+si+'"'+(si===c.status?' selected':'')+'>'+s+'</option>';}).join("")+
+        '</select></td></tr>';
+    });
+    document.getElementById("chapTable").innerHTML = h+'</tbody>';
+  }
+  document.getElementById("chapSubtabs").addEventListener("click", function(e){
+    var b=e.target.closest("button"); if(!b) return; chapSubj=b.dataset.s; renderChapters();
+  });
+  document.getElementById("chapTable").addEventListener("change", function(e){
+    var sel=e.target; if(sel.tagName!=="SELECT") return;
+    state.chapters[chapSubj][Number(sel.dataset.i)].status = Number(sel.value); save(); renderChapters();
+  });
+
+  // ---------- TESTS ----------
+  function renderTests(){
+    var h = '<thead><tr><th>Week</th><th>Date</th>'+SUBJ_KEYS.map(function(k){return '<th>'+SUBJ[k].name+' /25</th>';}).join("")+'<th>Weak topics found</th></tr></thead><tbody>';
+    state.tests.forEach(function(t,i){
+      var sat = weekStart(t.week); sat.setDate(sat.getDate()+5);
+      h += '<tr><td><b>W'+t.week+'</b>'+(t.week===1?' <span class="muted">(diagnostic)</span>':'')+'</td><td class="muted">'+fmt(sat)+'</td>'+
+        SUBJ_KEYS.map(function(k){
+          var v=t[k], low = v!=="" && v!=null && Number(v)<9;
+          return '<td><input type="number" min="0" max="25" step="0.5" data-i="'+i+'" data-k="'+k+'" value="'+esc(v)+'"'+(low?' style="border-color:var(--bad);color:var(--bad)"':'')+'></td>';
+        }).join("")+
+        '<td><input type="text" data-i="'+i+'" data-k="note" value="'+esc(t.note)+'" placeholder="e.g. AP word problems"></td></tr>';
+    });
+    document.getElementById("testTable").innerHTML = h+'</tbody>';
+    document.getElementById("chartTests").innerHTML = chartSVG();
+  }
+  document.getElementById("testTable").addEventListener("change", function(e){
+    var inp=e.target; if(inp.tagName!=="INPUT") return;
+    var t = state.tests[Number(inp.dataset.i)], k = inp.dataset.k;
+    if(k==="note"){ t.note = inp.value; }
+    else { var v = inp.value.trim(); if(v!==""){ v = Math.max(0,Math.min(25,Number(v))); if(isNaN(v)) v=""; } t[k]=v; }
+    save(); renderTests();
+  });
+
+  // ---------- MISTAKES ----------
+  function fillSubjSelect(id){
+    document.getElementById(id).innerHTML = SUBJ_KEYS.map(function(k){return '<option value="'+k+'">'+SUBJ[k].name+'</option>';}).join("");
+  }
+  function renderMistakes(){
+    var hide = document.getElementById("mHideFixed").checked;
+    var list = (state.mistakes||[]).slice().reverse().filter(function(m){return !(hide && m.fixed);});
+    document.getElementById("mList").innerHTML = list.length ? list.map(function(m){
+      return '<div class="entry"><div class="meta">'+esc(m.date)+' · '+subjChip(m.subject)+' · '+esc(m.chapter)+'</div>'+
+        '<div class="'+(m.fixed?'fixed':'')+'">'+esc(m.text).replace(/\n/g,"<br>")+'</div>'+
+        '<div class="row noprint" style="margin-top:6px"><button class="btn small ghost" data-act="fix" data-id="'+m.id+'">'+(m.fixed?'Mark open':'Mark fixed')+'</button>'+
+        '<button class="btn small danger" data-act="del" data-id="'+m.id+'">Delete</button></div></div>';
+    }).join("") : '<div class="muted">No mistakes logged yet.</div>';
+  }
+  document.getElementById("mAdd").addEventListener("click", function(){
+    var text = document.getElementById("mText").value.trim(); if(!text) return;
+    state.mistakes.push({ id:uid(), date:document.getElementById("mDate").value||isoToday(), subject:document.getElementById("mSubj").value,
+      chapter:document.getElementById("mChap").value.trim(), text:text, fixed:false });
+    document.getElementById("mText").value=""; document.getElementById("mChap").value="";
+    save(); renderMistakes();
+  });
+  document.getElementById("mHideFixed").addEventListener("change", renderMistakes);
+  document.getElementById("mList").addEventListener("click", function(e){
+    var b=e.target.closest("button"); if(!b) return;
+    var idx = state.mistakes.findIndex(function(m){return m.id===b.dataset.id;}); if(idx<0) return;
+    if(b.dataset.act==="fix") state.mistakes[idx].fixed = !state.mistakes[idx].fixed;
+    else if(b.dataset.act==="del") state.mistakes.splice(idx,1);
+    save(); renderMistakes();
+  });
+
+  // ---------- SESSIONS ----------
+  var RATE = {"3":["Good","var(--ok)"],"2":["Needs practice","var(--warn)"],"1":["Re-teach","var(--bad)"]};
+  function renderSessions(){
+    var list = (state.sessions||[]).slice().sort(function(a,b){return a.date<b.date?1:-1;});
+    document.getElementById("sCount").textContent = list.length? "("+list.length+")" : "";
+    document.getElementById("sList").innerHTML = list.length ? list.map(function(s){
+      var r = RATE[s.rating];
+      return '<div class="entry"><div class="meta">'+esc(s.date)+' · '+subjChip(s.subject)+(r?' · <b style="color:'+r[1]+'">'+r[0]+'</b>':'')+'</div>'+
+        '<div><b>'+esc(s.topic)+'</b></div>'+(s.hw?'<div class="muted">Homework: '+esc(s.hw)+'</div>':'')+
+        (s.notes?'<div>'+esc(s.notes).replace(/\n/g,"<br>")+'</div>':'')+
+        '<div class="row noprint" style="margin-top:6px"><button class="btn small danger" data-id="'+s.id+'">Delete</button></div></div>';
+    }).join("") : '<div class="muted">No sessions logged yet.</div>';
+  }
+  document.getElementById("sAdd").addEventListener("click", function(){
+    var topic = document.getElementById("sTopic").value.trim(); if(!topic) return;
+    state.sessions.push({ id:uid(), date:document.getElementById("sDate").value||isoToday(), subject:document.getElementById("sSubj").value,
+      topic:topic, hw:document.getElementById("sHw").value.trim(), rating:document.getElementById("sRating").value, notes:document.getElementById("sNotes").value.trim() });
+    ["sTopic","sHw","sNotes"].forEach(function(id){document.getElementById(id).value="";}); document.getElementById("sRating").value="";
+    save(); renderSessions();
+  });
+  document.getElementById("sList").addEventListener("click", function(e){
+    var b=e.target.closest("button"); if(!b) return;
+    state.sessions = state.sessions.filter(function(s){return s.id!==b.dataset.id;}); save(); renderSessions();
+  });
+
+  // ---------- BACKUP ----------
+  document.getElementById("exportBtn").addEventListener("click", function(){
+    var blob = new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
+    var a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+    a.download = "class10-tracker-backup-"+isoToday()+".json"; document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  });
+  document.getElementById("importFile").addEventListener("change", function(e){
+    var f = e.target.files[0]; if(!f) return;
+    var rd = new FileReader();
+    rd.onload = function(){
+      try{
+        var s = JSON.parse(rd.result);
+        if(!valid(s)) throw new Error("bad");
+        s.mistakes = s.mistakes||[]; s.sessions = s.sessions||[];
+        state = s; save(); nameEl.value = state.student||""; renderAll();
+        document.getElementById("saveStatus").textContent = "Backup restored.";
+      }catch(err){ document.getElementById("saveStatus").textContent = "That file is not a valid tracker backup."; }
+      e.target.value = "";
+    };
+    rd.readAsText(f);
+  });
+  document.getElementById("resetBtn").addEventListener("click", function(){
+    if(!window.confirm("Delete all tracker data on this device?")) return;
+    state = defaults(); save(); nameEl.value=""; renderAll();
+  });
+
+  // ---------- INIT ----------
+  function renderAll(){ renderDash(); renderChapters(); renderTests(); renderMistakes(); renderSessions(); }
+  state = load();
+  nameEl.value = state.student||"";
+  fillSubjSelect("mSubj"); fillSubjSelect("sSubj");
+  document.getElementById("mDate").value = isoToday(); document.getElementById("sDate").value = isoToday();
+  renderAll();
+})();
+</script>
+</body>
+</html>
