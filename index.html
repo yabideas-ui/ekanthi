@@ -137,7 +137,11 @@ tr.click{cursor:pointer}tr.click:hover td{background:#f7f9fc}
 /* tutor */
 #tutor{min-height:100vh}
 .t-head{background:var(--brand);color:#fff}
-.t-head .in{max-width:1180px;margin:0 auto;padding:14px 20px 0}
+.t-head .in{max-width:1180px;margin:0 auto;padding:14px 20px 0;position:relative;z-index:1}
+.t-head{position:relative;overflow:hidden}
+.t-head .sk-box{width:280px;height:96px;right:auto;left:38%}
+@media(max-width:760px){.t-head .sk-box{left:auto;right:0;opacity:.6}}
+#tClock{color:#cfdced;font-size:13px;margin-top:2px}
 .t-head .logo{font-size:20px;font-weight:800}
 .tabs{display:flex;gap:4px;margin-top:12px;overflow-x:auto}
 .tabs button{border:0;background:transparent;color:#cfdced;font-weight:700;padding:10px 14px;border-radius:10px 10px 0 0;cursor:pointer;white-space:nowrap}
@@ -397,6 +401,17 @@ body.th-diwali .s-head{--fglow:rgba(255,170,50,.45);--fband:linear-gradient(90de
 body.th-tuition .s-head{--fglow:rgba(80,190,230,.35);--fband:linear-gradient(90deg,#4dabf7,#e7f5ff,#4dabf7)}
 body.th-weekend .s-head{--fglow:rgba(242,182,50,.22)}
 .hchip.fest{background:rgba(255,255,255,.95);color:#1b2a3d;border:0;font-weight:600}
+/* festival chip as a waving flag (Oman / India National Days) */
+.flagchip{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:7px;padding-bottom:7px!important}
+.flagchip:after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:var(--fcb);background-size:200% 100%;animation:fcFlow 3s linear infinite}
+.flagchip:before{content:"";position:absolute;top:0;bottom:0;left:-40%;width:35%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.4),transparent);animation:fcShine 3.2s ease-in-out infinite;pointer-events:none}
+@keyframes fcFlow{to{background-position:200% 0}}
+@keyframes fcShine{to{left:120%}}
+.mflag{display:inline-block;width:24px;height:15px;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,.3);transform-origin:left center;animation:skWave 2.4s ease-in-out infinite;flex:none}
+.fc-oman{--fcb:linear-gradient(90deg,#db161b 0 16%,#fff 16% 50%,#db161b 50% 66%,#008000 66% 100%)}
+.fc-oman .mflag{background:linear-gradient(90deg,#db161b 0 28%,transparent 28%),linear-gradient(#fff 0 33.3%,#db161b 33.3% 66.6%,#008000 66.6%)}
+.fc-india{--fcb:linear-gradient(90deg,#ff9933 0 33%,#fff 33% 66%,#138808 66% 100%)}
+.fc-india .mflag{background:radial-gradient(circle at 50% 50%,#000080 0 2.2px,transparent 2.6px),linear-gradient(#ff9933 0 33.3%,#fff 33.3% 66.6%,#138808 66.6%)}
 .card.holi{display:flex;gap:12px;align-items:center;background:linear-gradient(135deg,#fff8e1,#fff);border:1px solid #f3dc9b}
 .card.holi.tuition{background:linear-gradient(135deg,#e6f6fd,#fff);border-color:#b6e0f3}
 .s-head{position:relative;overflow:hidden}
@@ -429,14 +444,21 @@ body.th-weekend .s-head{--fglow:rgba(242,182,50,.22)}
 .smenu button:hover{background:#f4f6fa}
 .s-head>*:not(.sk-box){position:relative;z-index:1}
 .sk-box{position:absolute;right:0;top:0;width:200px;height:110px;pointer-events:none;z-index:0;opacity:.9}
+.s-head .sk-box{height:100%}
 .sk b,.sk i{display:block;position:absolute}
 .sk-star{width:3px;height:3px;border-radius:50%;background:#fff;box-shadow:0 0 6px #fff;animation:skTw 3.2s ease-in-out infinite}
 @keyframes skTw{0%,100%{opacity:.25;transform:scale(.7)}50%{opacity:1;transform:scale(1.25)}}
+.sk-moon2{position:absolute;right:24px;top:12px;filter:drop-shadow(0 0 10px rgba(255,244,199,.55));animation:skFloat 6s ease-in-out infinite}
 .sk-moon{position:absolute;right:26px;top:14px;width:34px;height:34px;border-radius:50%;box-shadow:-9px 5px 0 0 #fff4c7;transform:rotate(-20deg);filter:drop-shadow(0 0 8px rgba(255,244,199,.6));animation:skFloat 6s ease-in-out infinite}
 @keyframes skFloat{0%,100%{translate:0 0}50%{translate:0 -3px}}
 .sk-sun{position:absolute;right:22px;top:12px;width:40px;height:40px;border-radius:50%;background:radial-gradient(circle,#fff7c2,#ffd84d 55%,#ffb703);box-shadow:0 0 26px rgba(255,210,80,.7)}
 .sk-sun i{inset:-14px;border-radius:50%;background:repeating-conic-gradient(rgba(255,220,120,.45) 0 6deg,transparent 6deg 30deg);-webkit-mask:radial-gradient(circle,transparent 46%,#000 47%,#000 70%,transparent 71%);mask:radial-gradient(circle,transparent 46%,#000 47%,#000 70%,transparent 71%);animation:skSpin 24s linear infinite}
 .sk-sun.rise{top:34px;animation:skRise 3s ease-out forwards}
+.sk-sun.dim{opacity:.45;filter:blur(.6px)}
+/* time-of-day sky (festival days keep their own look) */
+.s-head[data-tod="morning"]{background:radial-gradient(420px 200px at 92% 10%,rgba(255,196,120,.45),transparent 62%),linear-gradient(160deg,#173f6c 0%,#2a6297 60%,#7f8fb0 100%)}
+.s-head[data-tod="day"]{background:radial-gradient(460px 210px at 92% 0%,rgba(255,230,140,.35),transparent 62%),linear-gradient(160deg,#14457a 0%,#2b74b4 100%)}
+.s-head[data-tod="evening"]{background:radial-gradient(440px 210px at 92% 30%,rgba(255,140,80,.45),transparent 62%),linear-gradient(160deg,#1b2b57 0%,#3a3f78 65%,#7a4a63 100%)}
 @keyframes skRise{from{top:70px;opacity:.3}to{top:18px;opacity:1}}
 .sk-sun.set{top:46px;width:54px;height:54px;background:radial-gradient(circle,#ffe0a3,#ff9f43 55%,#ff6b35);box-shadow:0 0 40px rgba(255,120,60,.6)}
 @keyframes skSpin{to{transform:rotate(360deg)}}
@@ -444,6 +466,27 @@ body.th-weekend .s-head{--fglow:rgba(242,182,50,.22)}
 .sk-cloud:before,.sk-cloud:after{content:"";position:absolute;background:inherit;border-radius:50%}
 .sk-cloud:before{width:26px;height:26px;left:8px;top:-12px}.sk-cloud:after{width:20px;height:20px;left:26px;top:-8px}
 .sk-cloud.c1{right:12px;top:40px}.sk-cloud.c2{right:84px;top:22px;transform:scale(.75);opacity:.75;animation-duration:18s}
+.sk-cloud.c3{right:150px;top:52px;transform:scale(.6);opacity:.6;animation-duration:22s}
+.sk-cloud.lite{opacity:.8;transform:scale(.8)}
+.sk-cloud.dark{background:rgba(160,174,192,.9)}
+.sk-rain.thin{width:1px;height:8px;opacity:.7;animation-duration:1.6s}
+.sk-fog{position:absolute;right:-40px;height:16px;width:300px;border-radius:20px;background:linear-gradient(90deg,transparent,rgba(235,240,248,.55),transparent);filter:blur(5px);animation:skFog 12s ease-in-out infinite alternate}
+.sk-fog.f1{top:30px}.sk-fog.f2{top:56px;animation-duration:16s;opacity:.8}.sk-fog.f3{top:80px;animation-duration:20s;opacity:.6}
+@keyframes skFog{from{translate:0 0}to{translate:-70px 0}}
+.sk-flock{position:absolute;width:90px;height:40px;animation-timing-function:linear;animation-iteration-count:infinite;opacity:0}
+.sk-flock.l{right:-90px;animation-name:skFlL}.sk-flock.r{right:-90px;animation-name:skFlR}
+@keyframes skFlL{0%{translate:0 0;opacity:0}6%{opacity:.9}50%{translate:-300px 10px}94%{opacity:.9}100%{translate:-640px -4px;opacity:0}}
+@keyframes skFlR{0%{translate:-640px 6px;opacity:0}6%{opacity:.85}50%{translate:-320px -6px}94%{opacity:.85}100%{translate:0 4px;opacity:0}}
+.sk-flock.r .sk-b svg{transform:scaleX(-1)}
+.sk-b{position:absolute;display:block;animation:skBob 2.4s ease-in-out infinite alternate}
+.sk-b svg{display:block;animation:skFlap .42s ease-in-out infinite alternate;transform-origin:50% 60%}
+.sk-flock.r .sk-b svg{animation-name:skFlapR}
+@keyframes skFlapR{from{transform:scaleX(-1) scaleY(1)}to{transform:scaleX(-1) scaleY(.35)}}
+@keyframes skBob{from{translate:0 0}to{translate:0 3px}}
+.sk-bird{position:absolute;right:-30px;animation:skBird 16s linear infinite}
+.sk-bird svg{display:block;animation:skFlap .5s ease-in-out infinite alternate;transform-origin:50% 60%}
+@keyframes skBird{0%{translate:0 0;opacity:0}5%{opacity:.85}50%{translate:-260px 8px}95%{opacity:.85}100%{translate:-560px -6px;opacity:0}}
+@keyframes skFlap{from{transform:scaleY(1)}to{transform:scaleY(.35)}}
 @keyframes skDrift{from{translate:0 0}to{translate:-22px 0}}
 .sk-rain{top:-10px;width:1.6px;height:12px;background:linear-gradient(transparent,#cfe8ff);animation:skRain 1.1s linear infinite}
 @keyframes skRain{from{transform:translateY(0)}to{transform:translateY(120px)}}
@@ -468,8 +511,8 @@ body.th-weekend .s-head{--fglow:rgba(242,182,50,.22)}
 .sk-fw{position:absolute;width:2px;height:2px;animation:skFw 2.8s ease-out infinite;opacity:0}
 .sk-fw i{left:0;top:0;width:2px;height:16px;background:linear-gradient(#ffd84d,transparent);transform-origin:top center}
 @keyframes skFw{0%{transform:scale(.1);opacity:1}60%{opacity:1}100%{transform:scale(1.3);opacity:0}}
-.sk-pole{position:absolute;right:104px;top:10px;width:3px;height:86px;border-radius:2px;background:linear-gradient(#f5f5f5,#9aa5b1)}
-.sk-flag{position:absolute;right:16px;top:12px;width:88px;height:56px;border-radius:2px;box-shadow:0 4px 12px rgba(0,0,0,.25);transform-origin:left center;animation:skWave 2.6s ease-in-out infinite}
+.sk-pole{position:absolute;right:58px;bottom:14px;width:2px;height:44px;border-radius:2px;background:linear-gradient(#f5f5f5,#9aa5b1)}
+.sk-flag{position:absolute;right:16px;bottom:32px;width:42px;height:26px;border-radius:2px;box-shadow:0 4px 12px rgba(0,0,0,.25);transform-origin:left center;animation:skWave 2.6s ease-in-out infinite}
 @keyframes skWave{0%,100%{transform:perspective(200px) rotateY(0) skewY(0)}25%{transform:perspective(200px) rotateY(-14deg) skewY(2deg)}50%{transform:perspective(200px) rotateY(0) skewY(-1deg)}75%{transform:perspective(200px) rotateY(10deg) skewY(1.5deg)}}
 @media (prefers-reduced-motion:reduce){.sk-box *{animation:none!important}}
 @media (max-width:380px){.sk-box{width:160px;opacity:.75}}
@@ -780,7 +823,7 @@ body.on-break #brkBtn,body.on-break #askBtn{display:none!important}
 <!-- ================= TUTOR ================= -->
 <section id="tutor" class="hidden">
   <div class="t-head"><div class="in">
-    <div class="row between"><div><div class="logo">Ekanthi · Tutor</div><div class="muted" style="color:#cfdced" id="tToday"></div></div><div class="row" style="gap:8px;flex-wrap:nowrap"><button id="tAI" class="bell hidden" title="Ekanthi Agent status — tap to test" style="font-size:12px;width:auto;padding:0 10px;white-space:nowrap">🤖 …</button><button id="tBell" class="bell" title="Student submissions">🔔<span id="tBellN" class="hidden"></span></button><button class="btn ghost sm" style="color:#fff;border-color:rgba(255,255,255,.4)" id="tLogout">Log out</button></div></div>
+    <div class="row between"><div><div class="logo">Ekanthi · Tutor</div><div class="muted" style="color:#cfdced" id="tToday"></div><div id="tClock"></div></div><div class="row" style="gap:8px;flex-wrap:nowrap"><button id="tAI" class="bell hidden" title="Ekanthi Agent status — tap to test" style="font-size:12px;width:auto;padding:0 10px;white-space:nowrap">🤖 …</button><button id="tBell" class="bell" title="Student submissions">🔔<span id="tBellN" class="hidden"></span></button><button class="btn ghost sm" style="color:#fff;border-color:rgba(255,255,255,.4)" id="tLogout">Log out</button></div></div>
     <div class="trk hidden" id="tTrack"></div>
     <div class="tabs" id="tTabs"><button data-t="students" class="on">Students</button><button data-t="live">📡 Live</button><button data-t="messages">💬 Messages</button><button data-t="revision">🔁 Revision</button><button data-t="teach">🎓 Take class</button><button data-t="homework">Homework</button><button data-t="board">🏁 Board exams</button><button data-t="tutors" class="owner-only">👥 Tutors</button><button data-t="plans">Exam plans</button><button data-t="study">Study materials</button><button data-t="classes">Classes</button></div>
   </div></div>
@@ -794,7 +837,7 @@ if(window.top!==window.self){ document.documentElement.style.display="none"; try
 "use strict";
 // ===================== SETTINGS =====================
 var API_URL = "https://ekanthi-tutor.yabideas.workers.dev";
-var APP_VERSION = 80; // bump on every release: open apps notice and refresh themselves
+var APP_VERSION = 85; // bump on every release: open apps notice and refresh themselves
 var WHATSAPP_NUMBER = "96893376228";   // Ma'am (students / parents chat)
 function SUPPORT_WA(){ var b=(REGI&&REGI.biz)||(SHOP&&SHOP.d&&SHOP.d.biz)||{}; return String(b.wa||"").replace(/\D/g,"")||WHATSAPP_NUMBER; }   // public support line (admin 🛒 → 🏢 Business)
 var SITE_URL = /(^|\.)ekanthi\.(in|com)$|cyberkalari\.com$/.test(location.hostname) ? location.origin : "https://www.ekanthi.in";   // works on the old and the new domain
@@ -1254,7 +1297,7 @@ function dayInfo(){ var r=myRegion(), now=new Date(), t=ymd(now), list=holList(r
 var THEMES=["xmas","newyear","eid","oman","harvest","india","holi","easter","vishu","onam","diwali","tuition","weekend"];
 function themeApply(di){ THEMES.forEach(function(k){ document.body.classList.remove("th-"+k); }); if(di && di.theme && role==="student" && holSet().themes) document.body.classList.add("th-"+di.theme); }
 function dayChips(di){ var c=[], hs=holSet(); if(!hs.greet) return c;
-  if(di.fest) c.push('<span class="hchip fest">'+di.fest.icon+' <b>'+esc(di.fest.greet)+'</b>'+(di.fest.tentative?' <span style="opacity:.75">*</span>':'')+'</span>');
+  if(di.fest){ var ft=di.fest.theme, fl= ft==="oman"||ft==="india"; c.push('<span class="hchip fest'+(fl?' flagchip fc-'+ft:'')+'">'+(fl?'<i class="mflag"></i>':di.fest.icon+' ')+'<b>'+esc(di.fest.greet)+'</b>'+(di.fest.tentative?' <span style="opacity:.75">*</span>':'')+'</span>'); }
   if(di.special && !di.fest) c.push('<span class="hchip fest">'+di.special.icon+' <b>'+esc(di.special.name)+'</b></span>');
   if(di.tuition) c.push('<span class="hchip fest">📚 <b>'+tr("ഇന്ന് ക്ലാസ് ഇല്ല — പഠനം തുടരാം","आज क्लास नहीं — पढ़ाई जारी","No class today — study on")+'</b></span>');
   else if(di.weekend && !di.fest) c.push('<span class="hchip">🌴 '+tr("വാരാന്ത്യം","वीकेंड","Weekend")+'</span>');
@@ -1268,34 +1311,51 @@ function holidayCard(di){ if(holSet().greet && !di.tuition && !di.fest && di.spe
   return '<div class="card holi"><div style="font-size:34px">'+di.fest.icon+'</div><div><b>'+esc(di.fest.greet)+'!</b><div class="small">'+tr("ആഘോഷത്തിനിടയിലും ഒരു ചെറിയ പഠനം — streak പോകാതെ നോക്കൂ. 🎉","त्योहार के साथ थोड़ी पढ़ाई — streak मत तोड़ो। 🎉","Celebrate — and fit in a little study so your streak stays alive. 🎉")+(di.fest.tentative? ' <span class="muted">* '+tr("ഔദ്യോഗിക പ്രഖ്യാപനം അനുസരിച്ച് തീയതി മാറാം","आधिकारिक घोषणा के अनुसार तारीख बदल सकती है","date may change as officially announced")+'</span>':'')+'</div>'+todo+'</div></div>'; }
 // ----- ✨ header corner: sky by time + weather; festival decoration (flag / diyas / crescent / snow / petals …) -----
 function skyScene(){ var di=dayInfo(), hs=holSet(), f=di.fest, h=new Date().getHours(), code=(WX.w&&WX.w.code)||0;
-  if(f && hs.themes!==false){ var th=f.theme; if(th==="oman"||th==="india"||th==="diwali"||th==="eid"||th==="xmas"||th==="onam"||th==="vishu"||th==="harvest"||th==="holi"||th==="newyear") return {k:th, n:f.name}; }
-  var wx= code>=95? "storm" : (code>=51&&code<=67)||(code>=80&&code<=82)? "rain" : code>=71&&code<=77? "snow" : code===2||code===3||code===45||code===48? "cloud" : "";
+  var fest=null; if(f && hs.themes!==false){ var th=f.theme; if(th==="oman"||th==="india"||th==="diwali"||th==="eid"||th==="xmas"||th==="onam"||th==="vishu"||th==="harvest"||th==="holi"||th==="newyear") fest=th; }
+  var wx= code>=95? "storm" : (code>=61&&code<=67)||(code>=80&&code<=82)? "rain" : code>=51&&code<=57? "drizzle" : code>=71&&code<=77? "snow" : code===45||code===48? "fog" : code===3? "cloud" : code===1||code===2? "few" : "";
   var t= h>=19||h<5? "night" : h<9? "morning" : h<16? "day" : "evening";
-  return {k:t, wx:wx}; }
+  return {k:t, wx:wx, fest:fest}; }
+// 🌙 real moon: phase from the date (synodic month 29.53 d, new moon 6 Jan 2000 18:14 UTC); shown only while it is up at night
+function moonNow(){ var d=new Date(), p=(((d.getTime()-Date.UTC(2000,0,6,18,14))/86400000/29.530588853)%1+1)%1, k=(1-Math.cos(2*Math.PI*p))/2;
+  var h=d.getHours()+d.getMinutes()/60, tr0=(12+p*24)%24, diff=Math.abs(h-tr0); diff=Math.min(diff,24-diff);   // moon is highest ~ p×24 h after noon, visible ±6 h
+  return {p:p, k:k, up: k>0.03 && diff<6.3}; }
+function moonSvg(m){ var r=17, c=20, rx=(r*Math.abs(Math.cos(2*Math.PI*m.p))).toFixed(2), wax=m.p<0.5, cres=m.k<0.5;
+  var a1= wax? 1:0, a2= wax? (cres?0:1) : (cres?1:0);
+  var lit= m.k>0.985? '<circle cx="'+c+'" cy="'+c+'" r="'+r+'" fill="url(#mg)"/>' : '<path d="M'+c+' '+(c-r)+' A'+r+' '+r+' 0 0 '+a1+' '+c+' '+(c+r)+' A'+rx+' '+r+' 0 0 '+a2+' '+c+' '+(c-r)+'Z" fill="url(#mg)"/>';
+  return '<svg class="sk-moon2" viewBox="0 0 40 40" width="40" height="40"><defs><radialGradient id="mg" cx="45%" cy="40%" r="65%"><stop offset="0" stop-color="#fffbe6"/><stop offset="1" stop-color="#f3dc8c"/></radialGradient></defs><circle cx="'+c+'" cy="'+c+'" r="'+r+'" fill="rgba(255,255,255,.07)"/>'+lit+'</svg>'; }
 function skyFlag(kind){ var stripes= kind==="oman"? '<rect width="90" height="60" fill="#fff"/><rect y="20" width="90" height="20" fill="#db161b"/><rect y="40" width="90" height="20" fill="#008000"/><rect width="26" height="60" fill="#db161b"/><g fill="#fff" opacity=".95"><path d="M6 6l14 14M20 6L6 20" stroke="#fff" stroke-width="2.4"/><circle cx="13" cy="9" r="3"/></g>'
   : '<rect width="90" height="20" fill="#ff9933"/><rect y="20" width="90" height="20" fill="#fff"/><rect y="40" width="90" height="20" fill="#138808"/><circle cx="45" cy="30" r="7.5" fill="none" stroke="#000080" stroke-width="1.6"/><circle cx="45" cy="30" r="1.6" fill="#000080"/>'+Array.from({length:12},function(_,i){ var a=i*Math.PI/6; return '<line x1="45" y1="30" x2="'+(45+7*Math.cos(a)).toFixed(1)+'" y2="'+(30+7*Math.sin(a)).toFixed(1)+'" stroke="#000080" stroke-width=".7"/>'; }).join("");
   return '<div class="sk-pole"></div><svg class="sk-flag" viewBox="0 0 90 60" preserveAspectRatio="none">'+stripes+'</svg>'; }
 function skyHtml(sc){ var k=sc.k, h='', R=function(n,seed,fn){ var o=''; for(var i=0;i<n;i++){ var r=((Math.sin((i+1)*seed)*10000)%1+1)%1, r2=((Math.sin((i+3)*seed*1.7)*10000)%1+1)%1; o+=fn(i,r,r2); } return o; };
-  if(k==="oman"||k==="india") return skyFlag(k);
-  if(k==="diwali") return R(3,7.1,function(i){ return '<div class="sk-diya" style="right:'+(14+i*34)+'px;animation-delay:'+(i*.4)+'s"><i></i></div>'; })+R(10,3.3,function(i,r,r2){ return '<b class="sk-spark" style="right:'+(r*130)+'px;top:'+(r2*60)+'px;animation-delay:'+(r*3).toFixed(2)+'s"></b>'; });
-  if(k==="eid") return '<div class="sk-crescent"></div><b class="sk-estar"></b>'+R(3,5.5,function(i){ return '<div class="sk-lantern" style="right:'+(70+i*26)+'px;animation-delay:'+(i*.5)+'s;height:'+(20+i*9)+'px"><i></i></div>'; });
-  if(k==="xmas") return R(16,2.9,function(i,r,r2){ return '<b class="sk-snow" style="right:'+(r*150)+'px;animation-delay:'+(r2*6).toFixed(2)+'s;animation-duration:'+(4+r*4).toFixed(1)+'s;width:'+(3+r2*3).toFixed(1)+'px;height:'+(3+r2*3).toFixed(1)+'px"></b>'; })+'<div class="sk-star5">⭐</div>';
-  if(k==="onam"||k==="vishu"||k==="harvest") return R(12,4.7,function(i,r,r2){ var c=["#ffd23f","#ff9f1c","#ffffff","#ff5d73"][i%4]; return '<b class="sk-petal" style="right:'+(r*150)+'px;background:'+c+';animation-delay:'+(r2*6).toFixed(2)+'s;animation-duration:'+(5+r*4).toFixed(1)+'s"></b>'; });
-  if(k==="holi") return R(6,6.1,function(i,r,r2){ var c=["#ff4d9d","#7c4dff","#00c2ff","#ffd000","#22c55e","#ff7a00"][i]; return '<b class="sk-burst" style="right:'+(10+r*120)+'px;top:'+(r2*60)+'px;background:'+c+';animation-delay:'+(i*.5)+'s"></b>'; });
-  if(k==="newyear") return R(4,8.3,function(i,r,r2){ return '<div class="sk-fw" style="right:'+(14+r*120)+'px;top:'+(6+r2*50)+'px;animation-delay:'+(i*.7)+'s">'+Array.from({length:8},function(_,j){ return '<i style="transform:rotate('+(j*45)+'deg)"></i>'; }).join("")+'</div>'; });
-  if(k==="night") h='<div class="sk-moon"></div>'+R(14,1.3,function(i,r,r2){ return '<b class="sk-star" style="right:'+(r*170)+'px;top:'+(r2*80)+'px;animation-delay:'+(r*4).toFixed(2)+'s"></b>'; });
-  else if(k==="morning") h='<div class="sk-sun rise"><i></i></div>';
-  else if(k==="day") h='<div class="sk-sun"><i></i></div>';
-  else h='<div class="sk-sun set"><i></i></div>';
-  if(sc.wx==="cloud"||sc.wx==="rain"||sc.wx==="storm") h+='<div class="sk-cloud c1"></div><div class="sk-cloud c2"></div>';
-  if(sc.wx==="rain"||sc.wx==="storm") h+=R(14,2.2,function(i,r,r2){ return '<b class="sk-rain" style="right:'+(r*150)+'px;animation-delay:'+(r2*1.2).toFixed(2)+'s"></b>'; });
+  var F=sc.fest, fx='';
+  // Oman / India flags now wave inside the festival chip (saves space; the real sky stays clear)
+  if(F==="diwali") fx=R(3,7.1,function(i){ return '<div class="sk-diya" style="right:'+(14+i*34)+'px;animation-delay:'+(i*.4)+'s"><i></i></div>'; })+R(10,3.3,function(i,r,r2){ return '<b class="sk-spark" style="right:'+(r*130)+'px;top:'+(r2*60)+'px;animation-delay:'+(r*3).toFixed(2)+'s"></b>'; });
+  if(F==="eid") fx=R(3,5.5,function(i){ return '<div class="sk-lantern" style="right:'+(70+i*26)+'px;animation-delay:'+(i*.5)+'s;height:'+(20+i*9)+'px"><i></i></div>'; });
+  if(F==="xmas") fx=R(16,2.9,function(i,r,r2){ return '<b class="sk-snow" style="right:'+(r*150)+'px;animation-delay:'+(r2*6).toFixed(2)+'s;animation-duration:'+(4+r*4).toFixed(1)+'s;width:'+(3+r2*3).toFixed(1)+'px;height:'+(3+r2*3).toFixed(1)+'px"></b>'; })+'<div class="sk-star5">⭐</div>';
+  if(F==="onam"||F==="vishu"||F==="harvest") fx=R(12,4.7,function(i,r,r2){ var c=["#ffd23f","#ff9f1c","#ffffff","#ff5d73"][i%4]; return '<b class="sk-petal" style="right:'+(r*150)+'px;background:'+c+';animation-delay:'+(r2*6).toFixed(2)+'s;animation-duration:'+(5+r*4).toFixed(1)+'s"></b>'; });
+  if(F==="holi") fx=R(6,6.1,function(i,r,r2){ var c=["#ff4d9d","#7c4dff","#00c2ff","#ffd000","#22c55e","#ff7a00"][i]; return '<b class="sk-burst" style="right:'+(10+r*120)+'px;top:'+(r2*60)+'px;background:'+c+';animation-delay:'+(i*.5)+'s"></b>'; });
+  if(F==="newyear") fx=R(4,8.3,function(i,r,r2){ return '<div class="sk-fw" style="right:'+(14+r*120)+'px;top:'+(6+r2*50)+'px;animation-delay:'+(i*.7)+'s">'+Array.from({length:8},function(_,j){ return '<i style="transform:rotate('+(j*45)+'deg)"></i>'; }).join("")+'</div>'; });
+  if(k==="night"){ var mn=moonNow(); h=(mn.up? moonSvg(mn) : '')+R(mn.up?14:22,1.3,function(i,r,r2){ return '<b class="sk-star" style="right:'+(r*170)+'px;top:'+(r2*80)+'px;animation-delay:'+(r*4).toFixed(2)+'s"></b>'; }); }
+  else if(k==="morning") h='<div class="sk-sun rise'+(sc.wx&&sc.wx!=="few"?' dim':'')+'"><i></i></div>';
+  else if(k==="day") h='<div class="sk-sun'+(sc.wx&&sc.wx!=="few"?' dim':'')+'"><i></i></div>';
+  else h='<div class="sk-sun set'+(sc.wx&&sc.wx!=="few"?' dim':'')+'"><i></i></div>';
+  var dayish=k==="morning"||k==="day"||k==="evening", wet=sc.wx==="rain"||sc.wx==="storm"||sc.wx==="drizzle";
+  if(sc.wx==="few") h+='<div class="sk-cloud c1 lite"></div>';
+  if(sc.wx==="cloud"||wet) h+='<div class="sk-cloud c1'+(k==="night"||wet?' dark':'')+'"></div><div class="sk-cloud c2'+(k==="night"||wet?' dark':'')+'"></div><div class="sk-cloud c3'+(k==="night"||wet?' dark':'')+'"></div>';
+  if(sc.wx==="rain"||sc.wx==="storm") h+=R(18,2.2,function(i,r,r2){ return '<b class="sk-rain" style="right:'+(r*190)+'px;animation-delay:'+(r2*1.2).toFixed(2)+'s"></b>'; });
+  if(sc.wx==="drizzle") h+=R(10,3.1,function(i,r,r2){ return '<b class="sk-rain thin" style="right:'+(r*190)+'px;animation-delay:'+(r2*1.6).toFixed(2)+'s"></b>'; });
+  if(sc.wx==="fog") h+='<div class="sk-fog f1"></div><div class="sk-fog f2"></div><div class="sk-fog f3"></div>';
+  // 🐦 flocks: a V of birds flying one way, a smaller group the other way, each bird flapping on its own beat
+  var bird=function(x,y,d,sz){ return '<i class="sk-b" style="left:'+x+'px;top:'+y+'px;animation-delay:'+d+'s"><svg width="'+sz+'" height="'+(sz*0.45).toFixed(1)+'" viewBox="0 0 22 10"><path d="M1 6 Q6 0 11 6 Q16 0 21 6" fill="none" stroke="rgba(255,255,255,.92)" stroke-width="1.9" stroke-linecap="round"/></svg></i>'; };
+  var flock=function(dir,top,delay,dur,n,sz){ var o=''; for(var j=0;j<n;j++){ var row=Math.ceil(j/2), side=j%2? -1:1; o+=bird(row*13*(dir==="l"?1:-1)+ (dir==="l"?0:60), 12+(j===0?0:side*row*6), (j*0.13).toFixed(2), sz-(row*1.2)); } return '<div class="sk-flock '+dir+'" style="top:'+top+'px;animation-delay:'+delay+'s;animation-duration:'+dur+'s">'+o+'</div>'; };
+  if(dayish && (sc.wx===""||sc.wx==="few")) h+= flock("l",8,0,17,5,20) + flock("r",44,6,21,3,16) + (k!=="evening"? flock("l",26,12,24,2,14) : '');
   if(sc.wx==="storm") h+='<div class="sk-flash"></div>';
   if(sc.wx==="snow") h+=R(12,2.9,function(i,r,r2){ return '<b class="sk-snow" style="right:'+(r*150)+'px;animation-delay:'+(r2*6).toFixed(2)+'s"></b>'; });
-  return h; }
+  return h+fx; }
 function skyRender(hd){ if(!hd){ if(role!=="student") return; hd=document.querySelector("#student .s-head"); } if(!hd) return; var hs=holSet(); var el=hd.querySelector(".sk-box");
   if(hs.sky===false){ if(el) el.remove(); return; }
   if(!el){ el=document.createElement("div"); el.className="sk-box"; if(hd.closest("#student")) el.id="sSky"; el.setAttribute("aria-hidden","true"); hd.insertBefore(el, hd.firstChild); }
-  var sc=skyScene(), key=sc.k+"|"+(sc.wx||""); if(el.dataset.k===key) return; el.dataset.k=key; el.className="sk-box sk sk-"+sc.k; el.innerHTML=skyHtml(sc); }
+  var sc=skyScene(); if(hd.classList.contains("s-head")) hd.dataset.tod=sc.k; var mk=sc.k==="night"? moonNow() : null, key=sc.k+"|"+(sc.wx||"")+"|"+(sc.fest||"")+(mk? "|"+(mk.up?Math.round(mk.k*20):"x") : ""); if(el.dataset.k===key) return; el.dataset.k=key; el.className="sk-box sk sk-"+sc.k+(sc.fest?" sk-"+sc.fest:""); el.innerHTML=skyHtml(sc); }
 // ----- 🌟 special days (not holidays): education & awareness days, every year. r: in / om / all -----
 var SPECIAL=[["01-12","in","National Youth Day","🧑","Swami Vivekananda's birthday — set one big goal today."],["01-24","all","International Day of Education","🎓","Education day — learn one new thing today!"],
   ["02-21","all","Mother Language Day","🗣️","Read a page in your mother tongue today."],["02-24","om","Omani Teachers' Day","👩‍🏫","Say thank you to a teacher today."],["02-28","in","National Science Day","🔬","C.V. Raman's discovery day — try one science question!"],
@@ -4548,7 +4608,14 @@ function trackBar(m){ var b=$("tTrack"); if(!b) return; if(!m.owner || !m.tracks
     if(k==="all") lsDel("ek_track"); else lsSet("ek_track", k);
     if(t && !t.classes){ toast("No "+t.l+" course yet — add one: Classes → New class (board is set for you)"); }
     location.reload(); }; }); }
-function startTutor(){ appCall("secure", false); setTimeout(appRegister, 1500); LANG="en"; document.body.classList.toggle("staff", !isOwner()); var cl=document.querySelector('#tTabs [data-t="classes"]'); if(cl) cl.classList.add("owner-only");
+// tutor header: greeting, date, time, weather and the same animated sky (stars, real moon, sun, rain…)
+var TWX=null;
+function tHead(){ var hd=document.querySelector("#tutor .t-head"), c=$("tClock"); if(!hd||!c||role!=="tutor") return; var now=new Date(), h=now.getHours();
+  var g= h<5? "Good night" : h<12? "Good morning" : h<17? "Good afternoon" : h<21? "Good evening" : "Good night";
+  var w=WX.w, wi=w&&w.temp!==undefined&&w.temp!==null? (WXI[w.code]||["🌡️","🌡️",""]) : null;
+  c.textContent=g+" · "+now.toLocaleDateString("en-IN",{weekday:"short",day:"numeric",month:"short"})+" · "+now.toLocaleTimeString("en-IN",{hour:"numeric",minute:"2-digit"})+(wi? " · "+(w.day===false?wi[1]:wi[0])+" "+w.temp+"°"+(w.city?" "+w.city:"") : "");
+  var td=$("tToday"); if(td) td.style.display="none"; try{ skyRender(hd); }catch(e){} }
+function startTutor(){ setTimeout(function(){ tHead(); if(!WX.at || Date.now()-WX.at>20*60000){ WX.at=Date.now(); api("/api/admin/weather").then(function(w){ WX.w=w&&w.ok?w:null; tHead(); }).catch(function(){}); } }, 300); clearInterval(TWX); TWX=setInterval(tHead, 30000); appCall("secure", false); setTimeout(appRegister, 1500); LANG="en"; document.body.classList.toggle("staff", !isOwner()); var cl=document.querySelector('#tTabs [data-t="classes"]'); if(cl) cl.classList.add("owner-only");
   api("/api/admin/me").then(function(m){ TDYK=m.dyk||null; setTimeout(function(){ dykShow(); }, 1500); lsSet("ek_owner", m.owner?"1":"0"); lsSet("ek_tname", m.name); document.body.classList.toggle("staff", !m.owner); var TABP={teach:"teach",homework:"homework",homework2:"revision",board:"board",plans:"plans",materials:"study",messages:"messages",live:"live"};
     Object.keys(TABP).forEach(function(k){ var tb=document.querySelector('#tTabs [data-t="'+TABP[k]+'"]'); var pk=k.replace(/2$/,""); if(tb) tb.style.display= (m.perms && m.perms[pk]===false)? "none" : ""; });
     if(m.perms && T.view && Object.keys(TABP).some(function(k){ return TABP[k]===T.view && m.perms[k]===false; })) tGo("students");
