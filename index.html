@@ -402,11 +402,7 @@ body.th-tuition .s-head{--fglow:rgba(80,190,230,.35);--fband:linear-gradient(90d
 body.th-weekend .s-head{--fglow:rgba(242,182,50,.22)}
 .hchip.fest{background:rgba(255,255,255,.95);color:#1b2a3d;border:0;font-weight:600}
 /* festival chip as a waving flag (Oman / India National Days) */
-.flagchip{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:7px;padding-bottom:7px!important}
-.flagchip:after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:var(--fcb);background-size:200% 100%;animation:fcFlow 3s linear infinite}
-.flagchip:before{content:"";position:absolute;top:0;bottom:0;left:-40%;width:35%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.4),transparent);animation:fcShine 3.2s ease-in-out infinite;pointer-events:none}
-@keyframes fcFlow{to{background-position:200% 0}}
-@keyframes fcShine{to{left:120%}}
+.flagchip{display:inline-flex;align-items:center;gap:7px}
 .mflag{display:inline-block;width:24px;height:15px;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,.3);transform-origin:left center;animation:skWave 2.4s ease-in-out infinite;flex:none}
 .fc-oman{--fcb:linear-gradient(90deg,#db161b 0 16%,#fff 16% 50%,#db161b 50% 66%,#008000 66% 100%)}
 .fc-oman .mflag{background:linear-gradient(90deg,#db161b 0 28%,transparent 28%),linear-gradient(#fff 0 33.3%,#db161b 33.3% 66.6%,#008000 66.6%)}
@@ -837,7 +833,7 @@ if(window.top!==window.self){ document.documentElement.style.display="none"; try
 "use strict";
 // ===================== SETTINGS =====================
 var API_URL = "https://ekanthi-tutor.yabideas.workers.dev";
-var APP_VERSION = 85; // bump on every release: open apps notice and refresh themselves
+var APP_VERSION = 86; // bump on every release: open apps notice and refresh themselves
 var WHATSAPP_NUMBER = "96893376228";   // Ma'am (students / parents chat)
 function SUPPORT_WA(){ var b=(REGI&&REGI.biz)||(SHOP&&SHOP.d&&SHOP.d.biz)||{}; return String(b.wa||"").replace(/\D/g,"")||WHATSAPP_NUMBER; }   // public support line (admin 🛒 → 🏢 Business)
 var SITE_URL = /(^|\.)ekanthi\.(in|com)$|cyberkalari\.com$/.test(location.hostname) ? location.origin : "https://www.ekanthi.in";   // works on the old and the new domain
