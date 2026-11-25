@@ -1,7 +1,7 @@
 // Ekanthi service worker — notifications + instant start.
 // The app page is served from the phone's cache at once (fast open), and the latest version is fetched in the
 // background; when it changed, the open page is told so it can offer "New version ready — refresh".
-var SHELL = "ekanthi-shell-v1";
+var SHELL = "ekanthi-shell-v2";
 self.addEventListener("install", function () { self.skipWaiting(); });
 self.addEventListener("activate", function (e) {
   e.waitUntil(caches.keys().then(function (ks) { return Promise.all(ks.filter(function (k) { return k !== SHELL; }).map(function (k) { return caches.delete(k); })); }).then(function () { return self.clients.claim(); }));
@@ -9,7 +9,9 @@ self.addEventListener("activate", function (e) {
 self.addEventListener("fetch", function (e) {
   var r = e.request; if (r.method !== "GET") return;
   var u = new URL(r.url); if (u.origin !== self.location.origin) return;
-  if (r.mode === "navigate" || u.pathname === "/" || u.pathname === "/index.html") {
+  if (/\.apk$/i.test(u.pathname)) return;   // the Android app download must never be swapped for the page
+  var isPage = u.pathname === "/" || u.pathname === "/index.html" || (r.mode === "navigate" && !/\.[a-z0-9]+$/i.test(u.pathname));
+  if (isPage) {
     e.respondWith(caches.open(SHELL).then(function (c) {
       return c.match("/index.html").then(function (cached) {
         var oldCopy = cached ? cached.clone() : null;   // clone now — the page will read the cached body

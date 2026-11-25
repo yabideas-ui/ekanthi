@@ -642,7 +642,7 @@ body.on-break #brkBtn,body.on-break #askBtn{display:none!important}
   <section style="padding:0 0 30px"><div class="lw"><div class="fin">
     <h2 class="h2 serif" style="color:#fff">Ten minutes a day changes everything.</h2>
     <p class="sub" style="margin:0 auto 24px;color:#c3d2e5">Join Ekanthi today.</p>
-    <div class="ctas" style="justify-content:center"><button class="b1" data-go="reg" id="lnRegEnd">Register now</button><button class="b2" data-go="login">Log in</button><a class="b2" id="lnApk" href="/ekanthi.apk">📲 Android app</a></div>
+    <div class="ctas" style="justify-content:center"><button class="b1" data-go="reg" id="lnRegEnd">Register now</button><button class="b2" data-go="login">Log in</button><a class="b2" id="lnApk" href="https://raw.githubusercontent.com/yabideas-ui/ekanthi/main/ekanthi.apk">📲 Android app</a></div>
   </div></div></section>
   <div class="lw"><footer><div class="fr"><div><b style="color:#0b2239">Ekanthi</b> · www.ekanthi.in</div><div><a href="terms.html" target="_blank" rel="noopener">Terms</a><a href="refund.html" target="_blank" rel="noopener">Refunds</a><a href="privacy.html" target="_blank" rel="noopener">Privacy</a><a href="delete-account.html" target="_blank" rel="noopener">Delete account</a><a href="#" id="lnWa">WhatsApp</a></div></div>
     <div class="disc" id="lnBiz"></div>
@@ -747,7 +747,7 @@ if(window.top!==window.self){ document.documentElement.style.display="none"; try
 "use strict";
 // ===================== SETTINGS =====================
 var API_URL = "https://ekanthi-tutor.yabideas.workers.dev";
-var APP_VERSION = 76; // bump on every release: open apps notice and refresh themselves
+var APP_VERSION = 77; // bump on every release: open apps notice and refresh themselves
 var WHATSAPP_NUMBER = "96893376228";   // Ma'am (students / parents chat)
 function SUPPORT_WA(){ var b=(REGI&&REGI.biz)||(SHOP&&SHOP.d&&SHOP.d.biz)||{}; return String(b.wa||"").replace(/\D/g,"")||WHATSAPP_NUMBER; }   // public support line (admin 🛒 → 🏢 Business)
 var SITE_URL = /(^|\.)ekanthi\.(in|com)$|cyberkalari\.com$/.test(location.hostname) ? location.origin : "https://www.ekanthi.in";   // works on the old and the new domain
@@ -945,7 +945,7 @@ function appRegister(){ try{ if(!IN_APP || !window.EkanthiApp || !EkanthiApp.dev
 window.ekNotes=function(on){ var b=$("suPush"); if(b && on){ var m=b.closest(".modal"); if(m && m.__paint) m.__paint(); } renderAppCard && renderAppCard(); };
 function needPush(){ if(IN_APP) return (role==="student"||role==="tutor") && !appNotesOn(); return role==="student" && pushSupported() && Notification.permission==="default" && !(isIOS && !isStandalone); }
 // Android phones get the real Ekanthi app (APK on our website: screenshots blocked, phone notifications)
-var APK_URL=SITE_URL.replace(/\/$/,"")+"/ekanthi.apk";
+var APK_URL="https://raw.githubusercontent.com/yabideas-ui/ekanthi/main/ekanthi.apk";   // straight from GitHub: a phone's cached Ekanthi page can never get in the way of the download
 function apkGuide(){ var m=document.createElement("div"); m.className="modal";
   m.innerHTML='<div class="box hwpop"><div style="font-weight:800;font-size:19px">🤖 '+tr("Ekanthi app install ചെയ്യാം","Ekanthi app install करो","Install the Ekanthi app")+'</div><div class="muted small" style="margin-top:2px">'+tr("Android phone — ഒരു തവണ മതി","Android phone — सिर्फ एक बार","Android phone — only once")+'</div>'+
     '<ol style="margin:10px 0 0 18px;line-height:1.75">'+
