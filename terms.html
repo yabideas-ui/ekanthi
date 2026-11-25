@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ekanthi — Terms & Conditions</title>
+<link rel="icon" href="icon-192.png">
+<style>
+  body{margin:0;font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#1b2a3d;background:#f6f8fb}
+  header{background:#16324F;color:#fff;padding:28px 20px}
+  header .in,main{max-width:780px;margin:0 auto}
+  header h1{margin:0;font-size:26px}
+  header p{margin:6px 0 0;opacity:.85}
+  main{padding:20px}
+  section{background:#fff;border:1px solid #e3e8ef;border-radius:14px;padding:18px 20px;margin:0 0 14px}
+  h2{font-size:19px;margin:0 0 8px}
+  ul{padding-left:20px;margin:6px 0}
+  table{border-collapse:collapse;width:100%;font-size:15px}
+  td,th{border-bottom:1px solid #eef1f5;padding:8px 6px;text-align:left;vertical-align:top}
+  .muted{color:#64748b;font-size:14px}
+  a{color:#1b4fa8}
+</style>
+</head>
+<body>
+<header><div class="in"><h1>Ekanthi — Terms & Conditions</h1><p>Terms of use for www.ekanthi.in and the Ekanthi app · Last updated: 25 November 2026</p></div></header>
+<main>
+<section><h2>Who we are</h2><p><b>Ekanthi</b> is a brand of <b>DHANU GLOBAL ENTERPRISES</b>, <span class="ek-addr">Kerala, India</span> (GSTIN 32BPMPT3394E1ZM). Contact: <a class="ek-mail" href="mailto:support@ekanthi.in">support@ekanthi.in</a> · WhatsApp <a class="ek-wa" href="https://wa.me/96893376228">+968 9337 6228</a>.</p><p>By registering for, logging in to or paying for Ekanthi (the website www.ekanthi.in and the Ekanthi Android app) you agree to these terms. If a student is under 18, a parent or guardian must agree to them for the student.</p></section>
+<section><h2>The service</h2><ul>
+<li>Ekanthi is an online coaching and study service: study plans, notes, daily quizzes, practice tests, mock exams, homework, doubt help from the tutor and an AI helper ("Ekanthi Agent"), progress reports and a parent dashboard.</li>
+<li>It covers CBSE school classes and, when opened, coaching for competitive exams such as Kerala PSC, Railway and SSC.</li>
+<li>Ekanthi is an independent coaching service. It is <b>not</b> affiliated with or endorsed by CBSE, NCERT, Kerala PSC, RRB, SSC or any government body. Exam names describe the syllabus we help with.</li>
+<li>We work hard to keep content correct, but notes, questions and AI answers can contain mistakes. Always follow your textbook, official syllabus and exam notifications. Ekanthi does not guarantee any marks, rank or job.</li></ul></section>
+<section><h2>Accounts</h2><ul>
+<li>New registrations are checked by the tutor before the account opens. We may refuse or close an account if the details are false.</li>
+<li>Keep your PIN / password secret. Logging in on another phone signs out the old one. One account is for one student only.</li>
+<li>Accounts not used for some days may be locked; the tutor can reopen them.</li></ul></section>
+<section><h2>Plans, extras and payment</h2><ul>
+<li>Plans (Lite, Basic, Pro) and extras (for example support sessions with the tutor, extra tests, downloads) and their prices are shown on the website. Prices are in Indian Rupees (or Omani Rial where shown) and include GST at 18% unless stated otherwise.</li>
+<li>Online payments are processed by Razorpay. We never see or store your card, bank or UPI PIN details. Payments made directly by UPI or bank transfer are switched on after the tutor checks the transaction / reference number.</li>
+<li>A plan runs for the period shown with its price (for example one month). Plans do not renew automatically; you choose to pay again.</li>
+<li>Daily limits (practice tests, mock exams, AI doubts and so on) depend on the plan and are shown in the app. They may be changed to keep the service fair; paid limits will not be reduced during a period you have already paid for.</li>
+<li>Refunds and cancellations follow our <a href="refund.html">Refund &amp; Cancellation Policy</a>.</li></ul></section>
+<section><h2>Fair use</h2><ul>
+<li>Do not copy, share or sell Ekanthi content, test papers or answers; do not try to cheat in tests, attack the service or use someone else's account.</li>
+<li>Be respectful in messages to tutors. We may suspend accounts that break these rules (without refund for misuse).</li></ul></section>
+<section><h2>Privacy</h2><p>How we use your information is explained in our <a href="privacy.html">Privacy Policy</a>.</p></section>
+<section><h2>Liability and law</h2><p>Ekanthi is provided "as is". To the extent the law allows, our total liability for any claim is limited to the amount you paid in the 3 months before the claim. These terms are governed by the laws of India; courts in Kerala have jurisdiction.</p><p>We may update these terms; the date above will change and we will tell users in the app.</p></section>
+<p class="muted" style="text-align:center"><a href="/">www.ekanthi.in</a> · <a href="terms.html">Terms</a> · <a href="refund.html">Refunds</a> · <a href="privacy.html">Privacy</a> · <a href="delete-account.html">Delete account</a></p>
+</main>
+<script>
+// support WhatsApp / email come from the admin settings (🛒 → 🏢 Business), so they can change without editing this page
+fetch("https://ekanthi-tutor.yabideas.workers.dev/api/register/info").then(function(r){ return r.json(); }).then(function(d){ var b=(d&&d.biz)||{};
+  var wa=String(b.wa||"").replace(/\D/g,""); if(wa) document.querySelectorAll(".ek-wa").forEach(function(a){ a.href="https://wa.me/"+wa; a.textContent="+"+wa; });
+  if(b.email) document.querySelectorAll(".ek-mail").forEach(function(a){ a.href="mailto:"+b.email; a.textContent=b.email; });
+  if(b.address) document.querySelectorAll(".ek-addr").forEach(function(x){ x.textContent=b.address; }); }).catch(function(){});
+</script>
+</body>
+</html>

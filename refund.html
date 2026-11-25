@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ekanthi — Refund & Cancellation Policy</title>
+<link rel="icon" href="icon-192.png">
+<style>
+  body{margin:0;font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#1b2a3d;background:#f6f8fb}
+  header{background:#16324F;color:#fff;padding:28px 20px}
+  header .in,main{max-width:780px;margin:0 auto}
+  header h1{margin:0;font-size:26px}
+  header p{margin:6px 0 0;opacity:.85}
+  main{padding:20px}
+  section{background:#fff;border:1px solid #e3e8ef;border-radius:14px;padding:18px 20px;margin:0 0 14px}
+  h2{font-size:19px;margin:0 0 8px}
+  ul{padding-left:20px;margin:6px 0}
+  table{border-collapse:collapse;width:100%;font-size:15px}
+  td,th{border-bottom:1px solid #eef1f5;padding:8px 6px;text-align:left;vertical-align:top}
+  .muted{color:#64748b;font-size:14px}
+  a{color:#1b4fa8}
+</style>
+</head>
+<body>
+<header><div class="in"><h1>Ekanthi — Refund & Cancellation Policy</h1><p>For plans and extras bought on www.ekanthi.in · Last updated: 25 November 2026</p></div></header>
+<main>
+<section><h2>Summary</h2><ul>
+<li><b>Paid by mistake twice, or money taken but the plan was not switched on?</b> Full refund.</li>
+<li><b>Changed your mind?</b> Ask within <b>3 days</b> of payment and before using the paid features much (no more than 2 paid tests) — full refund.</li>
+<li>After that, fees for the running period are not refundable, but you can ask to move the remaining days to a sibling or pause once for up to 15 days (for example, illness).</li></ul></section>
+<section><h2>Extras</h2><ul>
+<li><b>Support sessions with the tutor</b>: unused sessions can be refunded within 30 days of payment.</li>
+<li><b>Extra tests</b>: unused tests can be refunded within 7 days.</li>
+<li><b>Digital downloads</b>: not refundable once the download link has been opened, unless the file is wrong or does not open — then we replace it or refund.</li></ul></section>
+<section><h2>Cancellation</h2><p>Plans do not renew automatically, so there is nothing to cancel — the plan simply ends at the end of the period you paid for. You can ask us to close your account at any time (see <a href="delete-account.html">Delete account</a>).</p></section>
+<section><h2>How to ask for a refund</h2><p>WhatsApp <a class="ek-wa" href="https://wa.me/96893376228">+968 9337 6228</a> or email <a class="ek-mail" href="mailto:support@ekanthi.in">support@ekanthi.in</a> with the student's username, the date and the payment / transaction ID (the 🧾 receipt in the app has it).</p>
+<p>Approved refunds are sent back to the <b>same payment method</b> within <b>5–7 working days</b> (online payments through Razorpay; UPI / bank payments to the same account).</p></section>
+<section><h2>Who we are</h2><p><b>Ekanthi</b> is a brand of <b>DHANU GLOBAL ENTERPRISES</b>, <span class="ek-addr">Kerala, India</span> (GSTIN 32BPMPT3394E1ZM). Contact: <a class="ek-mail" href="mailto:support@ekanthi.in">support@ekanthi.in</a> · WhatsApp <a class="ek-wa" href="https://wa.me/96893376228">+968 9337 6228</a>.</p></section>
+<p class="muted" style="text-align:center"><a href="/">www.ekanthi.in</a> · <a href="terms.html">Terms</a> · <a href="refund.html">Refunds</a> · <a href="privacy.html">Privacy</a> · <a href="delete-account.html">Delete account</a></p>
+</main>
+<script>
+// support WhatsApp / email come from the admin settings (🛒 → 🏢 Business), so they can change without editing this page
+fetch("https://ekanthi-tutor.yabideas.workers.dev/api/register/info").then(function(r){ return r.json(); }).then(function(d){ var b=(d&&d.biz)||{};
+  var wa=String(b.wa||"").replace(/\D/g,""); if(wa) document.querySelectorAll(".ek-wa").forEach(function(a){ a.href="https://wa.me/"+wa; a.textContent="+"+wa; });
+  if(b.email) document.querySelectorAll(".ek-mail").forEach(function(a){ a.href="mailto:"+b.email; a.textContent=b.email; });
+  if(b.address) document.querySelectorAll(".ek-addr").forEach(function(x){ x.textContent=b.address; }); }).catch(function(){});
+</script>
+</body>
+</html>

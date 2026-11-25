@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ekanthi — Delete your account or data</title>
+<link rel="icon" href="icon-192.png">
+<style>
+  body{margin:0;font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#1b2a3d;background:#f6f8fb}
+  header{background:#16324F;color:#fff;padding:28px 20px}
+  header .in,main{max-width:720px;margin:0 auto}
+  header h1{margin:0;font-size:24px}
+  main{padding:20px}
+  section{background:#fff;border:1px solid #e3e8ef;border-radius:14px;padding:18px 20px;margin:0 0 14px}
+  h2{font-size:18px;margin:0 0 8px}
+  a{color:#1b4fa8}
+</style>
+</head>
+<body>
+<header><div class="in"><h1>Ekanthi — Delete your account or data</h1></div></header>
+<main>
+<section>
+  <h2>How to ask</h2>
+  <p>A student account, a parent account, or any of its data can be deleted at any time. A parent can ask for a child's account.</p>
+  <ol>
+    <li>Send an email to <b><a class="ek-mail" href="mailto:support@ekanthi.in?subject=Ekanthi%20account%20deletion">support@ekanthi.in</a></b> (or message Ma'am on WhatsApp).</li>
+    <li>Write the student's name and username (or the parent's username), and whether you want the <b>whole account</b> deleted or only some data (for example uploaded answer photos or doubts).</li>
+    <li>We confirm it is really you (usually by replying from the parent's registered WhatsApp number) and delete it within <b>7 days</b>. We will message you when it is done.</li>
+  </ol>
+</section>
+<section>
+  <h2>What is deleted</h2>
+  <p>The account (name, username, PIN/password), class and subject choices, check-ins, quiz/test/homework answers and marks, uploaded photos, doubts and messages, app-usage records, notification tokens and the linked parent login.</p>
+  <p>It is removed from the live database right away, and from backups within 30 days. Nothing is kept except what the law requires (for example fee receipts, if any).</p>
+</section>
+<section>
+  <h2>More</h2>
+  <p>Read our <a href="privacy.html">Privacy Policy</a>.</p>
+</section>
+</main>
+<script>
+// support WhatsApp / email come from the admin settings (🛒 → 🏢 Business), so they can change without editing this page
+fetch("https://ekanthi-tutor.yabideas.workers.dev/api/register/info").then(function(r){ return r.json(); }).then(function(d){ var b=(d&&d.biz)||{};
+  var wa=String(b.wa||"").replace(/\D/g,""); if(wa) document.querySelectorAll(".ek-wa").forEach(function(a){ a.href="https://wa.me/"+wa; a.textContent="+"+wa; });
+  if(b.email) document.querySelectorAll(".ek-mail").forEach(function(a){ a.href="mailto:"+b.email; a.textContent=b.email; });
+  if(b.address) document.querySelectorAll(".ek-addr").forEach(function(x){ x.textContent=b.address; }); }).catch(function(){});
+</script>
+</body>
+</html>
