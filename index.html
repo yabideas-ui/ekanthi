@@ -69,6 +69,24 @@ tr.click{cursor:pointer}tr.click:hover td{background:#f7f9fc}
 .brand{color:#fff;text-align:center;margin-bottom:18px}
 .brand .logo{font-size:34px;font-weight:800;letter-spacing:.01em}
 .brand .tag{opacity:.85;font-size:14px}
+/* 🧠 skills */
+.skcard{display:flex;align-items:center;gap:14px;cursor:pointer}.skcard.locked{opacity:.92;background:linear-gradient(135deg,#fafafa,#fff)}
+.skic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:28px;background:linear-gradient(135deg,#eef4ff,#fdf6e3);flex:none}
+.abacus{margin:12px auto 0;max-width:100%;overflow-x:auto}.ab-frame{display:flex;justify-content:center;gap:4px;background:linear-gradient(#7a4a22,#5a3416);padding:10px 10px 6px;border-radius:14px;box-shadow:inset 0 0 0 3px #3d230e,0 6px 18px rgba(0,0,0,.18);width:max-content;margin:0 auto}
+.ab-rod{position:relative;width:44px;display:flex;flex-direction:column;align-items:center;background:linear-gradient(90deg,transparent 20px,#c9b08a 20px,#c9b08a 24px,transparent 24px);border-radius:6px}
+.ab-top{height:66px;display:flex;flex-direction:column;justify-content:flex-start;padding-top:2px}.ab-bot{height:172px;display:flex;flex-direction:column;justify-content:flex-end;gap:2px;padding-bottom:2px}
+.ab-beam{width:52px;height:8px;background:#2b1a0c;border-radius:3px;box-shadow:0 1px 0 #8a6a45}
+.ab-b{display:block;width:40px;height:26px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffd98a,#e08a1e 60%,#a45a07);box-shadow:0 2px 3px rgba(0,0,0,.35);cursor:pointer;transition:transform .14s ease;touch-action:manipulation}
+.ab-b.hb{background:radial-gradient(circle at 35% 30%,#ffb3a3,#d6452b 60%,#8e2412)}
+.ab-b.hb.on{transform:translateY(36px)}.ab-bot .ab-b.on{transform:translateY(-44px)}
+.ab-pl{font-size:10px;color:#f3dcbb;margin-top:3px;font-weight:700}
+.ab-val{text-align:center;font-size:30px;font-weight:800;margin-top:6px;letter-spacing:1px}
+.ab-rows{font-size:26px;font-weight:800;text-align:right;max-width:200px;margin:10px auto;font-variant-numeric:tabular-nums;line-height:1.35}
+.fl-stage{height:130px;display:grid;place-items:center;font-size:64px;font-weight:900;color:#0b2239;background:linear-gradient(135deg,#fff8e8,#eef6ff);border-radius:16px;font-variant-numeric:tabular-nums}
+.fl-stage.pop{animation:flpop .25s ease}@keyframes flpop{from{transform:scale(.6);opacity:.2}to{transform:scale(1);opacity:1}}
+.sp-q{font-size:38px;font-weight:900;margin:12px 0 4px;font-variant-numeric:tabular-nums}.sp-in{font-size:30px;font-weight:800;color:#1d4f80;min-height:40px;border-bottom:2px dashed #cbd5e1;max-width:200px;margin:0 auto 12px}
+.sp-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:300px;margin:0 auto}.sp-pad button{font-size:24px;font-weight:800;padding:14px 0;border-radius:14px;border:1px solid var(--line);background:#fff;cursor:pointer;touch-action:manipulation}.sp-pad button:active{background:#eef4ff}
+.en-s{font-size:22px;font-weight:600;line-height:1.5;margin:14px 6px 14px}
 .seg{display:flex;background:#eef0f3;border-radius:10px;padding:4px;margin-bottom:14px}
 .seg button{flex:1;border:0;background:transparent;border-radius:8px;padding:9px;font-weight:700;cursor:pointer;color:var(--muted)}
 .seg button.on{background:#fff;color:var(--brand);box-shadow:0 1px 3px rgba(0,0,0,.08)}
@@ -784,6 +802,7 @@ body.on-break #brkBtn,body.on-break #askBtn{display:none!important}
     <div id="sv-study" class="stack hidden"></div>
     <div id="sv-quiz" class="stack hidden"></div>
     <div id="sv-progress" class="stack hidden"></div>
+    <div id="sv-skills" class="stack hidden"></div>
     <div id="sv-assist" class="hidden">
       <div class="row between" style="margin-bottom:10px">
         <h2>Ekanthi Agent</h2>
@@ -812,6 +831,7 @@ body.on-break #brkBtn,body.on-break #askBtn{display:none!important}
     <button data-v="study"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5V21h16"/></svg>Study</button>
     <button data-v="quiz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>Tests</button>
     <button data-v="progress"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Progress</button>
+    <button data-v="skills" class="hidden"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 9h8M8 12h8M8 15h8"/><circle cx="10" cy="9" r="1.2" fill="currentColor"/><circle cx="14" cy="12" r="1.2" fill="currentColor"/><circle cx="11" cy="15" r="1.2" fill="currentColor"/></svg>Skills</button>
     <button data-v="assist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>Agent</button>
   </div></nav>
 </section>
@@ -833,7 +853,7 @@ if(window.top!==window.self){ document.documentElement.style.display="none"; try
 "use strict";
 // ===================== SETTINGS =====================
 var API_URL = "https://ekanthi-tutor.yabideas.workers.dev";
-var APP_VERSION = 86; // bump on every release: open apps notice and refresh themselves
+var APP_VERSION = 88; // bump on every release: open apps notice and refresh themselves
 var WHATSAPP_NUMBER = "96893376228";   // Ma'am (students / parents chat)
 function SUPPORT_WA(){ var b=(REGI&&REGI.biz)||(SHOP&&SHOP.d&&SHOP.d.biz)||{}; return String(b.wa||"").replace(/\D/g,"")||WHATSAPP_NUMBER; }   // public support line (admin 🛒 → 🏢 Business)
 var SITE_URL = /(^|\.)ekanthi\.(in|com)$|cyberkalari\.com$/.test(location.hostname) ? location.origin : "https://www.ekanthi.in";   // works on the old and the new domain
@@ -951,13 +971,172 @@ $("sHelp").addEventListener("click",function(){
 });
 $("sLogout").addEventListener("click", function(){ logout(); });
 $("sNav").addEventListener("click", function(e){ var b=e.target.closest("button"); if(!b) return; setSView(b.dataset.v); });
+// ===================== 🧠 SKILLS: Abacus · Speed maths · Spoken English (shown only when the admin switches them on) =====================
+var SK={d:null, view:"home"};
+var SK_INFO={abacus:["🧮","Abacus","അബാക്കസ് & മനക്കണക്ക്","अबेकस और मानसिक गणित","Abacus & mental maths"], speed:["⚡","Speed maths","വേഗക്കണക്ക്","स्पीड मैथ्स","Speed maths"], english:["🗣️","Spoken English","Spoken English","Spoken English","Spoken English"]};
+function skAcc(){ var a=(S&&S.proFeats)||{}; return {abacus:a.abacus, speed:a.speed, english:a.english}; }
+function skillsNav(){ var a=skAcc(), on=["abacus","speed","english"].some(function(k){ return a[k]===true||a[k]==="locked"||a[k]==="ask"; }), b=document.querySelector('#sNav [data-v="skills"]'); if(b) b.classList.toggle("hidden", !on); if(!on && sView==="skills") setSView("today"); }
+function skDate(d){ try{ return new Date(d+"T00:00:00").toLocaleDateString(LANG==="ml"?"ml-IN":LANG==="hi"?"hi-IN":"en-IN",{day:"numeric",month:"short"}); }catch(e){ return d; } }
+function skLog(skill, mode, level, score, total, secs){ return api("/api/skills/log",{skill:skill, mode:mode, level:level, score:score, total:total, secs:secs}).then(function(r){ try{ if(SK.d&&SK.d.limits&&SK.d.limits[skill]&&r.used) SK.d.limits[skill].used=r.used; if(r.used&&r.perDay&&r.used>=r.perDay) toast("✅ "+tr("ഇന്നത്തെ "+r.perDay+" sessions കഴിഞ്ഞു. സൂപ്പർ!","आज के "+r.perDay+" sessions पूरे। शाबाश!","That's today's "+r.perDay+" sessions. Super!")); }catch(e){} if(r.levelUp){ toast("🎉 "+tr("Level "+r.level+" തുറന്നു!","Level "+r.level+" खुल गया!","Level "+r.level+" unlocked!")); try{ confetti(90); }catch(e){} } return r; }).catch(function(e){ toast(e.message); }); }
+function skBox(){ return $("sv-skills"); }
+function renderSkills(){ var b=skBox(); if(!b) return; SK.view="home"; b.innerHTML='<div class="card empty"><span class="spinner"></span></div>';
+  api("/api/skills").then(function(d){ SK.d=d; skHome(); }).catch(function(e){ b.innerHTML='<div class="card empty">'+esc(e.message)+'</div>'; }); }
+function skHome(){ var b=skBox(), d=SK.d||{skills:{}}, a=d.access||skAcc();
+  var h='<div class="card" style="background:linear-gradient(150deg,#0b2239,#1d4f80);color:#fff;border:0"><div style="font-size:20px;font-weight:800">🧠 '+tr("Skills — ദിവസവും 10 മിനിറ്റ്","Skills — रोज़ 10 मिनट","Skills — 10 minutes a day")+'</div><div class="small" style="opacity:.85;margin-top:4px">'+tr("കണക്കിലും സംസാരത്തിലും വേഗവും ആത്മവിശ്വാസവും.","गणित और बोलने में तेज़ी और आत्मविश्वास।","Speed and confidence in maths and speaking.")+'</div></div>';
+  ["abacus","speed","english"].forEach(function(k){ if(a[k]!==true && a[k]!=="locked" && a[k]!=="ask") return; var I=SK_INFO[k], p=(d.skills||{})[k]||{level:1,week:{}}, lock=a[k]==="locked", ask=a[k]==="ask", L=(d.limits||{})[k]||{}, full=a[k]===true&&L.perDay&&L.used>=L.perDay;
+    var limTxt= a[k]===true&&L.perDay? '<div class="small" style="margin-top:3px;color:'+(full?'#1f8a5b':'#1d4f80')+';font-weight:700">'+(full? '✅ '+tr("ഇന്നത്തെ "+L.perDay+" sessions കഴിഞ്ഞു — നാളെ വരൂ!","आज के "+L.perDay+" sessions पूरे — कल आना!","Today's "+L.perDay+" sessions done — see you tomorrow!") : '🎯 '+tr("ഇന്ന് ","आज ","Today ")+L.used+' / '+L.perDay)+(L.until?' · 📅 '+tr("വരെ ","तक ","till ")+skDate(L.until):'')+'</div>' : (ask&&L.ended? '<div class="small" style="color:#b26a00">'+tr("കാലാവധി കഴിഞ്ഞു ","समय खत्म ","Ended ")+skDate(L.until)+'</div>' : '');
+    var sub= k==="abacus"? tr("Level "+p.level+" / 10","Level "+p.level+" / 10","Level "+p.level+" of 10") : k==="speed"? tr("Sprint best: ","Sprint best: ","Sprint best: ")+(((p.best||{})["sprint:1"]||(p.best||{})["sprint:2"]||{}).s||0) : tr("ഈ ആഴ്ച കൃത്യത: ","इस हफ़्ते सटीकता: ","This week: ")+(p.week&&p.week.acc!==null&&p.week.acc!==undefined? p.week.acc+"%" : "—");
+    h+=('<div class="card skcard'+(lock||ask?' locked':'')+'" data-sk="'+k+'"><div class="skic">'+I[0]+'</div><div style="flex:1;min-width:0"><div style="font-weight:800;font-size:17px">'+tr(I[2],I[3],I[4])+(lock?' <span class="pill" style="background:#fff3c4;color:#7a5a00">⭐ Pro</span>':'')+(ask?' <span class="pill" style="background:#eef0f3;color:#5b6472">🔒</span>':'')+'</div><div class="small muted">'+(ask? esc(SK_DESC[k]())+'<br><b style="color:#b26a00">'+tr("Ma\'am on ആക്കിയാൽ തുറക്കും","Ma\'am चालू करें तो खुलेगा","Opens when Ma\'am switches it on")+'</b></div></div><span class="go" style="font-size:22px;color:#b0b8c4">›</span></div>' : sub+' · '+tr((p.week&&p.week.n||0)+" sessions ഈ ആഴ്ച",(p.week&&p.week.n||0)+" sessions इस हफ़्ते",(p.week&&p.week.n||0)+" sessions this week")+'</div>'+limTxt+'</div><span class="go" style="font-size:22px;color:#b0b8c4">›</span></div>')); });
+  b.innerHTML=h;
+  b.querySelectorAll("[data-sk]").forEach(function(x){ x.onclick=function(){ var k=x.dataset.sk; if(a[k]==="ask"){ skAsk(k); return; } var L0=(d.limits||{})[k]; if(a[k]===true && L0 && L0.used>=L0.perDay){ toast("✅ "+tr("ഇന്നത്തെ sessions കഴിഞ്ഞു — നാളെ വീണ്ടും!","आज के sessions पूरे — कल फिर!","Today's sessions are done — come back tomorrow!")); return; } if(a[k]==="locked"){ if(S&&S.shopOn) shopOpen(); else toast(tr("ഇത് Pro ആണ് — Ma\'am-നോട് ചോദിക്കൂ","यह Pro है — Ma\'am से पूछें","This is Pro — ask Ma\'am")); return; } if(k==="abacus") skAbacus(); else if(k==="speed") skSpeed(); else skEnglish(); }; }); }
+var SK_DESC={abacus:function(){ return tr("Bead-കൾ നീക്കി കണക്ക് — level 1 മുതൽ 10 വരെ, flash anzan മനക്കണക്ക്.","Beads से गिनती — level 1 से 10, flash anzan मानसिक गणित।","Bead counting on a real abacus, levels 1–10, and flash-anzan mental maths."); }, speed:function(){ return tr("60 സെക്കൻഡ് sprint, ഗുണനപ്പട്ടിക race, Vedic എളുപ്പവഴികൾ.","60 सेकंड sprint, पहाड़ा race, Vedic ट्रिक्स।","60-second sprints, times-tables races and Vedic shortcuts."); }, english:function(){ return tr("വാക്യം കേട്ട് ഉറക്കെ പറയൂ — ഓരോ വാക്കും ശരിയായോ എന്ന് കാണാം.","वाक्य सुनो और बोलो — हर शब्द की जाँच।","Listen, then say the sentence aloud — every word is checked."); }};
+function skAsk(k){ var I=SK_INFO[k], u=(S&&S.student&&S.student.username)||"";
+  ekSheet('<div style="text-align:center"><div style="font-size:44px">'+I[0]+'</div><h2 style="margin:4px 0">'+tr(I[2],I[3],I[4])+'</h2><div class="muted" style="margin:6px 0 12px">'+esc(SK_DESC[k]())+'</div><div class="card" style="background:#fffaf0;border-color:#f3dc9b;text-align:left">🔒 '+tr("ഇത് Ma\'am നിനക്ക് വേണ്ടി on ആക്കണം. Ma\'am-നോട് ചോദിക്കൂ!","यह Ma\'am तुम्हारे लिए चालू करेंगी। Ma\'am से पूछो!","Ma\'am switches this on for you. Ask Ma\'am!")+'</div><a class="btn block" style="margin-top:10px" target="_blank" rel="noopener" href="'+esc(waLink(WHATSAPP_NUMBER,"Hi Ma'am, please switch on "+I[4]+" for me on Ekanthi"+(u?" (username "+u+")":"")+"."))+'">💬 '+tr("Ma\'am-നോട് ചോദിക്കൂ","Ma\'am से पूछो","Ask Ma\'am")+'</a><button class="btn ghost block" data-x style="margin-top:8px">OK</button></div>',"skAsk"); }
+function skTop(title){ return '<div class="row between" style="margin-bottom:2px"><button class="btn ghost sm" id="skBack">‹ '+tr("Skills","Skills","Skills")+'</button><b style="font-size:17px">'+title+'</b><span style="width:60px"></span></div>'; }
+function skWireBack(){ var x=$("skBack"); if(x) x.onclick=function(){ stopAll(); skHome(); }; }
+var SKT=null; function stopAll(){ clearInterval(SKT); clearTimeout(SKT); SKT=null; try{ speechSynthesis.cancel(); }catch(e){} }
+function rnd(a,b){ return a+Math.floor(Math.random()*(b-a+1)); }
+
+// ---------- 🧮 ABACUS ----------
+var AB={v:[0,0,0,0,0], lvl:1};
+function abHtml(n){ AB.v=[]; for(var i=0;i<n;i++) AB.v.push(0); var h='<div class="abacus"><div class="ab-frame">'; for(var r=0;r<n;r++){ h+='<div class="ab-rod" data-r="'+r+'"><div class="ab-top"><i class="ab-b hb" data-r="'+r+'" data-k="h"></i></div><div class="ab-beam"></div><div class="ab-bot">'; for(var k=0;k<4;k++) h+='<i class="ab-b eb" data-r="'+r+'" data-k="'+k+'"></i>'; h+='</div><div class="ab-pl">'+["U","T","H","Th","TTh","L","TL"][n-1-r]+'</div></div>'; } return h+'</div></div><div class="ab-val">0</div>'; }
+function abVal(){ var x=0; AB.v.forEach(function(d){ x=x*10+d; }); return x; }
+function abPaint(root){ root.querySelectorAll(".ab-rod").forEach(function(rod){ var r=Number(rod.dataset.r), d=AB.v[r], up=d%5; rod.querySelector(".hb").classList.toggle("on", d>=5); rod.querySelectorAll(".eb").forEach(function(e){ e.classList.toggle("on", Number(e.dataset.k)<up); }); }); var v=root.querySelector(".ab-val"); if(v) v.textContent=abVal(); }
+function abWire(root, onChange){ root.querySelectorAll(".ab-b").forEach(function(bd){ bd.onclick=function(){ var r=Number(bd.dataset.r), d=AB.v[r], hi=d>=5?5:0, lo=d%5;
+    if(bd.dataset.k==="h") hi= hi?0:5; else { var k=Number(bd.dataset.k); lo= k<lo? k : k+1; }
+    AB.v[r]=hi+lo; abPaint(root); try{ navigator.vibrate&&navigator.vibrate(8); }catch(e){} if(onChange) onChange(abVal()); }; }); }
+function abSet(n){ var s=String(Math.max(0,n)).padStart(AB.v.length,"0").slice(-AB.v.length); AB.v=s.split("").map(Number); }
+// levels 1–10: what each level practises
+var AB_LV=[null,
+  {t:"1-digit add & take away (answers 0–9)", d:1, rows:3, op:"as", max:9},
+  {t:"1-digit with small friends (5)", d:1, rows:4, op:"as", max:9},
+  {t:"1-digit with big friends (10)", d:1, rows:5, op:"as", max:99},
+  {t:"2-digit add & take away", d:2, rows:3, op:"as", max:999},
+  {t:"2-digit, 5 rows", d:2, rows:5, op:"as", max:999},
+  {t:"3-digit add & take away", d:3, rows:4, op:"as", max:9999},
+  {t:"Multiply 2-digit × 1-digit", op:"m", a:[10,99], b:[2,9]},
+  {t:"Multiply 3-digit × 1-digit and 2-digit × 2-digit", op:"m2"},
+  {t:"Divide by 1-digit (no remainder)", op:"d"},
+  {t:"Mixed 3-digit, 6 rows", d:3, rows:6, op:"as", max:9999}];
+function abQ(L){ var c=AB_LV[L];
+  if(c.op==="m"){ var a=rnd(c.a[0],c.a[1]), b=rnd(c.b[0],c.b[1]); return {rows:[a+" × "+b], ans:a*b}; }
+  if(c.op==="m2"){ if(Math.random()<.5){ var a2=rnd(100,999), b2=rnd(2,9); return {rows:[a2+" × "+b2], ans:a2*b2}; } var a3=rnd(11,99), b3=rnd(11,99); return {rows:[a3+" × "+b3], ans:a3*b3}; }
+  if(c.op==="d"){ var q=rnd(c.q||11, 199), dv=rnd(2,9); return {rows:[(q*dv)+" ÷ "+dv], ans:q}; }
+  var lo=Math.pow(10,c.d-1), hi=Math.pow(10,c.d)-1, tot=rnd(c.d===1?1:lo,hi), rows=[String(tot)];
+  for(var i=1;i<c.rows;i++){ var n=rnd(c.d===1?1:lo,hi), sub=Math.random()<.42 && tot-n>=0; if(!sub && tot+n>c.max){ if(tot-n>=0) sub=true; else { n=rnd(1,Math.max(1,c.max-tot)); } } tot+= sub? -n : n; rows.push((sub?"− ":"+ ")+n); }
+  return {rows:rows, ans:tot}; }
+function skAbacus(){ stopAll(); SK.view="abacus"; var b=skBox(), p=((SK.d||{}).skills||{}).abacus||{level:1}; AB.lvl=p.level||1;
+  b.innerHTML=skTop("🧮 Abacus")+'<div class="seg" id="abTabs" style="margin:4px 0 10px"><button data-t="learn" class="on">'+tr("പഠിക്കാം","सीखो","Learn")+'</button><button data-t="level">Level '+AB.lvl+'</button><button data-t="flash">⚡ Flash</button></div><div id="abBody"></div>';
+  skWireBack(); b.querySelectorAll("#abTabs [data-t]").forEach(function(x){ x.onclick=function(){ stopAll(); b.querySelectorAll("#abTabs button").forEach(function(y){ y.classList.toggle("on",y===x); }); ({learn:abLearn, level:abLevel, flash:abFlash})[x.dataset.t](); }; }); abLearn(); }
+function abLearn(){ var b=$("abBody"), target=rnd(1,999);
+  b.innerHTML='<div class="card"><div class="small muted">'+tr("Beads തൊട്ട് നീക്കൂ. മുകളിലെ bead = 5, താഴത്തെ ഓരോന്നും = 1.","Beads को छूकर हिलाओ। ऊपर वाला bead = 5, नीचे वाला हर एक = 1।","Tap the beads. The top bead = 5, each bottom bead = 1.")+'</div><div id="abW">'+abHtml(5)+'</div>'+
+    '<div class="row between" style="margin-top:10px;gap:8px;flex-wrap:wrap"><div>'+tr("ഈ സംഖ്യ ഉണ്ടാക്കൂ:","यह संख्या बनाओ:","Make this number:")+' <b id="abTgt" style="font-size:22px">'+target+'</b></div><div class="row" style="gap:6px"><button class="btn ghost sm" id="abClr">'+tr("മായ്ക്കൂ","साफ़","Clear")+'</button><button class="btn ghost sm" id="abNew">'+tr("പുതിയത്","नया","New")+'</button></div></div><div id="abMsg" class="small" style="margin-top:6px"></div></div>';
+  var w=$("abW"); abPaint(w); var start=Date.now(), done=0;
+  abWire(w, function(v){ if(v===target){ done++; $("abMsg").innerHTML='✅ <b>'+tr("ശരി! ","सही! ","Correct! ")+'</b>'; try{ navigator.vibrate&&navigator.vibrate([30,40,30]); }catch(e){} setTimeout(function(){ target=rnd(1, done<3?99:done<6?999:9999); $("abTgt").textContent=target; $("abMsg").textContent=""; abSet(0); abPaint(w); }, 900); if(done%5===0) skLog("abacus","set",1,5,5,Math.round((Date.now()-start)/1000)); } });
+  $("abClr").onclick=function(){ abSet(0); abPaint(w); }; $("abNew").onclick=function(){ target=rnd(1,999); $("abTgt").textContent=target; $("abMsg").textContent=""; }; }
+function abLevel(){ var b=$("abBody"), L=AB.lvl, c=AB_LV[L], qs=[], i=0, ok=0, t0=Date.now(), maxL=AB.lvl;
+  b.innerHTML='<div class="card"><div class="row between"><b>Level '+L+' / 10</b><select id="abLv" style="width:auto">'+[1,2,3,4,5,6,7,8,9,10].map(function(n){ return '<option value="'+n+'"'+(n===L?' selected':'')+(n>maxL?' disabled':'')+'>'+(n>maxL?'🔒 ':'')+'Level '+n+'</option>'; }).join("")+'</select></div><div class="small muted" style="margin:4px 0 8px">'+esc(c.t)+' · '+tr("10 ചോദ്യം · 8 ശരിയായാൽ അടുത്ത level","10 सवाल · 8 सही तो अगला level","10 questions · 8 right unlocks the next level")+'</div><div id="abQ"></div></div>';
+  $("abLv").onchange=function(){ AB.lvl=Number(this.value); abLevel(); AB.lvl=maxL; };
+  for(var k=0;k<10;k++) qs.push(abQ(L));
+  function show(){ var q=qs[i], useAb=c.op==="as";
+    $("abQ").innerHTML='<div class="row between small muted"><span>'+tr("ചോദ്യം ","सवाल ","Question ")+(i+1)+' / 10</span><span>✅ '+ok+'</span></div><div class="ab-rows">'+q.rows.map(function(r){ return '<div>'+esc(r)+'</div>'; }).join("")+'</div>'+(useAb?'<div id="abW2">'+abHtml(c.max>999?5:4)+'</div>':'')+'<div class="row" style="gap:8px;margin-top:8px"><input id="abAns" inputmode="numeric" placeholder="'+tr("ഉത്തരം","उत्तर","Answer")+'" style="flex:1;font-size:20px;text-align:center"><button class="btn" id="abOk">'+tr("ശരിയോ?","जाँचो","Check")+'</button></div><div id="abFb" class="small" style="margin-top:6px;min-height:18px"></div>';
+    if(useAb){ var w=$("abW2"); abPaint(w); abWire(w, function(v){ $("abAns").value=v; }); }
+    $("abAns").focus(); $("abAns").onkeydown=function(e){ if(e.key==="Enter") $("abOk").click(); };
+    $("abOk").onclick=function(){ var v=Number($("abAns").value); if($("abAns").value==="") return; var right=v===q.ans; if(right) ok++; $("abFb").innerHTML= right? '✅ <b>'+tr("ശരി!","सही!","Right!")+'</b>' : '❌ '+tr("ശരിയുത്തരം ","सही उत्तर ","Answer ")+'<b>'+q.ans+'</b>'; this.disabled=true;
+      setTimeout(function(){ i++; if(i<10) show(); else finish(); }, right?600:1500); }; }
+  function finish(){ var secs=Math.round((Date.now()-t0)/1000), pass=ok>=8;
+    $("abQ").innerHTML='<div style="text-align:center;padding:10px"><div style="font-size:46px">'+(pass?'🏆':'💪')+'</div><div style="font-size:24px;font-weight:800">'+ok+' / 10</div><div class="muted">'+Math.floor(secs/60)+'m '+(secs%60)+'s</div><div style="margin-top:6px">'+(pass? (L===maxL&&L<10? tr("അടുത്ത level തുറന്നു!","अगला level खुल गया!","Next level unlocked!") : tr("നന്നായി!","शाबाश!","Well done!")) : tr("8 ശരിയായാൽ അടുത്ത level. വീണ്ടും ശ്രമിക്കൂ!","8 सही होने पर अगला level। फिर कोशिश करो!","Get 8 right for the next level. Try again!"))+'</div><button class="btn" id="abAgain" style="margin-top:10px">'+tr("വീണ്ടും","फिर से","Again")+'</button></div>';
+    skLog("abacus", L===maxL?"level":"practice", L, ok, 10, secs).then(function(r){ if(r&&r.level){ AB.lvl=r.level; if(SK.d&&SK.d.skills&&SK.d.skills.abacus) SK.d.skills.abacus.level=r.level; } });
+    $("abAgain").onclick=function(){ abLevel(); }; }
+  show(); }
+function abFlash(){ var b=$("abBody"), cfg={d:1, rows:5, ms:1200};
+  b.innerHTML='<div class="card"><div class="small muted">'+tr("സംഖ്യകൾ ഓരോന്നായി മിന്നും. മനസ്സിൽ കൂട്ടി ഉത്തരം എഴുതൂ.","संख्याएँ एक-एक करके चमकेंगी। मन में जोड़ो और उत्तर लिखो।","Numbers flash one by one. Add them in your head and type the answer.")+'</div>'+
+    '<div class="row" style="gap:8px;margin:10px 0;flex-wrap:wrap"><select id="flD" style="width:auto"><option value="1">1-digit</option><option value="2">2-digit</option><option value="3">3-digit</option></select><select id="flR" style="width:auto">'+[3,4,5,6,8,10].map(function(n){ return '<option'+(n===5?' selected':'')+'>'+n+'</option>'; }).join("")+'</select><span class="small muted" style="align-self:center">rows</span><select id="flS" style="width:auto"><option value="1800">🐢 slow</option><option value="1200" selected>🙂 normal</option><option value="800">🐇 fast</option><option value="500">🚀 super</option></select></div>'+
+    '<div id="flStage" class="fl-stage">▶</div><div class="row" style="gap:8px;margin-top:8px"><input id="flAns" inputmode="numeric" placeholder="'+tr("ഉത്തരം","उत्तर","Answer")+'" style="flex:1;font-size:20px;text-align:center" disabled><button class="btn" id="flGo">'+tr("തുടങ്ങൂ","शुरू","Start")+'</button></div><div id="flFb" class="small" style="margin-top:6px"></div></div>';
+  var round=0, ok=0, nums=[], t0=0;
+  function play(){ cfg.d=Number($("flD").value); cfg.rows=Number($("flR").value); cfg.ms=Number($("flS").value); nums=[]; var lo=Math.pow(10,cfg.d-1), hi=Math.pow(10,cfg.d)-1, k=0; for(var i=0;i<cfg.rows;i++) nums.push(rnd(cfg.d===1?1:lo,hi));
+    $("flAns").value=""; $("flAns").disabled=true; $("flGo").disabled=true; $("flFb").textContent=""; if(!t0) t0=Date.now();
+    var st=$("flStage"); st.textContent="3"; SKT=setTimeout(function tick(){ if(k<nums.length){ st.textContent=nums[k]; st.classList.remove("pop"); void st.offsetWidth; st.classList.add("pop"); k++; SKT=setTimeout(function(){ st.textContent=""; SKT=setTimeout(tick, 140); }, cfg.ms-140); } else { st.textContent="?"; $("flAns").disabled=false; $("flAns").focus(); $("flGo").disabled=false; $("flGo").textContent=tr("ശരിയോ?","जाँचो","Check"); $("flGo").onclick=check; } }, 700); }
+  function check(){ var sum=nums.reduce(function(a,b){ return a+b; },0), v=Number($("flAns").value), right=v===sum; if(right) ok++; round++;
+    $("flFb").innerHTML=(right?'✅ <b>'+tr("ശരി!","सही!","Right!")+'</b> ':'❌ ')+nums.join(" + ")+" = <b>"+sum+"</b> · "+tr("റൗണ്ട് ","राउंड ","Round ")+round+"/5";
+    if(round>=5){ skLog("abacus","flash",Math.min(10,cfg.d*2+(cfg.ms<=800?1:0)),ok,5,Math.round((Date.now()-t0)/1000)); $("flGo").textContent=tr("വീണ്ടും","फिर से","Again"); $("flGo").onclick=function(){ round=0; ok=0; t0=0; play(); }; $("flFb").innerHTML+='<div style="margin-top:6px;font-weight:800">'+ok+' / 5 '+(ok>=4?'🏆':'💪')+'</div>'; }
+    else { $("flGo").textContent=tr("അടുത്തത്","अगला","Next"); $("flGo").onclick=play; } }
+  $("flGo").onclick=play; $("flAns").onkeydown=function(e){ if(e.key==="Enter" && !$("flGo").disabled) $("flGo").click(); }; }
+
+// ---------- ⚡ SPEED MATHS ----------
+var SP_TRICKS=[
+  ["×11","Multiply a 2-digit number by 11","Split the digits and put their sum in the middle: 34 × 11 → 3 (3+4) 4 = 374. If the sum is 10 or more, carry 1: 68 × 11 → 6 (14) 8 → 748.",function(){ var a=rnd(11,99); return [a+" × 11", a*11]; }],
+  ["5²","Square a number ending in 5","Take the first digit, multiply it by the next number, then write 25: 35² → 3×4 = 12 → 1225.",function(){ var a=rnd(1,9)*10+5; return [a+"²", a*a]; }],
+  ["×5","Multiply by 5","Multiply by 10, then halve: 48 × 5 → 480 ÷ 2 = 240.",function(){ var a=rnd(12,198); return [a+" × 5", a*5]; }],
+  ["×9","Multiply by 9","Multiply by 10 and take the number away once: 37 × 9 → 370 − 37 = 333.",function(){ var a=rnd(12,99); return [a+" × 9", a*9]; }],
+  ["+9","Add 9 or 99 fast","Add 10 then take 1 away: 47 + 9 → 57 − 1 = 56. For 99, add 100 then take 1.",function(){ var a=rnd(10,899), n=Math.random()<.5?9:99; return [a+" + "+n, a+n]; }],
+  ["×25","Multiply by 25","Multiply by 100, then divide by 4: 36 × 25 → 3600 ÷ 4 = 900.",function(){ var a=rnd(2,40)*4; return [a+" × 25", a*25]; }]];
+function spQ(level){ if(level===1){ var a=rnd(1,20), b=rnd(1,20); return Math.random()<.5? [a+" + "+b, a+b] : [Math.max(a,b)+" − "+Math.min(a,b), Math.abs(a-b)]; }
+  if(level===2){ var x=rnd(2,10), y=rnd(2,10); return [x+" × "+y, x*y]; }
+  var r=Math.random(); if(r<.35){ var p=rnd(11,20), q=rnd(2,10); return [p+" × "+q, p*q]; } if(r<.7){ var m=rnd(20,99), n=rnd(10,99); return [m+" + "+n, m+n]; } var u=rnd(30,99), v=rnd(10,u); return [u+" − "+v, u-v]; }
+function skSpeed(){ stopAll(); SK.view="speed"; var b=skBox(), best=(((SK.d||{}).skills||{}).speed||{}).best||{};
+  b.innerHTML=skTop("⚡ Speed maths")+
+    '<div class="card"><b>⏱️ '+tr("60 സെക്കൻഡ് sprint","60 सेकंड sprint","60-second sprint")+'</b><div class="small muted">'+tr("ഒരു മിനിറ്റിൽ എത്ര ശരിയാക്കാം?","एक मिनट में कितने सही?","How many can you get right in one minute?")+'</div><div class="row" style="gap:6px;margin-top:8px;flex-wrap:wrap">'+[[1,"🙂 Easy +−"],[2,"✖️ Tables"],[3,"🔥 Hard"]].map(function(x){ var bb=best["sprint:"+x[0]]; return '<button class="btn ghost sm" data-spr="'+x[0]+'">'+x[1]+(bb?' · 🏆 '+bb.s:'')+'</button>'; }).join("")+'</div></div>'+
+    '<div class="card"><b>📋 '+tr("ഗുണനപ്പട്ടിക race","पहाड़ा race","Tables race")+'</b><div class="small muted">'+tr("12 ചോദ്യം, എത്ര വേഗം?","12 सवाल, कितनी जल्दी?","12 questions — how fast?")+'</div><div class="row" style="gap:6px;margin-top:8px;flex-wrap:wrap">'+[2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19,20].map(function(n){ return '<button class="chip" data-tbl="'+n+'">'+n+'</button>'; }).join("")+'</div></div>'+
+    '<div class="card"><b>✨ '+tr("കണക്കിലെ എളുപ്പവഴികൾ (Vedic tricks)","गणित की आसान ट्रिक्स (Vedic)","Maths tricks (Vedic)")+'</b>'+SP_TRICKS.map(function(t,i){ return '<div class="task" data-trk="'+i+'" style="margin-top:8px"><div class="dot" style="border-style:dashed;font-size:11px;color:#0b2239">'+t[0]+'</div><div><div class="t">'+esc(t[1])+'</div><div class="muted small">'+tr("പഠിക്കൂ + 10 ചോദ്യം","सीखो + 10 सवाल","Learn + 10 questions")+'</div></div><span class="go">›</span></div>'; }).join("")+'</div>';
+  skWireBack();
+  b.querySelectorAll("[data-spr]").forEach(function(x){ x.onclick=function(){ spRun("sprint", Number(x.dataset.spr)); }; });
+  b.querySelectorAll("[data-tbl]").forEach(function(x){ x.onclick=function(){ spRun("table", Number(x.dataset.tbl)); }; });
+  b.querySelectorAll("[data-trk]").forEach(function(x){ x.onclick=function(){ spRun("trick", Number(x.dataset.trk)); }; }); }
+function spRun(kind, n){ stopAll(); var b=skBox(), q=null, ok=0, tried=0, t0=Date.now(), left=60, list=[], idx=0;
+  if(kind==="table"){ for(var i=1;i<=12;i++) list.push([n+" × "+i, n*i]); list.sort(function(){ return Math.random()-.5; }); }
+  if(kind==="trick"){ for(var j=0;j<10;j++) list.push(SP_TRICKS[n][3]()); }
+  var title= kind==="sprint"? "⏱️ Sprint" : kind==="table"? "📋 "+tr(n+"-ന്റെ പട്ടിക",n+" का पहाड़ा","Table of "+n) : "✨ "+SP_TRICKS[n][1];
+  b.innerHTML=skTop(title)+(kind==="trick"?'<div class="card" style="background:#fffaf0;border-color:#f3dc9b">💡 '+esc(SP_TRICKS[n][2])+'</div>':'')+
+    '<div class="card" style="text-align:center"><div class="row between small muted"><span id="spInfo"></span><span>✅ <b id="spOk">0</b></span></div><div id="spQ" class="sp-q"></div><div id="spIn" class="sp-in">&nbsp;</div><div class="sp-pad">'+[1,2,3,4,5,6,7,8,9,"⌫",0,"✓"].map(function(k){ return '<button data-pk="'+k+'">'+k+'</button>'; }).join("")+'</div><div id="spFb" class="small" style="min-height:18px;margin-top:6px"></div></div>';
+  skWireBack(); var inp="";
+  function next(){ q= kind==="sprint"? spQ(n) : list[idx]; $("spQ").textContent=q[0]+" = ?"; inp=""; $("spIn").innerHTML="&nbsp;"; $("spInfo").textContent= kind==="sprint"? "⏱️ "+left+"s" : (idx+1)+" / "+list.length; }
+  function submit(){ if(inp==="") return; tried++; var right=Number(inp)===q[1]; if(right){ ok++; $("spOk").textContent=ok; } $("spFb").innerHTML= right? "✅" : "❌ "+q[0]+" = <b>"+q[1]+"</b>"; idx++;
+    if(kind!=="sprint" && idx>=list.length) return end(); next(); }
+  function end(){ stopAll(); var secs=Math.round((Date.now()-t0)/1000);
+    $("spQ").innerHTML='🏁 '+ok+' / '+(kind==="sprint"?tried:list.length); $("spIn").innerHTML=secs+"s"; b.querySelector(".sp-pad").innerHTML='<button data-again="1" style="grid-column:1/-1">'+tr("വീണ്ടും","फिर से","Again")+'</button>'; b.querySelector("[data-again]").onclick=function(){ spRun(kind,n); };
+    skLog("speed", kind==="sprint"? "sprint" : kind==="table"? "table-"+n : "trick-"+n, kind==="sprint"? n : 1, ok, kind==="sprint"? Math.max(tried,1) : list.length, secs).then(function(r){ if(r&&r.best&&kind==="sprint"&&r.best.s===ok&&ok>0) toast("🏆 "+tr("പുതിയ best!","नया best!","New best!")); }); }
+  b.querySelector(".sp-pad").onclick=function(e){ var k=e.target.dataset && e.target.dataset.pk; if(k===undefined) return; if(k==="⌫") inp=inp.slice(0,-1); else if(k==="✓") return submit(); else if(inp.length<6) inp+=k; $("spIn").innerHTML=inp||"&nbsp;";
+    if(kind==="sprint" && inp!=="" && String(q[1]).length===inp.length) submit(); };
+  next(); if(kind==="sprint") SKT=setInterval(function(){ left--; $("spInfo").textContent="⏱️ "+left+"s"; if(left<=0) end(); }, 1000); }
+
+// ---------- 🗣️ SPOKEN ENGLISH ----------
+var EN_BANK=[null,
+  ["Good morning, teacher.","My name is written on my book.","I like to read stories.","The sun rises in the east.","Please open the window.","I go to school by bus.","My mother cooks tasty food.","We play cricket in the evening.","Thank you for your help.","May I come in, please?","The cat is sleeping on the mat.","I drink milk every morning."],
+  ["I would like to ask a question.","Could you please repeat that?","Yesterday I visited my grandparents.","Our school has a big library.","I am practising English every day.","Reading books makes me happy.","The weather is pleasant today.","I finished my homework on time.","Let us keep our classroom clean.","My favourite subject is science.","Water boils at one hundred degrees.","I want to become a doctor one day."],
+  ["Practice and patience help us learn any skill.","I believe that hard work always pays off.","Could you explain the main idea of this chapter?","Technology has changed the way we study.","Respecting others is a sign of good character.","I will try my best in the coming examination.","Healthy food and good sleep keep our minds sharp.","Learning a new language opens many doors.","Kindness costs nothing but means a lot.","We should save water for future generations.","Every mistake is a chance to learn something new.","Confidence comes from preparing well."]];
+var EN_SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+function enWords(t){ return String(t||"").toLowerCase().replace(/[^a-z0-9' ]/g," ").split(/\s+/).filter(Boolean); }
+function enScore(target, said){ var T=enWords(target), W=enWords(said), j=0, hit=[]; T.forEach(function(w){ var k=W.indexOf(w, j); if(k>=0 && k-j<=3){ hit.push(true); j=k+1; } else hit.push(false); }); var ok=hit.filter(Boolean).length; return {pct: T.length? Math.round(ok/T.length*100) : 0, hit:hit, words:String(target).split(/\s+/)}; }
+function enSpeak(t){ try{ var u=new SpeechSynthesisUtterance(t); u.lang="en-IN"; u.rate=.9; var v=(speechSynthesis.getVoices()||[]).filter(function(x){ return /en[-_](IN|GB|US)/i.test(x.lang); })[0]; if(v) u.voice=v; speechSynthesis.cancel(); speechSynthesis.speak(u); return true; }catch(e){ return false; } }
+function skEnglish(){ stopAll(); SK.view="english"; var b=skBox(), lvl=1;
+  b.innerHTML=skTop("🗣️ Spoken English")+'<div class="card"><div class="small muted">'+tr("വാക്യം കേൾക്കൂ, എന്നിട്ട് ഉറക്കെ പറയൂ. ഓരോ വാക്കും ശരിയായോ എന്ന് കാണാം.","वाक्य सुनो, फिर ज़ोर से बोलो। हर शब्द सही हुआ या नहीं, दिखेगा।","Listen to the sentence, then say it out loud. You will see which words came out right.")+'</div><div class="seg" id="enLv" style="margin-top:8px"><button data-l="1" class="on">🌱 Easy</button><button data-l="2">🌿 Medium</button><button data-l="3">🌳 Hard</button></div></div><div id="enBody"></div>';
+  skWireBack(); b.querySelectorAll("#enLv [data-l]").forEach(function(x){ x.onclick=function(){ b.querySelectorAll("#enLv button").forEach(function(y){ y.classList.toggle("on",y===x); }); lvl=Number(x.dataset.l); run(); }; });
+  function run(){ var bank=EN_BANK[lvl].slice().sort(function(){ return Math.random()-.5; }).slice(0,5), i=0, good=0, t0=Date.now(), body=$("enBody");
+    function show(){ var s=bank[i];
+      body.innerHTML='<div class="card" style="text-align:center"><div class="small muted">'+(i+1)+' / 5 · ⭐ '+good+'</div><div class="en-s" id="enS">'+esc(s)+'</div><div class="row" style="gap:8px;justify-content:center;flex-wrap:wrap"><button class="btn ghost" id="enListen">🔊 '+tr("കേൾക്കൂ","सुनो","Listen")+'</button>'+(EN_SR?'<button class="btn" id="enMic">🎤 '+tr("പറയൂ","बोलो","Speak")+'</button>':'')+'</div>'+
+        (EN_SR?'':'<div class="small muted" style="margin-top:10px">'+tr("Keyboard-ലെ 🎤 അമർത്തി വാക്യം പറയൂ:","Keyboard का 🎤 दबाकर वाक्य बोलो:","Tap 🎤 on your keyboard and say the sentence:")+'</div><div class="row" style="gap:6px;margin-top:6px"><input id="enTxt" style="flex:1" placeholder="🎤 …"><button class="btn" id="enChk">✓</button></div>')+
+        '<div id="enRes" style="margin-top:10px"></div></div>';
+      $("enListen").onclick=function(){ if(!enSpeak(s)) toast(tr("ഈ phone-ൽ ശബ്ദം ലഭ്യമല്ല","इस phone पर आवाज़ उपलब्ध नहीं","Voice is not available on this phone")); };
+      var judge=function(said){ var r=enScore(s, said), pass=r.pct>=80; if(pass) good++;
+        $("enS").innerHTML=r.words.map(function(w,k){ return '<span style="color:'+(r.hit[k]?'#1f8a5b':'#d64545')+';font-weight:'+(r.hit[k]?600:800)+'">'+esc(w)+'</span>'; }).join(" ");
+        $("enRes").innerHTML='<div style="font-size:26px;font-weight:800">'+r.pct+'% '+(r.pct>=90?'🌟':r.pct>=80?'👍':'💪')+'</div><div class="small muted">'+tr("നീ പറഞ്ഞത്: ","तुमने कहा: ","You said: ")+'“'+esc(said)+'”</div><div class="row" style="gap:8px;justify-content:center;margin-top:8px"><button class="btn ghost sm" id="enRetry">↻ '+tr("വീണ്ടും","फिर से","Try again")+'</button><button class="btn sm" id="enNext">'+(i<4?tr("അടുത്തത്","अगला","Next"):tr("കഴിഞ്ഞു","पूरा","Finish"))+' ›</button></div>';
+        $("enRetry").onclick=function(){ if(pass) good--; show(); }; $("enNext").onclick=function(){ i++; if(i<5) show(); else fin(); }; };
+      if(EN_SR) $("enMic").onclick=function(){ var m=this, rec=new EN_SR(); rec.lang="en-IN"; rec.interimResults=false; rec.maxAlternatives=1; m.textContent="🎙️ …"; m.disabled=true;
+        rec.onresult=function(ev){ judge(ev.results[0][0].transcript); }; rec.onerror=function(){ m.disabled=false; m.textContent="🎤 "+tr("പറയൂ","बोलो","Speak"); toast(tr("കേട്ടില്ല — വീണ്ടും പറയൂ","सुना नहीं — फिर बोलो","Didn't hear you — try again")); }; rec.onend=function(){ m.disabled=false; m.textContent="🎤 "+tr("പറയൂ","बोलो","Speak"); }; try{ rec.start(); }catch(e){ m.disabled=false; } };
+      else { $("enChk").onclick=function(){ var t=$("enTxt").value.trim(); if(t) judge(t); }; $("enTxt").onkeydown=function(e){ if(e.key==="Enter") $("enChk").click(); }; } }
+    function fin(){ body.innerHTML='<div class="card" style="text-align:center"><div style="font-size:46px">'+(good>=4?'🏆':'💪')+'</div><div style="font-size:24px;font-weight:800">'+good+' / 5</div><div class="muted">'+tr("80%-ന് മുകളിൽ ശരിയായ വാക്യങ്ങൾ","80% से ऊपर सही वाक्य","sentences said 80% right or better")+'</div><button class="btn" id="enAgain" style="margin-top:10px">'+tr("വീണ്ടും","फिर से","Again")+'</button></div>'; $("enAgain").onclick=run;
+      skLog("english","read",lvl,good,5,Math.round((Date.now()-t0)/1000)); }
+    show(); }
+  run(); }
+
 function setSView(v){
   sView=v; setTimeout(saveUI,0);
   document.querySelectorAll("#sNav button").forEach(function(x){x.classList.toggle("on",x.dataset.v===v);});
-  ["today","study","quiz","progress","assist"].forEach(function(x){ $("sv-"+x).classList.toggle("hidden", x!==v); });
+  ["today","study","quiz","progress","skills","assist"].forEach(function(x){ $("sv-"+x).classList.toggle("hidden", x!==v); });
   if(v==="assist"){ var av=$("sv-assist"), off=!feat("ai"); av.classList.toggle("feat-off", off); var lc=av.querySelector(".lockcard"); if(off && !lc){ var d=document.createElement("div"); d.className="lockcard"; d.innerHTML=lockCard("ai"); av.insertBefore(d, av.firstChild); } if(!off && lc) lc.remove(); }
   if(v==="study") renderStudy();
-  if(v==="today") renderToday(); if(v==="progress") renderProgress(); if(v==="quiz") loadQuiz(); if(v==="assist") openAssist();
+  if(v==="today") renderToday(); if(v==="progress") renderProgress(); if(v==="skills") renderSkills(); else stopAll(); if(v==="quiz") loadQuiz(); if(v==="assist") openAssist();
   window.scrollTo(0,0);
 }
 // On a computer, a WhatsApp link asks: WhatsApp Desktop app / WhatsApp Web / copy the message (Web alone fails when only the Desktop app is used).
@@ -1240,7 +1419,7 @@ function applyLang(){
 }
 function langBtn(l){ return l==="ml"?"മലയാളം":l==="hi"?"हिंदी":"English"; }
 function snapKey(){ try{ var t=(token||"").slice(-12); return "ek_snap_"+t; }catch(e){ return "ek_snap"; } }
-function loadMe(){ return api("/api/me").then(function(d){ S=d; setTimeout(clearBadge, 1500); xpNews(); setTimeout(function(){ dykShow(); }, 1200); try{ var js=JSON.stringify(d); if(js.length<400000) lsSet(snapKey(), js); }catch(e){} setTimeout(ssWarn, 1200); appOnlyGate(); if(d.lang && d.lang!==LANG){ LANG=d.lang; applyLang(); } headRender(); setWatermark(); checkLevelUp(); if(!WX.at || Date.now()-WX.at>20*60000){ WX.at=Date.now(); api("/api/weather").then(function(w){ WX.w=w.ok?w:null; headRender(); }).catch(function(){}); } }); }
+function loadMe(){ return api("/api/me").then(function(d){ S=d; try{ skillsNav(); }catch(e){} setTimeout(clearBadge, 1500); xpNews(); setTimeout(function(){ dykShow(); }, 1200); try{ var js=JSON.stringify(d); if(js.length<400000) lsSet(snapKey(), js); }catch(e){} setTimeout(ssWarn, 1200); appOnlyGate(); if(d.lang && d.lang!==LANG){ LANG=d.lang; applyLang(); } headRender(); setWatermark(); checkLevelUp(); if(!WX.at || Date.now()-WX.at>20*60000){ WX.at=Date.now(); api("/api/weather").then(function(w){ WX.w=w.ok?w:null; headRender(); }).catch(function(){}); } }); }
 var WX={at:0,w:null}, headTimer=null;
 var WXI={0:["☀️","🌙","Clear"],1:["🌤️","🌙","Mostly clear"],2:["⛅","☁️","Partly cloudy"],3:["☁️","☁️","Cloudy"],45:["🌫️","🌫️","Fog"],48:["🌫️","🌫️","Fog"],51:["🌦️","🌧️","Drizzle"],53:["🌦️","🌧️","Drizzle"],55:["🌦️","🌧️","Drizzle"],61:["🌧️","🌧️","Rain"],63:["🌧️","🌧️","Rain"],65:["🌧️","🌧️","Heavy rain"],71:["🌨️","🌨️","Snow"],80:["🌦️","🌧️","Showers"],81:["🌧️","🌧️","Showers"],82:["⛈️","⛈️","Heavy showers"],95:["⛈️","⛈️","Thunderstorm"],96:["⛈️","⛈️","Thunderstorm"],99:["⛈️","⛈️","Thunderstorm"]};
 function greet(h){ return h<5? [tr("ഇനി ഉറങ്ങാം","अब सो जाओ","Time to sleep"),"🌙"] : h<12? [tr("സുപ്രഭാതം","सुप्रभात","Good morning"),"☀️"] : h<17? [tr("ശുഭ ഉച്ച","शुभ दोपहर","Good afternoon"),"🌤️"] : h<21? [tr("ശുഭ സന്ധ്യ","शुभ संध्या","Good evening"),"🌆"] : [tr("ശുഭ രാത്രി","शुभ रात्रि","Good night"),"🌙"]; }
@@ -3055,6 +3234,7 @@ function renderOverview(){
   if(lsGet("ek_owner")!=="0"){ h+='<div class="card" style="margin-top:14px" id="rgBox"><span class="spinner"></span></div>'; setTimeout(regCard, 0); h+='<div class="card" style="margin-top:14px" id="pyBox"><span class="spinner"></span></div>'; setTimeout(payCard, 0); }
   if(lsGet("ek_owner")!=="0"){ h+='<div class="card" style="margin-top:14px" id="plBox"><span class="spinner"></span></div>'; setTimeout(plansCard, 0); h+='<div class="card" style="margin-top:14px" id="shBox"><span class="spinner"></span></div>'; setTimeout(shopCard, 0); }
   if(lsGet("ek_owner")!=="0"){ h+='<div class="card" style="margin-top:14px" id="sfBox"><span class="spinner"></span></div>'; setTimeout(sfCard, 0); }
+  h+='<div class="card" style="margin-top:14px" id="skBoxA"><span class="spinner"></span></div>'; setTimeout(skAdminCard, 0);
   if(lsGet("ek_owner")!=="0"){ h+='<div class="card" style="margin-top:14px" id="paBox"><span class="spinner"></span></div>'; setTimeout(parentsCard, 0); } h+='<div id="lkBox2" style="margin-top:14px"></div>'; setTimeout(loadLocked, 0);
   h+='<div class="card" style="margin-top:14px" id="devBox"><span class="spinner"></span></div>'; setTimeout(devicesCard, 0);
   h+='<div class="card" style="margin-top:14px" id="holBox"><span class="spinner"></span></div>'; setTimeout(holidaysCard, 0);
@@ -3466,6 +3646,37 @@ function sylAll(btn){ btn.disabled=true; var done=0, tried=0;
 
 // ----- tutor: edit a student's name, username, phones, or set a PIN of your choice -----
 document.addEventListener("click", function(e){ var b=e.target.closest && e.target.closest("[data-plan]"); if(!b) return; var P2={basic:[],standard:["practice","revision","coach"],premium:["practice","mock","paper","ai","revision","coach"]}[b.dataset.plan]; document.querySelectorAll(".seFeat").forEach(function(x){ x.checked=P2.indexOf(x.value)>=0; }); });
+// 🧠 Skills: which students may USE Abacus / Speed maths / Spoken English (all students and parents can see them)
+function skAdminCard(){ api("/api/admin/skills").then(function(d){ skAdminDraw(d); }).catch(function(e){ var b=$("skBoxA"); if(b) b.innerHTML='<div class="small muted">🧠 Skills: '+esc(e.message)+'</div>'; }); }
+var SK_K=[["abacus","🧮","Abacus"],["speed","⚡","Speed maths"],["english","🗣️","Spoken English"]];
+function skFmt(dt){ try{ return new Date(dt+"T00:00:00").toLocaleDateString("en-IN",{day:"numeric",month:"short"}); }catch(e){ return dt; } }
+function skAdminDraw(d){ var b=$("skBoxA"); if(!b) return; var md=d.modes||{}, D=d.defaults||{days:30,perDay:5}, t0=d.today, allOn=SK_K.filter(function(k){ return md[k[0]]!=="off"; });
+  var h='<div class="row between" style="flex-wrap:wrap;gap:6px"><h3>🧠 Skills — Abacus · Speed maths · Spoken English</h3><input id="skFind" type="search" placeholder="Find student…" style="max-width:200px"></div><div class="small muted" style="margin:4px 0 8px">Every student and parent can <b>see</b> Skills. A student can <b>use</b> one only after you switch it ON — for a number of days, with a limit of sessions per day. Tap a chip to switch on, change or switch off. '+(allOn.length?'<b>On for everyone</b> (Student extra features): '+allOn.map(function(k){ return k[1]+" "+k[2]+" ("+md[k[0]]+")"; }).join(", ")+' — uses the default sessions per day.':'')+'</div>';
+  h+='<div class="row" style="gap:8px;flex-wrap:wrap;align-items:center;background:#f6f8fb;border-radius:12px;padding:8px 10px;margin-bottom:8px"><b class="small">⚙️ Default when switching ON:</b>'+(d.owner?'<label class="small row" style="gap:4px">📅 <input id="skDD" type="number" min="0" max="366" value="'+D.days+'" style="width:70px"> days</label><label class="small row" style="gap:4px">🎯 <input id="skDP" type="number" min="1" max="50" value="'+D.perDay+'" style="width:64px"> sessions / day</label><button class="btn sm" id="skDSave">Save default</button><span class="small muted">0 days = no end date</span>':'<span class="small">📅 '+(D.days?D.days+' days':'no end date')+' · 🎯 '+D.perDay+' sessions / day <span class="muted">(owner sets this)</span></span>')+'</div>';
+  h+='<div class="row" style="gap:6px;margin-bottom:8px;flex-wrap:wrap"><span class="small muted" style="align-self:center">All listed students (default days / sessions):</span>'+SK_K.map(function(k){ return '<button class="btn ghost sm" data-skall="'+k[0]+'">'+k[1]+' '+k[2]+' ON</button>'; }).join("")+'<button class="btn ghost sm" data-skall="none">All OFF</button></div>';
+  h+='<div class="scroll" style="max-height:460px"><table><thead><tr><th>Student</th><th>Skills (tap to change)</th><th>Progress</th></tr></thead><tbody>'+(d.items||[]).map(function(x){ var p=x.prog||{}, cfg=x.cfg||{};
+    return '<tr data-skrow="'+x.id+'" data-nm="'+esc((x.name+" "+(x.cls||"")).toLowerCase())+'"><td><b>'+esc(x.name)+'</b><div class="small muted">'+esc(x.cls||"")+'</div></td><td>'+SK_K.map(function(k){ var c=cfg[k[0]], on=!!c&&(!c.until||c.until>=t0), ended=!!c&&!on;
+      return '<button class="chip" data-skedit="'+k[0]+'" style="margin:2px;text-align:left;'+(on?'background:#e7f7ee;border-color:#1f8a5b;color:#14532d':ended?'background:#fff4e5;border-color:#f0b35a;color:#8a4b00':'opacity:.6')+'">'+k[1]+(on?' ON <span style="font-weight:500;font-size:11.5px">· '+(c.perDay||D.perDay)+'/day'+(c.until?' · till '+skFmt(c.until):'')+'</span>':ended?' <span style="font-size:11.5px">ended '+skFmt(c.until)+'</span>':'')+'</button>'; }).join("")+'</td><td class="small">'+(p.abacus?'🧮 L'+p.abacus.level+' ':'')+(x.wk?'· '+x.wk+' this week':(p.abacus||p.speed||p.english?'':'<span class="muted">—</span>'))+'</td></tr>'; }).join("")+'</tbody></table></div>';
+  b.innerHTML=h;
+  var cfgOf=function(id){ var it=(d.items||[]).filter(function(x){ return x.id===id; })[0]; return (it&&it.cfg)||{}; };
+  var send=function(id, cfg){ var o={}; Object.keys(cfg).forEach(function(k){ if(cfg[k]) o[k]={until:cfg[k].until||"", perDay:cfg[k].perDay||D.perDay}; }); return api("/api/admin/student/skills",{id:id, skills:o}); };
+  var endOf=function(days){ if(!days) return ""; var t=new Date(t0+"T00:00:00Z"); t.setUTCDate(t.getUTCDate()+days-1); return t.toISOString().slice(0,10); };
+  if(d.owner) $("skDSave").onclick=function(){ api("/api/admin/skills",{defaults:{days:Number($("skDD").value)||0, perDay:Number($("skDP").value)||5}}).then(function(r){ toast("✅ Default saved"); skAdminDraw(r); }).catch(function(e){ toast(e.message); }); };
+  b.querySelectorAll("[data-skedit]").forEach(function(c){ c.onclick=function(){ var tr0=c.closest("tr"), id=Number(tr0.dataset.skrow), k=c.dataset.skedit, K=SK_K.filter(function(x){ return x[0]===k; })[0], cur=Object.assign({}, cfgOf(id)), cc=cur[k], on=!!cc&&(!cc.until||cc.until>=t0), nm=tr0.querySelector("b").textContent;
+      var daysLeft= cc&&cc.until&&on? Math.round((Date.parse(cc.until+"T00:00:00Z")-Date.parse(t0+"T00:00:00Z"))/864e5)+1 : (cc&&!cc.until&&on? 0 : D.days);
+      var w=ekSheet('<h2 style="margin:0 0 4px">'+K[1]+' '+K[2]+'</h2><div class="small muted" style="margin-bottom:10px">'+esc(nm)+(on?' · now ON'+(cc.until?' till '+skFmt(cc.until):' (no end date)'):'')+'</div><div class="grid2"><div><label class="f">📅 For how many days</label><input id="skeD" type="number" min="0" max="366" value="'+daysLeft+'"><div class="small muted">0 = no end date · ends <b id="skeEnd"></b></div></div><div><label class="f">🎯 Sessions per day</label><input id="skeP" type="number" min="1" max="50" value="'+((cc&&cc.perDay)||D.perDay)+'"><div class="small muted">Default '+D.perDay+'</div></div></div><div class="row" style="gap:6px;margin-top:8px;flex-wrap:wrap">'+[7,15,30,60,90].map(function(n){ return '<button class="chip" data-skq="'+n+'">'+n+' days</button>'; }).join("")+'</div><div class="row" style="gap:8px;margin-top:14px"><button class="btn" id="skeSave">'+(on?'Save':'Switch ON')+'</button>'+(cc?'<button class="btn ghost" id="skeOff" style="color:#c0392b">Switch OFF</button>':'')+'<button class="btn ghost" data-x>Cancel</button></div>',"skEd");
+      var paint=function(){ var n=Number($("skeD").value)||0; $("skeEnd").textContent= n? skFmt(endOf(n)) : "never"; }; $("skeD").oninput=paint; paint();
+      w.querySelectorAll("[data-skq]").forEach(function(q){ q.onclick=function(){ $("skeD").value=q.dataset.skq; paint(); }; });
+      $("skeSave").onclick=function(){ var n=Math.max(0,Math.min(366,Number($("skeD").value)||0)), pd=Math.max(1,Math.min(50,Number($("skeP").value)||D.perDay)); cur[k]={until:endOf(n), perDay:pd};
+        send(id,cur).then(function(){ w.remove(); toast("✅ "+K[2]+" ON for "+nm+(n?" — "+n+" days":"")+", "+pd+"/day"); skAdminCard(); }).catch(function(e){ toast(e.message); }); };
+      if($("skeOff")) $("skeOff").onclick=function(){ delete cur[k]; send(id,cur).then(function(){ w.remove(); toast("Switched off"); skAdminCard(); }).catch(function(e){ toast(e.message); }); };
+    }; });
+  b.querySelectorAll("[data-skall]").forEach(function(x){ x.onclick=function(){ var k=x.dataset.skall, rows=[].slice.call(b.querySelectorAll("tr[data-skrow]")).filter(function(r){ return r.style.display!=="none"; }); if(!rows.length) return;
+      if(!confirm((k==="none"?"Switch OFF all skills":"Switch ON "+k+" ("+(D.days?D.days+" days":"no end date")+", "+D.perDay+"/day)")+" for "+rows.length+" student(s)?")) return;
+      Promise.all(rows.map(function(r){ var id=Number(r.dataset.skrow), cur=Object.assign({}, cfgOf(id)); if(k==="none") cur={}; else { var c=cur[k]; if(!(c&&(!c.until||c.until>=t0))) cur[k]={until:endOf(D.days), perDay:D.perDay}; } return send(id,cur); }))
+        .then(function(){ toast("✅ Saved for "+rows.length); skAdminCard(); }).catch(function(e){ toast(e.message); skAdminCard(); }); }; });
+  $("skFind").oninput=function(){ var q=this.value.trim().toLowerCase(); b.querySelectorAll("tr[data-skrow]").forEach(function(r){ r.style.display= !q||r.dataset.nm.indexOf(q)>=0 ? "" : "none"; }); };
+}
 function stuEdit(a){ var m=$("stuEd"); if(m) m.remove(); m=document.createElement("div"); m.className="modal"; m.id="stuEd";
   m.innerHTML='<div class="box" style="max-width:560px;width:94vw;max-height:90vh;overflow:auto;text-align:left;padding:18px;background:#fff;color:var(--ink)"><div class="row between"><h2>✏️ Edit student</h2><button class="btn ghost sm" data-x>✕</button></div>'+
     '<label class="f" style="margin-top:10px">Full name</label><input id="seName" type="text" maxlength="80" value="'+esc(a.name)+'" placeholder="e.g. Arhan Mohammed">'+
@@ -3473,6 +3684,7 @@ function stuEdit(a){ var m=$("stuEd"); if(m) m.remove(); m=document.createElemen
     '<div class="grid2" style="margin-top:10px"><div><label class="f">Student phone</label><input id="sePh" type="tel" value="'+esc(a.phone||"")+'" placeholder="+968…"></div><div><label class="f">Parent phone</label><input id="sePp" type="tel" value="'+esc(a.parent_phone||"")+'" placeholder="+968…"></div></div>'+
     (a.subjChoice&&a.subjChoice.all.length?'<label class="f" style="margin-top:12px">📚 Subjects this student takes</label><div class="small muted" style="margin-bottom:4px">Untick a subject to hide it (study, quiz, mock, homework). ⭐ = optional / skill subject — only ticked students get it.</div><div class="stack" style="gap:4px">'+a.subjChoice.all.map(function(x){ var on=a.subjChoice.picked.length?a.subjChoice.picked.indexOf(x.id)>=0:!x.optional; return '<label class="row" style="gap:8px;font-weight:500"><input type="checkbox" class="seSub" value="'+x.id+'"'+(on?' checked':'')+' style="width:auto"> '+esc(x.name)+(x.optional?' <span class="pill">⭐ optional</span>':'')+'</label>'; }).join("")+'</div>':'')+
     (a.subjChoice&&a.subjChoice.features?'<label class="f" style="margin-top:12px">⭐ Plan / add-ons</label><div class="small muted" style="margin-bottom:4px">Locked add-ons still show to the student with a 🔒 “Ask Ma\'am” button.</div><div class="row" style="gap:6px;margin-bottom:6px"><button type="button" class="btn ghost sm" data-plan="basic">Basic</button><button type="button" class="btn ghost sm" data-plan="standard">Standard</button><button type="button" class="btn ghost sm" data-plan="premium">Premium (all)</button></div><div class="stack" style="gap:4px">'+a.subjChoice.features.map(function(f){ var on=!a.subjChoice.featuresOn||a.subjChoice.featuresOn.indexOf(f.k)>=0; return '<label class="row" style="gap:8px;font-weight:500"><input type="checkbox" class="seFeat" value="'+f.k+'"'+(on?' checked':'')+' style="width:auto"> '+f.ic+' '+esc(f.name)+' <span class="muted small">— '+esc(f.desc)+'</span></label>'; }).join("")+'</div>':'')+
+    (a.subjChoice&&a.subjChoice.skillsOn?'<label class="f" style="margin-top:12px">🧠 Skills this student can use</label><div class="small muted" style="margin-bottom:4px">The student and parents always see Skills; ticked ones open for practice (new ones get the default days and sessions per day — change them in Overview → 🧠 Skills).</div><div class="row" style="gap:12px;flex-wrap:wrap">'+[["abacus","🧮 Abacus"],["speed","⚡ Speed maths"],["english","🗣️ Spoken English"]].map(function(k){ return '<label class="row" style="gap:6px;font-weight:600"><input type="checkbox" class="seSk" value="'+k[0]+'"'+(a.subjChoice.skillsOn.indexOf(k[0])>=0?' checked':'')+' style="width:auto">'+k[1]+'</label>'; }).join("")+'</div>':'')+
     '<details style="margin-top:12px"><summary style="cursor:pointer;font-weight:700">🔑 Set a new PIN of my choice</summary><div class="small muted" style="margin:6px 0">PINs are stored locked (encrypted) — nobody, not even the owner, can see the current PIN. You can give a new one: 6 digits, not easy like 123456.</div><input id="sePin" type="text" inputmode="numeric" maxlength="6" placeholder="6-digit PIN" autocomplete="off"></details>'+
     '<span class="err" id="seErr"></span><div class="row" style="gap:8px;margin-top:14px"><button class="btn" id="seSave">Save</button><button class="btn ghost" data-x>Cancel</button></div></div>';
   document.body.appendChild(m); m.addEventListener("click", function(e){ if(e.target===m||e.target.closest("[data-x]")) m.remove(); });
@@ -3483,7 +3695,8 @@ function stuEdit(a){ var m=$("stuEd"); if(m) m.remove(); m=document.createElemen
       var def=a.subjChoice.all.filter(function(x){return !x.optional;}).map(function(x){return x.id;}); body.subjects=(ch.length===def.length&&def.every(function(id){return ch.indexOf(id)>=0;}))?null:ch; }
     if(pin){ if(!/^\d{6}$/.test(pin)){ $("seErr").textContent="PIN must be exactly 6 digits"; return; } if(!confirm("Set this new PIN? The old PIN stops working and the student is signed out.")) return; body.set_pin=pin; }
     b.disabled=true; b.textContent="Saving…";
-    api("/api/admin/student/update", body).then(function(r){ m.remove(); if(r.pin){ T.newCreds={name:body.name, username:r.username||body.username, pin:r.pin}; } toast("✅ Saved"+(r.username&&r.username!==a.username?" — new username: "+r.username:"")); loadDetail(a.id); window.scrollTo(0,0); })
+    var skP=Promise.resolve(); if(a.subjChoice&&a.subjChoice.skillsOn){ var skOn=[].slice.call(document.querySelectorAll(".seSk")).filter(function(x){return x.checked;}).map(function(x){return x.value;}); if(skOn.sort().join()!==a.subjChoice.skillsOn.slice().sort().join()) skP=api("/api/admin/student/skills",{id:a.id, skills:skOn}); }
+    skP.then(function(){ return api("/api/admin/student/update", body); }).then(function(r){ m.remove(); if(r.pin){ T.newCreds={name:body.name, username:r.username||body.username, pin:r.pin}; } toast("✅ Saved"+(r.username&&r.username!==a.username?" — new username: "+r.username:"")); loadDetail(a.id); window.scrollTo(0,0); })
     .catch(function(e){ b.disabled=false; b.textContent="Save"; $("seErr").textContent=e.message; }); };
 }
 function subTakers(sid){ api("/api/admin/subject/students?subject_id="+sid).then(function(d){ var m=$("subTk"); if(m) m.remove(); m=document.createElement("div"); m.className="modal"; m.id="subTk";
@@ -4668,6 +4881,9 @@ function pDraw(){ var d=PC.d, r=d.report||{}, P=PH.perms||{}, first=d.name.split
     '<div class="p-row"><span style="flex:1">'+tr("ഇന്ന് അവസാനം","आज आख़िरी बार","Last used today")+'</span><b>'+(u.lastToday? new Date(u.lastToday).toLocaleTimeString([], {hour:"numeric", minute:"2-digit"}) : '—')+'</b></div>'+
     '<div class="p-row"><span style="flex:1">'+tr("ഇന്ന് ആകെ","आज कुल","Total today")+'</span><b>'+u.minsToday+' min · '+u.opensToday+'× '+tr("തുറന്നു","खोला","opened")+'</b></div>'+
     (u.device?'<div class="p-row"><span style="flex:1">'+tr("ഉപകരണം","डिवाइस","Device")+'</span><b>'+esc(u.device)+'</b></div>':'')+'</div>'; } else if(d.usage==="locked") PRO.push(["📱","App usage — online / offline, open & close times"]);
+  if(d.skills && d.skills!=="locked"){ var SKP=d.skills; h+='<div class="card"><h2>🧠 '+tr(first+"-ന്റെ Skills",first+" की Skills",first+"'s skills")+'</h2>'+["abacus","speed","english"].map(function(k){ var x=SKP[k]; if(!x) return ""; var I=SK_INFO[k], w=x.week||{};
+      return '<div class="p-row" style="align-items:flex-start"><span style="font-size:22px">'+I[0]+'</span><span style="flex:1"><b>'+tr(I[2],I[3],I[4])+'</b><div class="small muted">'+(x.on? (x.lim?'🎯 '+tr("ഇന്ന് ","आज ","Today ")+x.lim.used+'/'+x.lim.perDay+(x.lim.until?' · 📅 '+tr("വരെ ","तक ","till ")+skDate(x.lim.until):'')+'<br>':'')+(k==="abacus"?'Level '+x.level+' / 10 · ':'')+tr(w.n+" sessions ഈ ആഴ്ച",w.n+" sessions इस हफ़्ते",w.n+" sessions this week")+(w.mins?' · '+w.mins+' min':'')+(w.acc!==null&&w.acc!==undefined?' · '+w.acc+'% '+tr("ശരി","सही","right"):'')+(x.sessions?'':'<br>'+tr("ഇതുവരെ തുടങ്ങിയില്ല","अभी शुरू नहीं किया","Not started yet")) : x.state==="pro"? '⭐ Pro' : (x.lim&&x.lim.ended)? '⌛ '+tr("കാലാവധി കഴിഞ്ഞു ("+skDate(x.lim.until)+") — Ma\'am-നോട് ചോദിക്കൂ","समय खत्म ("+skDate(x.lim.until)+") — Ma\'am से पूछें","Ended on "+skDate(x.lim.until)+" — ask Ma\'am to renew") : '🔒 '+tr("Ma\'am ഇനിയും on ആക്കിയിട്ടില്ല","Ma\'am ने अभी चालू नहीं किया","Not switched on yet — ask Ma\'am"))+'</div></span>'+(x.on?'<span class="pill" style="background:#e7f7ee;color:#1f8a5b">ON</span>':'')+'</div>'; }).join("")+'</div>'; }
+  else if(d.skills==="locked") PRO.push(["🧠","Skills progress — Abacus, Speed maths, Spoken English"]);
   if(d.goal && d.goal!=="locked"){ var g=d.goal, pct=g.min? Math.min(100, Math.round(g.done/g.min*100)) : 0; h+='<div class="card"><h2>🎯 '+tr("ദിവസത്തെ പഠന ലക്ഷ്യം","रोज़ का पढ़ाई लक्ष्य","Daily study goal")+'</h2>'+
     (g.min? '<div class="row between" style="margin:6px 0"><span>'+tr("ഇന്ന്","आज","Today")+': <b>'+g.done+' / '+g.min+' min</b></span><b style="color:'+(pct>=100?'#16a34a':'#d97706')+'">'+(pct>=100?'✅ ':'')+pct+'%</b></div><div style="height:10px;border-radius:6px;background:#eef2f7;overflow:hidden"><i style="display:block;height:100%;width:'+pct+'%;background:linear-gradient(90deg,#22c55e,#16a34a)"></i></div>' : '<div class="small muted">'+tr("ഇതുവരെ ലക്ഷ്യം വെച്ചിട്ടില്ല","अभी लक्ष्य नहीं रखा","No goal set yet")+'</div>')+
     '<div class="row" style="gap:6px;margin-top:8px;flex-wrap:wrap">'+[30,45,60,90,120].map(function(m){ return '<button class="dev-chip'+(g.min===m?' on':'')+'" data-goal="'+m+'">'+m+' min</button>'; }).join("")+'<button class="dev-chip" data-goal="0">'+tr("വേണ്ട","नहीं","None")+'</button></div><div class="small muted" style="margin-top:4px">'+tr(first+"-ന്റെ app-ലും ഈ ലക്ഷ്യം കാണിക്കും.",first+" के app में भी यह लक्ष्य दिखेगा।",first+" sees this goal in their app too.")+'</div></div>'; } else if(d.goal==="locked") PRO.push(["🎯","Set a daily study-time goal"]);
