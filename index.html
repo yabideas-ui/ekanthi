@@ -75,6 +75,16 @@ tr.click{cursor:pointer}tr.click:hover td{background:#f7f9fc}
 .err{color:var(--bad);font-size:13px;min-height:18px}
 /* student */
 #student{max-width:560px;margin:0 auto;min-height:100vh;padding-bottom:80px}
+#parent{max-width:620px;margin:0 auto;min-height:100vh;background:#f6f5f0}
+#parent .s-main{padding:14px 14px 30px}
+#pMain .card{border-radius:20px;border:1px solid rgba(20,58,94,.07);box-shadow:0 6px 22px rgba(11,34,57,.07);margin-bottom:12px}
+#pMain .card h2{font-size:17px;letter-spacing:-.01em;color:#0b2239}
+#pMain .card.kpi{box-shadow:none;border:1px solid #edf0f4;background:#fbfbf8;margin:0}
+#pMain .p-hero{border-left-width:0!important;border-top:5px solid}
+#pMain .dev-chips .dev-chip{border-radius:999px}
+#pMain>.dev-chips{display:flex;gap:6px;overflow-x:auto;padding:2px 0 6px}
+#pMain>.dev-chips .dev-chip{background:#fff;border:1px solid #e4e7ec;padding:8px 14px;font-weight:700;box-shadow:0 3px 10px rgba(11,34,57,.06)}
+#pMain>.dev-chips .dev-chip.on{background:#0b2239;color:#fff;border-color:#0b2239}
 .s-head{background:var(--brand);color:#fff;padding:16px 16px 18px;border-radius:0 0 18px 18px}
 .s-head .hi{font-size:20px;font-weight:800}
 .s-head .sub{opacity:.85;font-size:13px}
@@ -322,8 +332,8 @@ body.in-test .tb-link{display:none!important}
 #appGate,#lockScr{position:fixed;inset:0;z-index:100000;background:linear-gradient(160deg,#1e293b,#7f1d1d);color:#fff;display:flex;align-items:center;justify-content:center;padding:18px;overflow:auto}
 #appGate .box,#lockScr .box{max-width:420px;width:100%;text-align:center}
 #lockScr textarea{width:100%}
-#wmFoot{position:fixed;left:0;right:0;bottom:calc(var(--navh,64px) + env(safe-area-inset-bottom));pointer-events:none;z-index:91;text-align:center;font-size:10px;color:rgba(20,40,70,.5);padding:1px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-body.in-test #wmFoot{bottom:env(safe-area-inset-bottom);color:rgba(20,40,70,.45)}
+#wmFoot{position:static;margin:18px 0 6px;pointer-events:none;text-align:center;font-size:10px;color:rgba(20,40,70,.5);padding:1px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.in-test #wmFoot{position:fixed;left:0;right:0;bottom:env(safe-area-inset-bottom);z-index:91;color:rgba(20,40,70,.45)}
 @media print{#wmFoot{display:none}}
 @media print{#wmark{display:none}}
 body.as-student #student{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
@@ -368,21 +378,55 @@ body.shielded #shield{display:flex}body.shielded #student{filter:blur(18px)}
 #repBox{background:#fff}
 #askBtn{position:fixed;right:12px;bottom:84px;z-index:80;display:none;width:44px;height:44px;padding:0;background:rgba(255,255,255,.92);color:#1b2a3d;border:1px solid #e6d39a;border-radius:50%;font-size:21px;line-height:42px;text-align:center;box-shadow:0 4px 14px rgba(16,24,40,.18);cursor:pointer;backdrop-filter:blur(6px)}
 body.as-student.in-test #askBtn{display:block;animation:askPulse 3s ease-in-out 2}
-body.th-xmas .s-head{background:radial-gradient(420px 180px at 92% 0%,rgba(255,255,255,.22),transparent 60%),linear-gradient(150deg,#7c1420,#1d5b36)}
-body.th-newyear .s-head{background:radial-gradient(420px 180px at 90% 0%,rgba(255,215,90,.45),transparent 60%),linear-gradient(150deg,#1a1240,#3d2a7a)}
-body.th-eid .s-head{background:radial-gradient(420px 180px at 90% 0%,rgba(242,200,90,.38),transparent 60%),linear-gradient(150deg,#0c3b2c,#17704f)}
-body.th-oman .s-head{background:linear-gradient(180deg,rgba(255,255,255,0) 72%,rgba(255,255,255,.18) 72%,rgba(255,255,255,.18) 76%,rgba(0,0,0,0) 76%),linear-gradient(150deg,#b3141c 0%,#c8202a 45%,#1d7a2e 100%)}
-body.th-india .s-head{background:linear-gradient(150deg,#e8781a 0%,#1f3f73 55%,#13803a 100%)}
-body.th-harvest .s-head,body.th-vishu .s-head,body.th-onam .s-head{background:radial-gradient(420px 180px at 90% 0%,rgba(255,224,102,.55),transparent 60%),linear-gradient(150deg,#7a5a00,#2f6b1f)}
-body.th-holi .s-head{background:linear-gradient(120deg,#d6336c,#7048e8 40%,#1c7ed6 70%,#f59f00)}
-body.th-easter .s-head{background:linear-gradient(150deg,#5b3f99,#2f8a7a)}
-body.th-diwali .s-head{background:radial-gradient(420px 180px at 90% 0%,rgba(255,190,60,.6),transparent 60%),linear-gradient(150deg,#5a0f1e,#8a3b0b)}
-body.th-tuition .s-head{background:radial-gradient(420px 180px at 90% 0%,rgba(255,240,170,.45),transparent 60%),linear-gradient(150deg,#0e6fa8,#2bb3c0)}
-body.th-weekend .s-head{background:radial-gradient(500px 200px at 90% 0%,rgba(242,182,50,.22),transparent 60%),linear-gradient(150deg,#163b5e,#246b83)}
+/* festival days: the header keeps the Ekanthi navy; the day shows as a soft glow, a shining ribbon and the animated flag/sky */
+.s-head{--fglow:rgba(242,182,50,.28);--fband:none}
+body[class*="th-"] .s-head{background:radial-gradient(520px 210px at 92% 0%,var(--fglow),transparent 62%),linear-gradient(150deg,#0b2239,#1d4f80)}
+.s-head:after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--fband);z-index:2}
+.s-head:before{content:"";position:absolute;left:-40%;bottom:0;width:40%;height:5px;z-index:3;background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);animation:fbShine 3.5s ease-in-out infinite;pointer-events:none}
+body:not([class*="th-"]) .s-head:before,body.th-weekend .s-head:before{display:none}
+@keyframes fbShine{to{left:110%}}
+body.th-oman .s-head{--fglow:rgba(210,28,36,.38);--fband:linear-gradient(90deg,#d21c24 0 33%,#fff 33% 66%,#1a8a3a 66% 100%)}
+body.th-india .s-head{--fglow:rgba(255,153,51,.36);--fband:linear-gradient(90deg,#ff9933 0 33%,#fff 33% 66%,#138808 66% 100%)}
+body.th-xmas .s-head{--fglow:rgba(220,40,50,.32);--fband:repeating-linear-gradient(90deg,#c1121f 0 18px,#fff 18px 24px,#2d6a4f 24px 42px,#fff 42px 48px)}
+body.th-newyear .s-head{--fglow:rgba(255,215,90,.4);--fband:linear-gradient(90deg,#ffd36b,#fff3c4,#ffd36b,#f2b632)}
+body.th-eid .s-head{--fglow:rgba(80,200,140,.32);--fband:linear-gradient(90deg,#17704f,#f2c85a,#17704f,#f2c85a)}
+body.th-harvest .s-head,body.th-vishu .s-head,body.th-onam .s-head{--fglow:rgba(255,224,102,.42);--fband:linear-gradient(90deg,#ffd43b,#f59f00,#2f9e44,#ffd43b)}
+body.th-holi .s-head{--fglow:rgba(214,51,108,.35);--fband:linear-gradient(90deg,#d6336c,#7048e8,#1c7ed6,#f59f00,#2f9e44,#d6336c)}
+body.th-easter .s-head{--fglow:rgba(150,110,230,.32);--fband:linear-gradient(90deg,#b197fc,#63e6be,#ffd8a8,#b197fc)}
+body.th-diwali .s-head{--fglow:rgba(255,170,50,.45);--fband:linear-gradient(90deg,#ff922b,#ffd43b,#ff6b6b,#ffd43b,#ff922b)}
+body.th-tuition .s-head{--fglow:rgba(80,190,230,.35);--fband:linear-gradient(90deg,#4dabf7,#e7f5ff,#4dabf7)}
+body.th-weekend .s-head{--fglow:rgba(242,182,50,.22)}
 .hchip.fest{background:rgba(255,255,255,.95);color:#1b2a3d;border:0;font-weight:600}
 .card.holi{display:flex;gap:12px;align-items:center;background:linear-gradient(135deg,#fff8e1,#fff);border:1px solid #f3dc9b}
 .card.holi.tuition{background:linear-gradient(135deg,#e6f6fd,#fff);border-color:#b6e0f3}
 .s-head{position:relative;overflow:hidden}
+/* ---- Today (premium) ---- */
+#sv-today .card{border-radius:20px;border:1px solid rgba(20,58,94,.07);box-shadow:0 6px 22px rgba(11,34,57,.07)}
+#sv-today h3{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#5b6576;margin:0}
+.tk-card{background:linear-gradient(160deg,#ffffff,#fbf8ef)!important}
+.tk-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.tk-ring{--p:0;width:46px;height:46px;border-radius:50%;background:conic-gradient(#f2b632 calc(var(--p)*1%),#eef1f5 0);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#0b2239}
+.tk-ring span{width:36px;height:36px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center}
+#sv-today .task{border-radius:14px;padding:13px 14px;margin-top:8px;border:1px solid #edf0f4;transition:transform .12s}
+#sv-today .task:active{transform:scale(.99)}
+#sv-today .task .t{font-weight:700}
+#sv-today .task.done{background:#f3fbf6;border-color:#cdeedb}
+#sv-today .task .go{margin-left:auto;color:#b0b8c4;font-size:18px}
+.tstats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ts{background:#fff;border-radius:18px;padding:12px;box-shadow:0 6px 22px rgba(11,34,57,.07);border:1px solid rgba(20,58,94,.07);cursor:pointer;min-width:0}
+.ts-n{font-size:22px;font-weight:800;color:#0b2239;line-height:1.1;white-space:nowrap}
+.ts-n small{font-size:13px;color:#8a93a3;font-weight:700}
+.ts-l{font-size:12px;color:#6b7383;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ts-bar{height:5px;border-radius:5px;background:#eef1f5;margin-top:7px;overflow:hidden}.ts-bar i{display:block;height:100%;background:linear-gradient(90deg,#f2b632,#ffd36b);border-radius:5px}
+.exrow{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}.exrow::-webkit-scrollbar{display:none}
+.ex2{flex:1 0 110px;background:#fff;border-radius:16px;padding:10px 12px;border:1px solid rgba(20,58,94,.07);box-shadow:0 6px 22px rgba(11,34,57,.06);border-top:4px solid var(--c)}
+.ex2 span{display:block;font-size:12px;color:#6b7383;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ex2 b{font-size:19px;color:#0b2239}
+.prow{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px dashed #edf0f4}.prow:last-child{border:0}
+.prow .pn{flex:1;min-width:0;font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.prow .pill{flex:none;white-space:nowrap}
+.smenu{position:absolute;right:12px;top:58px;z-index:30;background:#fff;color:#0b2239;border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.25);overflow:hidden;min-width:180px}
+.smenu button{display:block;width:100%;text-align:left;background:none;border:0;padding:12px 16px;font-weight:700;font-size:14px;cursor:pointer;color:#0b2239}
+.smenu button:hover{background:#f4f6fa}
 .s-head>*:not(.sk-box){position:relative;z-index:1}
 .sk-box{position:absolute;right:0;top:0;width:200px;height:110px;pointer-events:none;z-index:0;opacity:.9}
 .sk b,.sk i{display:block;position:absolute}
@@ -496,6 +540,9 @@ body.on-break #brkBtn,body.on-break #askBtn{display:none!important}
 #landing .lw{max-width:1120px;margin:0 auto;padding:0 20px}
 #landing .serif{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;letter-spacing:-.01em}
 #landing h3{text-transform:none;letter-spacing:0}
+.pubLang{width:auto;padding:7px 10px;border-radius:999px;font-size:13px;font-weight:700;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.3);cursor:pointer}
+.pubLang option{color:#0b2239}
+.pubLang.lt{background:#fff;color:#0b2239;border:1px solid #d7dde6}
 #landing .hero{position:relative;overflow:hidden;color:#fff;background:radial-gradient(900px 500px at 85% -10%,rgba(242,182,50,.28),transparent 60%),radial-gradient(700px 500px at -10% 110%,rgba(43,106,163,.45),transparent 60%),linear-gradient(160deg,#061426 0%,#0b2239 55%,#102e4d 100%);padding-bottom:150px}
 #landing .hero:before{content:"";position:absolute;inset:0;background-image:radial-gradient(1.2px 1.2px at 12% 22%,rgba(255,255,255,.7),transparent),radial-gradient(1px 1px at 72% 12%,rgba(255,255,255,.6),transparent),radial-gradient(1.3px 1.3px at 38% 68%,rgba(255,255,255,.45),transparent),radial-gradient(1px 1px at 88% 58%,rgba(255,255,255,.5),transparent),radial-gradient(1px 1px at 55% 30%,rgba(255,255,255,.35),transparent),radial-gradient(1.2px 1.2px at 22% 85%,rgba(255,255,255,.4),transparent);pointer-events:none}
 #landing nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0;position:relative;z-index:2}
@@ -516,7 +563,7 @@ body.on-break #brkBtn,body.on-break #askBtn{display:none!important}
 #landing .lead{font-size:18px;color:#c3d2e5;max-width:560px;line-height:1.6;margin:0 0 26px}
 #landing .ctas{display:flex;gap:12px;flex-wrap:wrap}
 #landing .trust{display:flex;gap:18px;flex-wrap:wrap;margin-top:26px;color:#aebfd6;font-size:14px}
-#landing .trust span:before{content:"✦ ";color:var(--gd)}
+#landing .trust>span:before{content:"✦ ";color:var(--gd)}
 #landing .ph{justify-self:center;width:280px;border-radius:38px;padding:12px;background:linear-gradient(160deg,#1b3b5e,#0a1c31);box-shadow:0 40px 90px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.12);transform:rotate(3deg)}
 #landing .ph .sc{border-radius:28px;background:#f5f4ef;overflow:hidden;color:#1b2230}
 #landing .ph .top{background:linear-gradient(150deg,#0b2239,#1f4e79);color:#fff;padding:18px 16px 16px}
@@ -592,15 +639,15 @@ body.on-break #brkBtn,body.on-break #askBtn{display:none!important}
 <section id="landing" class="hidden">
   <div class="hero">
     <div class="lw">
-      <nav><a class="lg" href="#" data-go="top"><i>E</i>Ekanthi</a><div class="nb"><button class="b2" data-go="login">Log in</button><button class="b1" data-go="reg" id="lnRegTop">Register</button></div></nav>
+      <nav><a class="lg" href="#" data-go="top"><i>E</i>Ekanthi</a><div class="nb"><span id="lnLangBox"></span><button class="b2" data-go="login">Log in</button><button class="b1" data-go="reg" id="lnRegTop">Register</button></div></nav>
       <div class="hg">
         <div>
           <span class="ey">CBSE · Kerala PSC · Railway</span>
-          <h1 class="serif">Learn daily.<br><em>Grow daily.</em></h1>
-          <p class="ml">പഠിക്കാം, മുന്നേറാം — every single day.</p>
-          <p class="lead">A personal study coach for school students and exam candidates. Short daily practice, real exam-style tests, instant doubt help and a teacher who watches your progress.</p>
-          <div class="ctas"><button class="b1" data-go="reg" id="lnRegHero">Start learning — register</button><button class="b2" data-go="login">I already have a login</button></div>
-          <div class="trust"><span>No ads</span><span>Malayalam · English · हिन्दी</span><span>Parent dashboard</span></div>
+          <h1 class="serif"><span data-i="h1">Learn daily.<br><em>Grow daily.</em></span></h1>
+          <p class="ml"><span data-i="mlline">പഠിക്കാം, മുന്നേറാം — every single day.</span></p>
+          <p class="lead"><span data-i="lead">A personal study coach for school students and exam candidates. Short daily practice, real exam-style tests, instant doubt help and a teacher who watches your progress.</span></p>
+          <div class="ctas"><button class="b1" data-go="reg" id="lnRegHero">Start learning — register</button><button class="b2" data-go="login"><span data-i="havelogin">I already have a login</span></button></div>
+          <div class="trust"><span><span data-i="noads">No ads</span></span><span>Malayalam · English · हिन्दी</span><span>Parent dashboard</span></div>
         </div>
         <div class="ph" aria-hidden="true"><div class="sc">
           <div class="top"><b>Good evening, Riya ✨</b><div>Class 10 · 84 days to board exam</div></div>
@@ -612,36 +659,36 @@ body.on-break #brkBtn,body.on-break #askBtn{display:none!important}
   </div>
   <div class="lw"><div class="tracks" id="lnTracks"></div></div>
   <section class="s"><div class="lw">
-    <div class="kick">Why Ekanthi</div><h2 class="h2 serif">Everything a learner needs, in one calm place.</h2>
-    <p class="sub">Built by a tutor for her own students — now open for everyone who wants to study a little, every day.</p>
+    <div class="kick"><span data-i="whykick">Why Ekanthi</span></div><h2 class="h2 serif"><span data-i="whyh2">Everything a learner needs, in one calm place.</span></h2>
+    <p class="sub"><span data-i="whysub">Built by a tutor for her own students — now open for everyone who wants to study a little, every day.</span></p>
     <div class="fg">
-      <div class="ft"><div class="fi">📅</div><b>A plan for every day</b><span>Today's chapters, a 5-question daily quiz and a study streak that keeps you coming back.</span></div>
-      <div class="ft"><div class="fi">📝</div><b>Real exam-style tests</b><span>Practice tests on any chapter and full mock exams that look and feel like the real paper.</span></div>
-      <div class="ft"><div class="fi">🤖</div><b>Doubt help, any time</b><span>Ekanthi Agent explains step by step. Stuck? Ask Ma'am — she sees the exact question.</span></div>
-      <div class="ft"><div class="fi">📚</div><b>Notes &amp; important questions</b><span>Clear chapter notes and the questions that matter most, with answer checking.</span></div>
-      <div class="ft"><div class="fi">🏆</div><b>Motivation that works</b><span>XP, badges, weekly challenges, festival themes and a mind coach for exam pressure.</span></div>
-      <div class="ft"><div class="fi">🛡️</div><b>Fair and safe</b><span>Screenshot protection in tests, fair breaks, no ads — and your data is never sold.</span></div>
+      <div class="ft"><div class="fi">📅</div><span data-i="f1"><b>A plan for every day</b><span>Today's chapters, a 5-question daily quiz and a study streak that keeps you coming back.</span></span></div>
+      <div class="ft"><div class="fi">📝</div><span data-i="f2"><b>Real exam-style tests</b><span>Practice tests on any chapter and full mock exams that look and feel like the real paper.</span></span></div>
+      <div class="ft"><div class="fi">🤖</div><span data-i="f3"><b>Doubt help, any time</b><span>Ekanthi Agent explains step by step. Stuck? Ask Ma'am — she sees the exact question.</span></span></div>
+      <div class="ft"><div class="fi">📚</div><span data-i="f4"><b>Notes &amp; important questions</b><span>Clear chapter notes and the questions that matter most, with answer checking.</span></span></div>
+      <div class="ft"><div class="fi">🏆</div><span data-i="f5"><b>Motivation that works</b><span>XP, badges, weekly challenges, festival themes and a mind coach for exam pressure.</span></span></div>
+      <div class="ft"><div class="fi">🛡️</div><span data-i="f6"><b>Fair and safe</b><span>Screenshot protection in tests, fair breaks, no ads — and your data is never sold.</span></span></div>
     </div>
   </div></section>
   <section class="s dark"><div class="lw">
-    <div class="kick" style="color:#ffd97a">How it works</div><h2 class="h2 serif">Start in three easy steps.</h2><p class="sub">No long forms. No confusing menus.</p>
+    <div class="kick" style="color:#ffd97a"><span data-i="howkick">How it works</span></div><h2 class="h2 serif"><span data-i="howh2">Start in three easy steps.</span></h2><p class="sub"><span data-i="howsub">No long forms. No confusing menus.</span></p>
     <div class="steps">
-      <div class="st"><b>Register</b><span>Choose school student or exam candidate, pick your class or course and make a 6-digit PIN.</span></div>
-      <div class="st"><b>Get verified</b><span>Ma'am checks your details and opens your account — usually the same day.</span></div>
-      <div class="st"><b>Study daily</b><span>Open Ekanthi every day for your plan, quiz and tests. Watch your marks climb.</span></div>
+      <div class="st"><span data-i="s1"><b>Register</b><span>Choose school student or exam candidate, pick your class or course and make a 6-digit PIN.</span></span></div>
+      <div class="st"><span data-i="s2"><b>Get verified</b><span>Ma'am checks your details and opens your account — usually the same day.</span></span></div>
+      <div class="st"><span data-i="s3"><b>Study daily</b><span>Open Ekanthi every day for your plan, quiz and tests. Watch your marks climb.</span></span></div>
     </div>
   </div></section>
   <section class="s" id="lnPlansWrap"><div class="lw">
-    <div class="kick">Plans</div><h2 class="h2 serif">Simple plans. Start free.</h2><p class="sub">Begin on Lite and move up when you are ready. Exam-time boosts are available.</p>
+    <div class="kick">Plans</div><h2 class="h2 serif"><span data-i="plh2">Simple plans. Start free.</span></h2><p class="sub"><span data-i="plsub">Begin on Lite and move up when you are ready. Exam-time boosts are available.</span></p>
     <div class="pl" id="lnPlans"></div>
   </div></section>
   <section class="s" style="padding-top:0"><div class="lw"><div class="par">
-    <div><div class="kick">For parents</div><h2 class="h2 serif">Know how your child is doing — without asking.</h2><p class="sub" style="margin-bottom:0">A separate parent login, in English, Malayalam or Hindi.</p></div>
-    <ul><li>Did my child study today, and for how long</li><li>Marks, homework and upcoming exams</li><li>Weak topics and the tutor's remarks</li><li>Weekly WhatsApp summary</li></ul>
+    <div><div class="kick"><span data-i="pakick">For parents</span></div><h2 class="h2 serif"><span data-i="pah2">Know how your child is doing — without asking.</span></h2><p class="sub" style="margin-bottom:0"><span data-i="pasub">A separate parent login, in English, Malayalam or Hindi.</span></p></div>
+    <ul><span data-i="pa1"><li>Did my child study today, and for how long</li></span><span data-i="pa2"><li>Marks, homework and upcoming exams</li></span><span data-i="pa3"><li>Weak topics and the tutor's remarks</li></span><span data-i="pa4"><li>Weekly WhatsApp summary</li></span></ul>
   </div></div></section>
   <section style="padding:0 0 30px"><div class="lw"><div class="fin">
-    <h2 class="h2 serif" style="color:#fff">Ten minutes a day changes everything.</h2>
-    <p class="sub" style="margin:0 auto 24px;color:#c3d2e5">Join Ekanthi today.</p>
+    <h2 class="h2 serif" style="color:#fff"><span data-i="finh2">Ten minutes a day changes everything.</span></h2>
+    <p class="sub" style="margin:0 auto 24px;color:#c3d2e5"><span data-i="finsub">Join Ekanthi today.</span></p>
     <div class="ctas" style="justify-content:center"><button class="b1" data-go="reg" id="lnRegEnd">Register now</button><button class="b2" data-go="login">Log in</button><a class="b2" id="lnApk" href="https://raw.githubusercontent.com/yabideas-ui/ekanthi/main/ekanthi.apk">📲 Android app</a></div>
   </div></div></section>
   <div class="lw"><footer><div class="fr"><div><b style="color:#0b2239">Ekanthi</b> · www.ekanthi.in</div><div><a href="terms.html" target="_blank" rel="noopener">Terms</a><a href="refund.html" target="_blank" rel="noopener">Refunds</a><a href="privacy.html" target="_blank" rel="noopener">Privacy</a><a href="delete-account.html" target="_blank" rel="noopener">Delete account</a><a href="#" id="lnWa">WhatsApp</a></div></div>
@@ -652,7 +699,7 @@ body.on-break #brkBtn,body.on-break #askBtn{display:none!important}
 <!-- ================= LOGIN ================= -->
 <section id="login" class="hidden">
   <div class="login-box">
-    <div style="margin-bottom:8px"><a href="#" id="lgHome" style="color:#cfdced;font-size:14px;text-decoration:none">← Ekanthi home</a></div>
+    <div style="margin-bottom:8px;display:flex;justify-content:space-between;align-items:center"><a href="#" id="lgHome" style="color:#cfdced;font-size:14px;text-decoration:none"><span data-i="lghome">← Ekanthi home</span></a><span id="lgLangBox"></span></div>
     <div class="brand"><div class="mark">E</div><div class="logo">Ekanthi</div><div class="tag">പഠിക്കാം, മുന്നേറാം · Learn daily, grow daily</div></div>
     <div class="card stack">
       <div class="seg"><button data-role="student" class="on">Student</button><button data-role="parent">Parent</button><button data-role="tutor">Tutor</button></div>
@@ -661,7 +708,7 @@ body.on-break #brkBtn,body.on-break #askBtn{display:none!important}
       <div id="passWrap" class="hidden"><label class="f" for="lgPass">Password</label><input id="lgPass" type="password" autocomplete="current-password"></div>
       <div class="err" id="lgErr"></div>
       <button class="btn block" id="lgBtn">Log in</button>
-      <div class="muted small" style="text-align:center">Login details are given by your tutor. Don't share your PIN — logging in on another phone signs out this one.</div>
+      <div class="muted small" style="text-align:center"><span data-i="lgnote">Login details are given by your tutor. Don't share your PIN — logging in on another phone signs out this one.</span></div>
       <div id="lgReg" class="hidden" style="text-align:center;margin-top:4px"><button class="btn ghost block" id="lgRegBtn" type="button">🆕 New student? Register here</button></div>
     </div>
     <div id="lgApp"></div>
@@ -677,7 +724,7 @@ body.on-break #brkBtn,body.on-break #askBtn{display:none!important}
   <div class="s-head" id="pHead">
     <div class="row between">
       <div><div class="hi" id="pHi">Hello!</div><div class="sub" id="pSub"></div></div>
-      <div class="row" style="gap:6px"><button class="icon" id="pLang">മലയാളം</button><button class="icon" id="pOut">Logout</button></div>
+      <div class="row" style="gap:6px"><button class="icon" id="pLang">മലയാളം</button><button class="icon hidden" id="pOut">Logout</button><button class="icon" id="pMenuBtn" aria-label="Menu">⋯</button></div>
     </div>
     <div class="s-chips" id="pChips"></div>
   </div>
@@ -689,7 +736,7 @@ body.on-break #brkBtn,body.on-break #askBtn{display:none!important}
   <div class="s-head">
     <div class="row between">
       <div><div class="hi" id="sHi">Hi!</div><div class="sub" id="sSub"></div></div>
-      <div class="row" style="gap:6px"><button class="icon" id="sMsg" title="Messages" style="position:relative">🔔<span id="sMsgN" class="hidden"></span></button><button class="icon" id="sAsk" title="Ask Ma'am">🙋 Ask</button><button class="icon" id="sHelp" title="How to use">▶ Help</button><button class="icon" id="sLogout">Log out</button></div>
+      <div class="row" style="gap:6px"><button class="icon" id="sMsg" title="Messages" style="position:relative">🔔<span id="sMsgN" class="hidden"></span></button><button class="icon" id="sAsk" title="Ask Ma'am">🙋 Ask</button><button class="icon hidden" id="sHelp" title="How to use">▶ Help</button><button class="icon hidden" id="sLogout">Log out</button><button class="icon" id="sMenuBtn" title="Menu" aria-label="Menu">⋯</button></div>
     </div>
     <div class="s-chips" id="sChips"></div>
   </div>
@@ -747,7 +794,7 @@ if(window.top!==window.self){ document.documentElement.style.display="none"; try
 "use strict";
 // ===================== SETTINGS =====================
 var API_URL = "https://ekanthi-tutor.yabideas.workers.dev";
-var APP_VERSION = 77; // bump on every release: open apps notice and refresh themselves
+var APP_VERSION = 80; // bump on every release: open apps notice and refresh themselves
 var WHATSAPP_NUMBER = "96893376228";   // Ma'am (students / parents chat)
 function SUPPORT_WA(){ var b=(REGI&&REGI.biz)||(SHOP&&SHOP.d&&SHOP.d.biz)||{}; return String(b.wa||"").replace(/\D/g,"")||WHATSAPP_NUMBER; }   // public support line (admin 🛒 → 🏢 Business)
 var SITE_URL = /(^|\.)ekanthi\.(in|com)$|cyberkalari\.com$/.test(location.hostname) ? location.origin : "https://www.ekanthi.in";   // works on the old and the new domain
@@ -892,16 +939,22 @@ var isIOS=/iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform==
 // Ekanthi Android app (WebView shell) exposes window.EkanthiApp
 var IN_APP=!!(window.EkanthiApp && typeof window.EkanthiApp.secure==="function") || /EkanthiApp\//.test(navigator.userAgent);
 var IS_ANDROID=/Android/i.test(navigator.userAgent);
+var IS_MOBILE=IS_ANDROID || /iPhone|iPad|iPod/i.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints>1);
 function clearBadge(){ appCall("clearNotes"); try{ if(navigator.clearAppBadge) navigator.clearAppBadge().catch(function(){}); }catch(e){}
   try{ if("serviceWorker" in navigator) navigator.serviceWorker.getRegistration().then(function(r){ if(r && r.getNotifications) r.getNotifications().then(function(ns){ ns.forEach(function(n){ n.close(); }); }); }).catch(function(){}); }catch(e){} }
 document.addEventListener("visibilitychange", function(){ if(!document.hidden && token) setTimeout(clearBadge, 800); });
 function appCall(fn, arg){ try{ if(IN_APP && window.EkanthiApp[fn]) return window.EkanthiApp[fn](arg); }catch(e){} }
 var isStandalone=IN_APP || (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone===true;
 if("serviceWorker" in navigator){ navigator.serviceWorker.register("/sw.js").then(function(r){ SWREG=r; }).catch(function(){});
-  navigator.serviceWorker.addEventListener("message", function(m){ if(!m.data || m.data.type!=="ekanthi-updated" || $("updBar")) return;
-    var b=document.createElement("button"); b.id="updBar"; b.textContent="✨ "+tr("പുതിയ version തയ്യാർ — refresh ചെയ്യാൻ തൊടൂ","नया version तैयार — refresh के लिए दबाओ","New version ready — tap to refresh");
-    b.onclick=function(){ try{ saveUI(); }catch(e){} location.reload(); };
-    if(!document.body.classList.contains("in-test")) document.body.appendChild(b); }); }
+  navigator.serviceWorker.addEventListener("message", function(m){ if(m.data && m.data.type==="ekanthi-updated") updBar(); }); }
+function updBar(){ if($("updBar") || document.body.classList.contains("in-test")) return;
+  var b=document.createElement("button"); b.id="updBar"; b.textContent="✨ "+tr("പുതിയ version തയ്യാർ — refresh ചെയ്യാൻ തൊടൂ","नया version तैयार — refresh के लिए दबाओ","New version ready — tap to refresh");
+  b.onclick=function(){ try{ saveUI(); }catch(e){} location.reload(); }; document.body.appendChild(b); }
+// second update check that does not depend on the phone's cache: ask the website (tiny HEAD request) whether index.html changed
+var UPD_TAG=null;
+function updCheck(){ if(document.hidden || location.protocol!=="https:") return;
+  fetch("/index.html",{method:"HEAD",cache:"no-store"}).then(function(r){ var t=r.ok && (r.headers.get("ETag")||r.headers.get("Last-Modified")); if(!t) return; if(UPD_TAG===null){ UPD_TAG=t; return; } if(t!==UPD_TAG) updBar(); }).catch(function(){}); }
+setTimeout(updCheck, 4000); setInterval(updCheck, 4*60000); document.addEventListener("visibilitychange", function(){ if(!document.hidden) updCheck(); });
 window.addEventListener("beforeinstallprompt", function(e){ e.preventDefault(); INSTALL_EVT=e; renderAppCard(); renderLoginApp(); });
 window.addEventListener("appinstalled", function(){ INSTALL_EVT=null; isStandalone=true; if(typeof renderAppCard==="function") renderAppCard(); });
 function pushSupported(){ return "serviceWorker" in navigator && "PushManager" in window && "Notification" in window; }
@@ -996,7 +1049,7 @@ function installGuide(){ var ua=navigator.userAgent, m=document.createElement("d
 function iosHelp(){ var m=document.createElement("div"); m.className="modal"; m.innerHTML='<div class="box hwpop"><div style="font-weight:800;font-size:18px">📲 Install on iPhone</div><ol style="margin:10px 0 0 18px;line-height:1.9"><li>Open this page in <b>Safari</b></li><li>Tap <b>Share ⬆️</b> at the bottom</li><li>Tap <b>Add to Home Screen</b> → <b>Add</b></li><li>Open Ekanthi from the new <b>E</b> icon and turn on 🔔</li></ol><div class="row" style="justify-content:flex-end;margin-top:10px"><button class="btn sm" id="iosOk">OK</button></div></div>'; document.body.appendChild(m); m.querySelector("#iosOk").onclick=function(){ m.remove(); }; }
 function renderLoginApp(){
   var el=$("lgApp"); if(!el) return;
-  el.innerHTML= canInstall()? '<button class="intro-link" id="lgInstall" type="button">'+(IS_ANDROID?'🤖 Download Ekanthi app (Android)':'📲 Install Ekanthi app on this phone')+'</button>' : '';
+  el.innerHTML= canInstall() && IS_MOBILE? '<button class="intro-link" id="lgInstall" type="button">'+(IS_ANDROID?'🤖 '+tr("Ekanthi app download ചെയ്യൂ (Android)","Ekanthi app download करें (Android)","Download Ekanthi app (Android)"):'📲 '+tr("ഈ phone-ൽ Ekanthi ചേർക്കൂ","इस phone पर Ekanthi जोड़ें","Add Ekanthi to this phone"))+'</button>' : '';
   var b=$("lgInstall"); if(b) b.onclick=function(){ doInstall(); };
 }
 // One-time setup sheet right after login: install app + notifications (snoozed 3 days on "Later")
@@ -1097,15 +1150,26 @@ function checkLevelUp(){
   lsSet(bk, now);
 }
 // screenshot watermark: name + username on every student screen, so shared screenshots can be traced
+document.addEventListener("click", function(e){ var b=e.target.closest && e.target.closest("#sMenuBtn"), m=$("sMenu");
+  if(b){ e.stopPropagation(); if(m){ m.remove(); return; } m=document.createElement("div"); m.className="smenu"; m.id="sMenu";
+    m.innerHTML='<button data-sm="help">▶ '+tr("Ekanthi ഉപയോഗിക്കുന്ന വിധം","Ekanthi कैसे चलाएँ","How to use Ekanthi")+'</button>'+(S&&S.shopOn?'<button data-sm="shop">⭐ '+tr("Plans & extras","Plans & extras","Plans & extras")+'</button>':'')+'<button data-sm="ach">🏆 '+tr("എന്റെ achievements","मेरी achievements","My achievements")+'</button><button data-sm="out" style="color:#c0392b">⎋ '+tr("Log out","Log out","Log out")+'</button>';
+    document.querySelector("#student .s-head").appendChild(m); return; }
+  if(m && !e.target.closest("#sMenu") && !e.target.closest("#pMenuBtn")){ m.remove(); return; }
+  var it=e.target.closest && e.target.closest("[data-sm]"); if(!it) return; if(m) m.remove();
+  var k=it.dataset.sm; if(k==="help") $("sHelp").click(); else if(k==="out") $("sLogout").click(); else if(k==="shop") shopOpen(); else if(k==="ach") achOpen(); else if(k==="pout") $("pOut").click(); else if(k==="pshop") shopOpen(PC.id); else if(k==="prefresh") pLoad(PC.id); else if(k==="ppdf") pPrint(); });
+document.addEventListener("click", function(e){ var b=e.target.closest && e.target.closest("#pMenuBtn"); if(!b) return; e.stopPropagation(); var m=$("sMenu"); if(m){ m.remove(); return; }
+  m=document.createElement("div"); m.className="smenu"; m.id="sMenu";
+  m.innerHTML='<button data-sm="prefresh">↻ '+tr("പുതുക്കുക","Refresh","Refresh")+'</button>'+(PH&&PH.perms&&PH.perms.pdf===true?'<button data-sm="ppdf">📄 '+tr("Report card (PDF)","Report card (PDF)","Report card (PDF)")+'</button>':'')+'<button data-sm="pshop">⭐ Plans & extras</button><button data-sm="pout" style="color:#c0392b">⎋ Log out</button>';
+  $("pHead").appendChild(m); });
 function setWatermark(){
   if(!S||!S.student) return; var d=new Date(), hh=d.getHours(), mm=("0"+d.getMinutes()).slice(-2), test=document.body.classList.contains("in-test");
   var clean=function(x){ return String(x).replace(/[<>&"]/g,""); };
-  var l1=clean("© Ekanthi · Cyber Kalari — do not share"), l2=clean(S.student.name+" · @"+S.student.username+" · ID "+S.student.id), l3=clean(fmtDate(S.today)+" "+((hh%12)||12)+":"+mm+(hh<12?" am":" pm"));
+  var l1=clean("© Ekanthi — do not share"), l2=clean(S.student.name+" · @"+S.student.username+" · ID "+S.student.id), l3=clean(fmtDate(S.today)+" "+((hh%12)||12)+":"+mm+(hh<12?" am":" pm"));
   var op=test?0.11:0.075;
   var svg='<svg xmlns="http://www.w3.org/2000/svg" width="340" height="210"><g transform="rotate(-24 170 105)" font-family="Arial" fill="rgba(20,40,70,'+op+')"><text x="14" y="88" font-size="12" font-weight="700">'+l1+'</text><text x="14" y="106" font-size="13">'+l2+'</text><text x="14" y="123" font-size="12">'+l3+'</text></g></svg>';
   var w=$("wmark"); if(w) w.remove();   // full-screen watermark removed — only the copyright line at the bottom
   var f=$("wmFoot"); if(!f){ f=document.createElement("div"); f.id="wmFoot"; $("student").appendChild(f); }
-  f.textContent="© "+new Date().getFullYear()+" Ekanthi · Cyber Kalari. All rights reserved · "+S.student.name+" (@"+S.student.username+")";
+  f.textContent="© "+new Date().getFullYear()+" Ekanthi · "+S.student.name+" (@"+S.student.username+")";
 }
 setInterval(function(){ if(role==="student") setWatermark(); }, 60000);
 var VIZ=[];
@@ -1117,7 +1181,14 @@ document.addEventListener("click",function(e){
   var fs=e.target.closest("[data-vizfs]"); if(fs){ var bx=document.querySelector('[data-vbox="'+fs.dataset.vizfs+'"]'); if(document.fullscreenElement) document.exitFullscreen(); else if(bx&&bx.requestFullscreen) bx.requestFullscreen(); }
 });
 function vizErr(e){ return e.status===429? tr("ഇന്നത്തെ ചിത്ര limit കഴിഞ്ഞു. നാളെ വീണ്ടും.","आज की चित्र limit खत्म। कल फिर।","Today's picture limit is over. Try tomorrow.") : e.status===423? tr("Exam നടക്കുമ്പോൾ ചിത്രം ഇല്ല.","Exam के दौरान चित्र नहीं।","No pictures during an exam.") : e.message; }
-var LANG="ml";
+var LANG=(function(){ try{ return localStorage.getItem("ek_ulang")||"en"; }catch(e){ return "en"; } })();   // public pages start in English; a logged-in student's own language comes from the server
+var I18N={"h1": ["ദിവസവും പഠിക്കാം.<br><em>ദിവസവും വളരാം.</em>", "रोज़ पढ़ो।<br><em>रोज़ बढ़ो।</em>"], "mlline": ["പഠിക്കാം, മുന്നേറാം — എല്ലാ ദിവസവും.", "पढ़ो, आगे बढ़ो — हर दिन।"], "lead": ["സ്കൂൾ കുട്ടികൾക്കും മത്സരപ്പരീക്ഷ എഴുതുന്നവർക്കും ഒരു സ്വന്തം പഠന സഹായി. ദിവസവും ചെറിയ പരിശീലനം, യഥാർത്ഥ പരീക്ഷ പോലുള്ള ടെസ്റ്റുകൾ, ഉടനടി സംശയ നിവാരണം, നിങ്ങളുടെ പുരോഗതി ശ്രദ്ധിക്കുന്ന ഒരു ടീച്ചർ.", "स्कूल के बच्चों और प्रतियोगी परीक्षा की तैयारी करने वालों के लिए एक निजी स्टडी कोच। रोज़ थोड़ा अभ्यास, असली परीक्षा जैसे टेस्ट, तुरंत डाउट हल और आपकी प्रगति पर नज़र रखने वाली टीचर।"], "havelogin": ["എനിക്ക് login ഉണ്ട്", "मेरा login पहले से है"], "noads": ["പരസ്യങ്ങളില്ല", "कोई विज्ञापन नहीं"], "whykick": ["എന്തുകൊണ്ട് Ekanthi", "Ekanthi क्यों"], "whyh2": ["പഠിക്കാൻ വേണ്ടതെല്ലാം, ഒരു ശാന്തമായ ഇടത്ത്.", "पढ़ाई के लिए सब कुछ, एक शांत जगह पर।"], "whysub": ["ഒരു ടീച്ചർ സ്വന്തം കുട്ടികൾക്കായി ഉണ്ടാക്കിയത് — ഇപ്പോൾ ദിവസവും അൽപം പഠിക്കാൻ ആഗ്രഹിക്കുന്ന എല്ലാവർക്കും.", "एक टीचर ने अपने छात्रों के लिए बनाया — अब हर उस व्यक्ति के लिए जो रोज़ थोड़ा पढ़ना चाहता है।"], "f1": ["<b>എല്ലാ ദിവസത്തിനും ഒരു plan</b><span>ഇന്നത്തെ chapters, 5 ചോദ്യങ്ങളുള്ള daily quiz, തുടർച്ചയായി പഠിക്കാൻ പ്രേരിപ്പിക്കുന്ന study streak.</span>", "<b>हर दिन का plan</b><span>आज के chapters, 5 सवालों का daily quiz और रोज़ लौटने के लिए study streak।</span>"], "f2": ["<b>യഥാർത്ഥ പരീക്ഷ പോലുള്ള ടെസ്റ്റുകൾ</b><span>ഏത് chapter-ലും practice test, യഥാർത്ഥ ചോദ്യപേപ്പർ പോലുള്ള full mock exams.</span>", "<b>असली परीक्षा जैसे टेस्ट</b><span>किसी भी chapter पर practice test और असली पेपर जैसे full mock exams।</span>"], "f3": ["<b>ഏത് സമയത്തും സംശയ സഹായം</b><span>Ekanthi Agent പടിപടിയായി വിശദീകരിക്കും. ബുദ്ധിമുട്ടുണ്ടോ? Ma'am-നോട് ചോദിക്കൂ — ഏത് ചോദ്യമാണെന്ന് Ma'am കാണും.</span>", "<b>कभी भी डाउट हल</b><span>Ekanthi Agent कदम-दर-कदम समझाता है। अटके? Ma'am से पूछें — वे वही सवाल देखती हैं।</span>"], "f4": ["<b>Notes-ഉം പ്രധാന ചോദ്യങ്ങളും</b><span>വ്യക്തമായ chapter notes, ഏറ്റവും പ്രധാനപ്പെട്ട ചോദ്യങ്ങൾ, ഉത്തരം check ചെയ്യാനുള്ള സൗകര്യം.</span>", "<b>Notes और ज़रूरी सवाल</b><span>साफ़ chapter notes और सबसे ज़रूरी सवाल, उत्तर जाँच के साथ।</span>"], "f5": ["<b>പ്രചോദനം</b><span>XP, badges, weekly challenges, ഉത്സവ themes, പരീക്ഷാ സമ്മർദ്ദത്തിന് mind coach.</span>", "<b>असरदार प्रेरणा</b><span>XP, badges, weekly challenges, त्योहार themes और परीक्षा के तनाव के लिए mind coach।</span>"], "f6": ["<b>ന്യായവും സുരക്ഷിതവും</b><span>ടെസ്റ്റുകളിൽ screenshot സംരക്ഷണം, ന്യായമായ breaks, പരസ്യങ്ങളില്ല — നിങ്ങളുടെ data ഒരിക്കലും വിൽക്കില്ല.</span>", "<b>निष्पक्ष और सुरक्षित</b><span>टेस्ट में screenshot सुरक्षा, उचित breaks, कोई विज्ञापन नहीं — आपका data कभी बेचा नहीं जाता।</span>"], "howkick": ["എങ്ങനെ", "कैसे काम करता है"], "howh2": ["മൂന്ന് എളുപ്പ ഘട്ടങ്ങളിൽ തുടങ്ങാം.", "तीन आसान कदमों में शुरू करें।"], "howsub": ["നീണ്ട ഫോമുകളില്ല. ആശയക്കുഴപ്പമില്ല.", "लंबे फ़ॉर्म नहीं। कोई उलझन नहीं।"], "s1": ["<b>Register ചെയ്യൂ</b><span>School student അല്ലെങ്കിൽ exam candidate തിരഞ്ഞെടുക്കൂ, class / course തിരഞ്ഞെടുത്ത് 6 അക്ക PIN ഉണ്ടാക്കൂ.</span>", "<b>Register करें</b><span>School student या exam candidate चुनें, class / course चुनें और 6 अंकों का PIN बनाएँ।</span>"], "s2": ["<b>Verify ആകും</b><span>Ma'am വിവരങ്ങൾ നോക്കി account തുറക്കും — സാധാരണ അന്ന് തന്നെ.</span>", "<b>Verify होगा</b><span>Ma'am जानकारी देखकर account खोलेंगी — आमतौर पर उसी दिन।</span>"], "s3": ["<b>ദിവസവും പഠിക്കൂ</b><span>എല്ലാ ദിവസവും Ekanthi തുറന്ന് plan, quiz, tests ചെയ്യൂ. Marks ഉയരുന്നത് കാണാം.</span>", "<b>रोज़ पढ़ें</b><span>हर दिन Ekanthi खोलें — plan, quiz और tests करें। अपने marks बढ़ते देखें।</span>"], "plh2": ["ലളിതമായ plans. സൗജന്യമായി തുടങ്ങാം.", "आसान plans. मुफ़्त में शुरू करें।"], "plsub": ["Lite-ൽ തുടങ്ങി, തയ്യാറാകുമ്പോൾ മുകളിലേക്ക് മാറാം. പരീക്ഷാ സമയത്ത് boost ലഭ്യമാണ്.", "Lite से शुरू करें, तैयार होने पर ऊपर जाएँ। परीक्षा के समय boost भी है।"], "pakick": ["മാതാപിതാക്കൾക്ക്", "अभिभावकों के लिए"], "pah2": ["ചോദിക്കാതെ തന്നെ കുട്ടിയുടെ പഠനം അറിയാം.", "बिना पूछे जानिए बच्चा कैसा कर रहा है।"], "pasub": ["English, മലയാളം, हिन्दी — പ്രത്യേക parent login.", "अलग parent login — English, മലയാളം या हिन्दी में।"], "pa1": ["<li>കുട്ടി ഇന്ന് പഠിച്ചോ, എത്ര സമയം</li>", "<li>बच्चे ने आज पढ़ा या नहीं, कितनी देर</li>"], "pa2": ["<li>Marks, homework, വരാനിരിക്കുന്ന exams</li>", "<li>Marks, homework और आने वाले exams</li>"], "pa3": ["<li>ദുർബലമായ topics, ടീച്ചറുടെ remarks</li>", "<li>कमज़ोर topics और टीचर की टिप्पणियाँ</li>"], "pa4": ["<li>ആഴ്ചതോറും WhatsApp summary</li>", "<li>हर हफ़्ते WhatsApp summary</li>"], "finh2": ["ദിവസം പത്ത് മിനിറ്റ് — എല്ലാം മാറും.", "रोज़ दस मिनट — सब बदल देगा।"], "finsub": ["ഇന്ന് തന്നെ Ekanthi-യിൽ ചേരൂ.", "आज ही Ekanthi से जुड़ें।"], "lghome": ["← Ekanthi home", "← Ekanthi home"], "lgnote": ["Login വിവരങ്ങൾ Ma'am തരും (അല്ലെങ്കിൽ താഴെ register ചെയ്യൂ). PIN ആരോടും പറയരുത് — വേറെ phone-ൽ login ചെയ്താൽ ഇതിൽ logout ആകും.", "Login की जानकारी Ma'am देंगी (या नीचे register करें)। PIN किसी को न बताएँ — दूसरे phone पर login करने से यहाँ logout हो जाएगा।"]};
+// translate the home & login pages (English is kept in the page; ml / hi come from I18N)
+function pubI18n(){ document.querySelectorAll("[data-i]").forEach(function(el){ if(el.dataset.en===undefined) el.dataset.en=el.innerHTML; var t=I18N[el.dataset.i]; el.innerHTML= LANG==="ml"&&t? t[0] : LANG==="hi"&&t? t[1] : el.dataset.en; });
+  document.querySelectorAll(".pubLang").forEach(function(x){ x.value=LANG; }); document.documentElement.lang= LANG==="ml"?"ml":LANG==="hi"?"hi":"en"; }
+function setUiLang(l){ LANG=l; try{ localStorage.setItem("ek_ulang", l); }catch(e){} pubI18n(); if(REGI && $("landing") && !$("landing").classList.contains("hidden")) landDraw(REGI); var rs=$("regSheet"); if(rs){ var k=rs.dataset.k||"student"; regOpen(k); } }
+function langSel(cls){ return '<select class="pubLang '+(cls||'')+'" aria-label="Language"><option value="en">🌐 English</option><option value="ml">മലയാളം</option><option value="hi">हिन्दी</option></select>'; }
+document.addEventListener("change", function(e){ if(e.target.classList && e.target.classList.contains("pubLang")) setUiLang(e.target.value); });
 function tr(ml,hi,en){ return LANG==="hi"? hi : LANG==="en"? (en||hi) : ml; }
 function applyLang(){
   chatLang= LANG; $("chLang").textContent= langBtn(chatLang);
@@ -1330,27 +1401,31 @@ function renderToday(){
   var qz=S.quizzes.filter(function(q){return q.date===t;})[0], qDone=qz&&qz.completed_at;
   var h='';
   var ac=S.access||{}; if(ac.days_left!==null && ac.days_left!==undefined && ac.days_left<=3) h+='<div class="access"><div><b>'+(ac.plan==="trial"?tr("Trial ","Trial ","Trial "):"")+tr("അവസാനിക്കുന്നു: ","खत्म होगा: ","ends: ")+fmtDate(ac.valid_until)+'</b><div class="small muted">'+(ac.days_left===0?tr("ഇന്ന് അവസാന ദിവസം","आज आखिरी दिन","Today is the last day"):tr(ac.days_left+" ദിവസം കൂടി",ac.days_left+" दिन बाकी",ac.days_left+" days left"))+' · '+tr("തുടരാൻ tutor-നോട് പറയൂ","जारी रखने के लिए tutor से बात करो","Talk to your tutor to continue")+'</div></div><a class="btn gold sm" target="_blank" rel="noopener" href="'+waLink(WHATSAPP_NUMBER,"Hi, I want to continue Ekanthi — "+S.student.name)+'">WhatsApp</a></div>';
+  var tdone=(todayCi.length?1:0)+(qDone?1:0), L0=levelOf(S.xpAll||0), gp0=S.goal? Math.min(100,pct(S.studyToday||0,S.goal)) : 0; setTimeout(achPeek, 300);
+  var T1='<div class="card tk-card"><div class="tk-head"><div><h3>'+tr("ഇന്നത്തെ പണികൾ","आज के काम","Today\'s tasks")+'</h3><div class="small muted" style="margin-top:3px">'+(tdone>=2? tr("എല്ലാം കഴിഞ്ഞു — സൂപ്പർ! 🎉","सब हो गया — शाबाश! 🎉","All done — great work! 🎉") : tr("2 ചെറിയ പണികൾ · ഏകദേശം 15 മിനിറ്റ്","2 छोटे काम · लगभग 15 मिनट","2 small tasks · about 15 minutes"))+'</div></div><div class="tk-ring" style="--p:'+(tdone*50)+'"><span>'+tdone+'/2</span></div></div>'+
+    '<div class="task'+(qDone?' done':'')+'" data-go="quiz"><div class="dot">'+(qDone?'✓':'')+'</div><div><div class="t">📝 '+tr("Daily quiz","Daily quiz","Daily quiz")+'</div><div class="muted small">'+(qDone? tr("Score ","Score ","Score ")+qz.score+"/"+qz.total : tr("5 ചോദ്യം · 5 മിനിറ്റ്","5 सवाल · 5 मिनट","5 questions · 5 minutes"))+'</div></div><span class="go">›</span></div>'+
+    '<div class="task'+(todayCi.length?' done':'')+'" data-go="checkin"><div class="dot">'+(todayCi.length?'✓':'')+'</div><div><div class="t">📖 '+tr("Study check-in","Study check-in","Study check-in")+'</div><div class="muted small">'+(todayCi.length? tr(mins+" മിനിറ്റ് രേഖപ്പെടുത്തി",mins+" मिनट दर्ज",mins+" min logged today") : tr("ഇന്ന് എന്ത് പഠിച്ചു?","आज क्या पढ़ा?","What did you study today?"))+'</div></div><span class="go">›</span></div>'+
+    '<div class="task" data-go="assist"><div class="dot" style="border-style:dashed"></div><div><div class="t">🤖 '+tr("സംശയം ചോദിക്കൂ","डाउट पूछो","Ask a doubt")+'</div><div class="muted small">Ekanthi Agent · Malayalam / English · voice</div></div><span class="go">›</span></div></div>';
+  var T2='<div class="tstats"><div class="ts" title="Study streak"><div class="ts-n">🔥 '+S.streak+'</div><div class="ts-l">'+tr("ദിവസം streak","दिन streak",(S.streak===1?"day":"days")+" streak")+'</div></div>'+
+    '<div class="ts" data-go="checkin"><div class="ts-n">'+(S.studyToday||0)+'<small>/'+(S.goal||45)+'</small></div><div class="ts-l">'+tr("മിനിറ്റ് ഇന്ന്","मिनट आज","min today")+'</div><div class="ts-bar"><i style="width:'+gp0+'%"></i></div></div>'+
+    '<div class="ts" data-ach="1"><div class="ts-n">'+L0.t[1]+' '+L0.n+'</div><div class="ts-l">'+esc(L0.t[0])+' · '+(S.xpAll||0)+' XP</div><div class="ts-bar"><i style="width:'+L0.pc+'%"></i></div></div></div>';
   h+=planStrip();
+  h+=T1+T2;
+  h+='<div id="hwBox">'+hwListHtml()+'</div>';
   h+=holidayCard(dayInfo());
   h+=mindCard();
   if(S.goal && S.goal.min){ var gp=Math.min(100, Math.round(S.goal.done/S.goal.min*100)); h+='<div class="card" style="background:linear-gradient(135deg,#f0fdf4,#fff);border-color:#bbf7d0"><div class="row between"><b>🎯 '+tr("Parent വെച്ച ലക്ഷ്യം: "+S.goal.min+" മിനിറ്റ്","Parent का लक्ष्य: "+S.goal.min+" मिनट","Goal from your parent: "+S.goal.min+" min a day")+'</b><b>'+(gp>=100?'✅':gp+'%')+'</b></div><div style="height:8px;border-radius:6px;background:#e5efe8;overflow:hidden;margin-top:6px"><i style="display:block;height:100%;width:'+gp+'%;background:#22c55e"></i></div><div class="small muted" style="margin-top:4px">'+tr("ഇന്ന് "+S.goal.done+" മിനിറ്റ് ആയി","आज "+S.goal.done+" मिनट हुए",S.goal.done+" min done today")+'</div></div>'; }
-  h+='<div class="card streak"><div class="n">'+S.streak+'</div><div><b>day study streak</b><div class="muted">'+((todayCi.length||qDone)? tr("Today done ✓ — നാളെയും തുടരൂ!","Today done ✓ — कल भी जारी रखो!","Today done ✓ — keep going tomorrow!") : S.streak? "Study today to make it "+(S.streak+1)+" days!" : "Do a check-in or quiz today to start your streak.")+'</div></div></div>';
+
   var gp=S.goal? Math.min(100,pct(S.studyToday||0,S.goal)) : 0;
-  h+='<div class="card stack"><div class="row between"><h3>Today\'s study goal</h3><b>'+(S.studyToday||0)+' / '+(S.goal||45)+' min</b></div><div class="bar"><span style="width:'+gp+'%;background:'+(gp>=100?'var(--ok)':'var(--brand2)')+'"></span></div><div class="row between small"><span>This week: <b>'+(S.xp||0)+' XP</b></span><span>'+((S.badges||[]).map(function(x){return '<span class="badge">'+esc(x)+'</span>';}).join("")||'<span class="muted">Earn badges by studying daily</span>')+'</span></div></div>';
-  h+=coachCard();
-  h+='<div id="appCard"></div>'+levelCard()+'<div id="planBox"></div>';
+
+  h+='<div id="appCard"></div><div id="planBox"></div>';
   var lb=S.leaders; if(lb && lb.total>1 && lb.top.length) h+='<div class="card"><div class="row between" style="margin-bottom:6px"><h3>🏆 '+tr("ഈ ആഴ്ചയിലെ class toppers","इस हफ्ते के class toppers","This week in your class")+'</h3><span class="muted small">'+(lb.rank? tr("നിന്റെ rank: ","तुम्हारी rank: ","Your rank: ")+'<b>#'+lb.rank+'</b> / '+lb.total : '')+'</span></div>'+lb.top.map(function(x){ return '<div class="lb-row r'+x.rank+(x.me?' me':'')+'"><div class="lb-rank">'+x.rank+'</div><div style="flex:1"><b>'+esc(x.name)+(x.me?' ('+tr("നീ","तुम","you")+')':'')+'</b></div><div class="small"><b>'+x.xp+'</b> XP</div></div>'; }).join("")+'<div class="small muted" style="margin-top:6px">'+tr("Check-in, quiz, practice, mock — ശരിയായ ഉത്തരങ്ങൾക്കാണ് XP. വായിക്കാതെ ടാപ്പ് ചെയ്താൽ 0 XP. ഓരോ തിങ്കളാഴ്ചയും പുതിയ race!","Check-in, quiz, practice, mock — सही जवाबों पर XP मिलता है। बिना पढ़े टैप किया तो 0 XP। हर हफ्ते नई race!","Check-ins, quizzes, practice and mocks all earn XP. A new race every week!")+'</div></div>';
-  h+='<div id="hwBox">'+hwListHtml()+'</div>';
   var ex=S.subjects.filter(function(s){return s.exam_date;});
-  if(ex.length){ h+='<div class="row" style="gap:8px">'+ex.map(function(s){ var n=daysBetween(t,s.exam_date); return '<div class="exam" style="background:'+esc(s.color)+'"><span class="small">'+esc(s.name)+'</span><b>'+(n>0?n+" days":n===0?"Today":"Done")+'</b></div>'; }).join("")+'</div>'; }
-  h+='<div class="card stack"><h3>Today\'s tasks</h3>'+
-    '<div class="task'+(todayCi.length?' done':'')+'" data-go="checkin"><div class="dot">'+(todayCi.length?'✓':'')+'</div><div><div class="t">Study check-in</div><div class="muted">'+(todayCi.length? mins+" min logged today" : "What did you study today?")+'</div></div></div>'+
-    '<div class="task'+(qDone?' done':'')+'" data-go="quiz"><div class="dot">'+(qDone?'✓':'')+'</div><div><div class="t">Daily quiz</div><div class="muted">'+(qDone? "Score "+qz.score+"/"+qz.total : "5 questions · 5 minutes")+'</div></div></div>'+
-    '<div class="task" data-go="assist"><div class="dot" style="border-style:dashed"></div><div><div class="t">Ask a doubt</div><div class="muted">Ekanthi Agent · Malayalam / English · voice</div></div></div></div>';
+  if(ex.length){ h+='<div><h3 style="margin:2px 4px 8px">📅 '+tr("പരീക്ഷകൾ","परीक्षाएँ","Exams")+'</h3><div class="exrow">'+ex.map(function(s){ var n=daysBetween(t,s.exam_date); return '<div class="ex2" style="--c:'+esc(s.color)+'"><span>'+esc(s.name)+'</span><b>'+(n>0?n+'</b> <small class="muted">'+tr("ദിവസം","दिन","days")+'</small>':n===0?tr("ഇന്ന്","आज","Today")+'</b>':'✓</b>')+'</div>'; }).join("")+'</div></div>'; }
   var wk = S.week ? S.chapters.filter(function(c){return c.week===S.week;}) : [];
   var learning = S.chapters.filter(function(c){return c.status===1;});
   var focus = learning.length? learning : wk;
-  if(focus.length){ h+='<div class="card stack"><h3>'+(learning.length?"Now learning":"This week's plan")+'</h3>'+focus.map(function(c){ var s=subj(c.subject_id); return '<div class="row between"><div><span class="pill" style="background:'+esc(s.color)+';color:#fff">'+esc(s.name)+'</span> '+esc(c.name)+'</div><span class="pill p'+c.status+'">'+STATUS[c.status]+'</span></div>'; }).join("")+'</div>'; }
+  if(focus.length){ h+='<div class="card"><h3 style="margin-bottom:6px">'+(learning.length?tr("ഇപ്പോൾ പഠിക്കുന്നത്","अभी पढ़ रहे","Now learning"):tr("ഈ ആഴ്ചയിലെ plan","इस हफ़्ते का plan","This week\'s plan"))+'</h3>'+focus.map(function(c){ var s=subj(c.subject_id); return '<div class="prow"><span class="pill" style="background:'+esc(s.color)+';color:#fff">'+esc(s.name)+'</span><span class="pn" title="'+esc(c.name)+'">'+esc(c.name)+'</span><span class="pill p'+c.status+'">'+STATUS[c.status]+'</span></div>'; }).join("")+'</div>'; }
   // check-in form
   if(!ciSel.subject && S.subjects[0]) ciSel.subject=S.subjects[0].id;
   var chs=S.chapters.filter(function(c){return c.subject_id===ciSel.subject;});
@@ -1492,38 +1567,47 @@ function planStrip(){ if(!S) return ''; var u=lsGet("ek_reg_user")||"";
 var REGI=null;
 function regCheck(){ var box=$("lgReg"); if(!box) return; api("/api/register/info").then(function(d){ REGI=d; box.classList.toggle("hidden", !d.open); }).catch(function(){}); }
 var EXAM_RE=/PSC|RRB|Railway|SSC|Bank|UPSC|Exam/i;
+// countries for registration: ISO code → phone code (India first, Oman / Gulf next, then A–Z)
+var CTRY="IN:91,OM:968,AE:971,SA:966,QA:974,KW:965,BH:973,US:1,GB:44,CA:1,AU:61,NZ:64,SG:65,MY:60,LK:94,NP:977,BD:880,MV:960,BT:975,AF:93,ID:62,TH:66,PH:63,VN:84,MM:95,KH:855,BN:673,JP:81,KR:82,CN:86,HK:852,DE:49,FR:33,IT:39,ES:34,NL:31,BE:32,IE:353,CH:41,AT:43,SE:46,NO:47,DK:45,FI:358,PL:48,PT:351,GR:30,CZ:420,HU:36,RO:40,UA:380,TR:90,IL:972,JO:962,LB:961,IQ:964,YE:967,EG:20,KE:254,NG:234,ZA:27,TZ:255,UG:256,ET:251,GH:233,MU:230,SC:248,FJ:679,BR:55,AR:54,MX:52,CL:56,CO:57,PE:51".split(",").map(function(x){ var a=x.split(":"); return {c:a[0], d:a[1]}; });
+function ctryName(c){ try{ return new Intl.DisplayNames([LANG==="hi"?"hi":LANG==="ml"?"ml":"en"],{type:"region"}).of(c)||c; }catch(e){ return c; } }
+function ctryFlag(c){ return String.fromCodePoint.apply(null, c.split("").map(function(ch){ return 127397+ch.charCodeAt(0); })); }
+function ctryList(){ var top=CTRY.slice(0,7), rest=CTRY.slice(7).sort(function(a,b){ return ctryName(a.c).localeCompare(ctryName(b.c)); }); return top.concat(rest); }
 function regOpen(kind){ var d=REGI; if(!d) return; if(!d.open){ window.open(waLink(SUPPORT_WA(),"Hi, I want to join Ekanthi."),"_blank"); return; }
-  var tz=""; try{ tz=Intl.DateTimeFormat().resolvedOptions().timeZone||""; }catch(e){} var cty=tz==="Asia/Muscat"?"om":"in";
+  var cty="IN";
   var exams=d.classes.filter(function(c){ return EXAM_RE.test((c.board||"")+" "+c.name); }), school=d.classes.filter(function(c){ return exams.indexOf(c)<0; });
   var K=kind==="candidate"?"candidate":"student", want="lite";
   var opt=function(v,l,on){ return '<option value="'+v+'"'+(on?' selected':'')+'>'+l+'</option>'; };
-  var h='<div class="row between"><h2 style="margin:0">🆕 '+tr("Ekanthi-യിൽ ചേരാം","Ekanthi से जुड़ें","Join Ekanthi")+'</h2><button class="btn ghost sm" data-x>✕</button></div>'+
+  var h='<div class="row between" style="gap:8px"><h2 style="margin:0">🆕 '+tr("Ekanthi-യിൽ ചേരാം","Ekanthi से जुड़ें","Join Ekanthi")+'</h2><span class="row" style="gap:6px">'+langSel("lt")+'<button class="btn ghost sm" data-x>✕</button></span></div>'+
     '<div class="seg" id="rgKind" style="margin:10px 0"><button type="button" data-k="student">🎒 '+tr("School student","School student","School student")+'</button><button type="button" data-k="candidate">🏛️ '+tr("Exam candidate","Exam candidate","Exam candidate")+'</button></div>'+
     '<div class="small muted" id="rgHint" style="margin:0 0 10px"></div><div id="rgBody"></div>';
   var w=ekSheet(h,"regSheet");
-  function body(){ $("rgKind").querySelectorAll("[data-k]").forEach(function(b){ b.classList.toggle("on", b.dataset.k===K); });
+  w.querySelectorAll(".pubLang").forEach(function(x){ x.value=LANG; });
+  function body(){ w.dataset.k=K; $("rgKind").querySelectorAll("[data-k]").forEach(function(b){ b.classList.toggle("on", b.dataset.k===K); });
     var cand=K==="candidate", list=cand?exams:school;
     $("rgHint").textContent= cand? tr("Kerala PSC, Railway, SSC പോലുള്ള exam-കൾക്ക്. Ma\'am verify ചെയ്ത ശേഷം account തുറക്കും.","Kerala PSC, Railway, SSC जैसी परीक्षाओं के लिए। Ma\'am verify करेंगी, फिर account खुलेगा।","For Kerala PSC, Railway, SSC and other exams. Ma\'am verifies it before the account opens.") : tr("Parent-ന്റെ സമ്മതത്തോടെ fill ചെയ്യൂ. Ma\'am verify ചെയ്ത ശേഷം account തുറക്കും.","Parent की अनुमति से भरें। Ma\'am verify करेंगी, फिर account खुलेगा।","Fill this with your parent. Ma\'am verifies it before the account opens.");
     if(cand && !exams.length){ $("rgBody").innerHTML='<div class="card" style="text-align:center"><div style="font-size:36px">🏛️</div><b>'+tr("Exam courses ഉടൻ തുടങ്ങും","Exam courses जल्द शुरू होंगे","Exam courses open soon")+'</b><div class="small muted" style="margin:4px 0 10px">'+tr("തുടങ്ങുമ്പോൾ അറിയിക്കാൻ Ma\'am-ന് WhatsApp ചെയ്യൂ.","शुरू होने पर बताने के लिए Ma\'am को WhatsApp करें।","WhatsApp Ma\'am and she will tell you when they start.")+'</div><a class="btn" target="_blank" rel="noopener" href="'+esc(waLink(SUPPORT_WA(),"Hi, please tell me when Ekanthi exam courses (Kerala PSC / Railway) start."))+'">💬 WhatsApp Ma\'am</a></div>'; return; }
-    var code=cty==="om"?"+968 ":"+91 ";
+    var dialSel='<select class="rgDial" style="width:auto;flex:0 0 auto">'+ctryList().map(function(x){ return '<option value="'+x.d+'" data-c="'+x.c+'"'+(x.c===cty?' selected':'')+'>'+ctryFlag(x.c)+' +'+x.d+'</option>'; }).join("")+'</select>';
+    var phoneRow=function(id){ return '<div class="row" style="gap:6px">'+dialSel+'<input id="'+id+'" inputmode="tel" maxlength="14" placeholder="98xxxxxxxx" style="flex:1"></div>'; };
     $("rgBody").innerHTML='<div class="stack"><div><label class="f">'+(cand?tr("നിങ്ങളുടെ പേര്","आपका नाम","Your name"):tr("Student-ന്റെ പേര്","Student का नाम","Student name"))+'</label><input id="rgName" maxlength="80"></div>'+
-      '<div class="row" style="gap:8px"><div style="flex:1"><label class="f">'+(cand?tr("Course","Course","Course"):tr("Class","Class","Class"))+'</label><select id="rgCls"><option value="">—</option>'+list.map(function(c){ return opt(c.id, esc(c.name)+(cand&&c.board&&c.name.indexOf(c.board)<0?' · '+esc(c.board):'')); }).join("")+'</select></div><div style="flex:1"><label class="f">'+tr("Country","Country","Country")+'</label><select id="rgCty">'+opt("in","India",cty==="in")+opt("om","Oman",cty==="om")+opt("other","Other",false)+'</select></div></div>'+
-      (cand? '<div><label class="f">'+tr("നിങ്ങളുടെ WhatsApp (country code കൂടെ)","आपका WhatsApp (country code के साथ)","Your WhatsApp (with country code)")+'</label><input id="rgMyPhone" class="rgPh" inputmode="tel" maxlength="18" value="'+code+'"></div>'
-        : '<div><label class="f">'+tr("School (optional)","School (optional)","School (optional)")+'</label><input id="rgSchool" maxlength="80"></div><div><label class="f">'+tr("Parent-ന്റെ പേര്","Parent का नाम","Parent name")+'</label><input id="rgPName" maxlength="80"></div><div><label class="f">'+tr("Parent WhatsApp (country code കൂടെ)","Parent WhatsApp (country code के साथ)","Parent WhatsApp (with country code)")+'</label><input id="rgPhone" class="rgPh" inputmode="tel" maxlength="18" value="'+code+'"></div>')+
+      '<div class="row" style="gap:8px"><div style="flex:1"><label class="f">'+(cand?tr("Course","Course","Course"):tr("Class","Class","Class"))+'</label><select id="rgCls"><option value="">—</option>'+list.map(function(c){ return opt(c.id, esc(c.name)+(cand&&c.board&&c.name.indexOf(c.board)<0?' · '+esc(c.board):'')); }).join("")+'</select></div><div style="flex:1"><label class="f">'+tr("രാജ്യം","देश","Country")+'</label><select id="rgCty">'+ctryList().map(function(x){ return '<option value="'+x.c+'"'+(x.c===cty?' selected':'')+'>'+ctryFlag(x.c)+' '+esc(ctryName(x.c))+'</option>'; }).join("")+'</select></div></div>'+
+      (cand? '<div><label class="f">'+tr("നിങ്ങളുടെ WhatsApp (country code കൂടെ)","आपका WhatsApp (country code के साथ)","Your WhatsApp (with country code)")+'</label>'+phoneRow("rgMyPhone")+'</div>'
+        : '<div><label class="f">'+tr("School (optional)","School (optional)","School (optional)")+'</label><input id="rgSchool" maxlength="80"></div><div><label class="f">'+tr("Parent-ന്റെ പേര്","Parent का नाम","Parent name")+'</label><input id="rgPName" maxlength="80"></div><div><label class="f">'+tr("Parent WhatsApp (country code കൂടെ)","Parent WhatsApp (country code के साथ)","Parent WhatsApp (with country code)")+'</label>'+phoneRow("rgPhone")+'</div>')+
       '<div class="row" style="gap:8px"><div style="flex:1"><label class="f">'+tr("6 അക്ക PIN ഉണ്ടാക്കൂ","6 अंकों का PIN बनाओ","Make a 6-digit PIN")+'</label><input id="rgPin" type="password" inputmode="numeric" maxlength="6"></div><div style="flex:1"><label class="f">'+tr("PIN വീണ്ടും","PIN फिर से","PIN again")+'</label><input id="rgPin2" type="password" inputmode="numeric" maxlength="6"></div></div>'+
       '<div><label class="f">'+tr("ഭാഷ","भाषा","Language")+'</label><select id="rgLang">'+opt("ml","മലയാളം",LANG==="ml")+opt("en","English",LANG==="en")+opt("hi","हिन्दी",LANG==="hi")+'</select></div>'+
       '<div><label class="f">'+tr("Plan","Plan","Plan")+'</label><div id="rgPlans" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"></div></div>'+
       '<input id="rgWeb" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px" aria-hidden="true">'+
       '<label class="row small" style="gap:8px;align-items:flex-start"><input type="checkbox" id="rgOk" style="width:auto;margin-top:3px"> <span>'+(cand?tr("എനിക്ക് 18 വയസ്സ് കഴിഞ്ഞു (അല്ലെങ്കിൽ parent സമ്മതിച്ചു). ","मेरी उम्र 18+ है (या parent ने अनुमति दी)। ","I am 18 or older (or my parent agrees). "):tr("ഞാൻ parent ആണ് / parent സമ്മതിച്ചു. ","मैं parent हूँ / parent ने अनुमति दी। ","I am the parent, or my parent agrees. "))+'<a href="privacy.html" target="_blank" rel="noopener">Privacy</a></span></label>'+
       '<div class="err" id="rgErr"></div><button class="btn block" id="rgGo">'+tr("Register ചെയ്യൂ","Register करें","Register")+'</button></div>';
-    function plans(){ var c=$("rgCty").value==="om"?"om":"in"; $("rgPlans").innerHTML=d.plans.map(function(p){ var pp=p[c]||p.in, pr=IN_APP? "" : moneyTxt(pp); return '<button type="button" class="card" data-want="'+p.k+'" style="margin:0;text-align:left;padding:8px;cursor:pointer;'+(want===p.k?'border:2px solid var(--brand2);background:#eef6ff':'')+'"><b>'+TIER_NM[p.k]+'</b>'+(pr?'<div class="small"><b>'+pr+'</b>'+(pp&&Number(pp.amount)>0?'/'+esc(perTxt(d.period)):'')+'</div>':'')+'<div class="small muted">🧪 '+(p.limits.practice||0)+' · 🤖 '+(p.limits.chat||0)+' /'+tr("ദിവസം","दिन","day")+'</div></button>'; }).join("");
+    function plans(){ $("rgPlans").innerHTML=d.plans.map(function(p){ var pp=p.in, pr=IN_APP? "" : moneyTxt(pp); return '<button type="button" class="card" data-want="'+p.k+'" style="margin:0;text-align:left;padding:8px;cursor:pointer;'+(want===p.k?'border:2px solid var(--brand2);background:#eef6ff':'')+'"><b>'+TIER_NM[p.k]+'</b>'+(pr?'<div class="small"><b>'+pr+'</b>'+(pp&&Number(pp.amount)>0?'/'+esc(perTxt(d.period)):'')+'</div>':'')+'<div class="small muted">🧪 '+(p.limits.practice||0)+' · 🤖 '+(p.limits.chat||0)+' /'+tr("ദിവസം","दिन","day")+'</div></button>'; }).join("");
       $("rgPlans").querySelectorAll("[data-want]").forEach(function(b){ b.onclick=function(){ want=b.dataset.want; plans(); }; }); }
-    plans(); $("rgCty").onchange=function(){ var ph=$("rgBody").querySelector(".rgPh"), v=this.value; if(ph && (/^\+(91|968)\s*$/.test(ph.value)||!ph.value.trim())) ph.value=v==="om"?"+968 ":v==="in"?"+91 ":"+"; plans(); };
+    var dialTouched=false, dl=$("rgBody").querySelector(".rgDial"); if(dl) dl.onchange=function(){ dialTouched=true; };
+    plans(); $("rgCty").onchange=function(){ var v=this.value; if(dl && !dialTouched){ var o=dl.querySelector('option[data-c="'+v+'"]'); if(o) dl.value=o.value, o.selected=true; } plans(); };
+    var fullPhone=function(id){ var n=String(($(id)||{}).value||"").replace(/[^\d]/g,"").replace(/^0+/,""); return n? "+"+(dl?dl.value:"91")+" "+n : ""; };
     $("rgGo").onclick=function(){ var e=$("rgErr"), b=this; e.textContent="";
       if($("rgPin").value!==$("rgPin2").value){ e.textContent=tr("രണ്ട് PIN-ഉം ഒന്നല്ല","दोनों PIN अलग हैं","The two PINs are different"); return; }
       if(!$("rgOk").checked){ e.textContent=tr("സമ്മതം tick ചെയ്യൂ","अनुमति पर tick करें","Please tick the agreement"); return; }
       b.disabled=true;
-      api("/api/register",{kind:K, name:$("rgName").value, class_id:Number($("rgCls").value), country:$("rgCty").value, school:cand?"":$("rgSchool").value, parent_name:cand?"":$("rgPName").value, parent_phone:cand?"":$("rgPhone").value, phone:cand?$("rgMyPhone").value:"", pin:$("rgPin").value, lang:$("rgLang").value, want:want, website:$("rgWeb").value, app:IN_APP}).then(function(r){
+      api("/api/register",{kind:K, name:$("rgName").value, class_id:Number($("rgCls").value), country:$("rgCty").value.toLowerCase(), school:cand?"":$("rgSchool").value, parent_name:cand?"":$("rgPName").value, parent_phone:cand?"":fullPhone("rgPhone"), phone:cand?fullPhone("rgMyPhone"):"", pin:$("rgPin").value, lang:$("rgLang").value, want:want, website:$("rgWeb").value, app:IN_APP}).then(function(r){
         token=r.token; role="student"; ls(TOKEN_KEY,token); ls(ROLE_KEY,role); lsSet("ek_reg_user", r.username); w.remove();
         var m=ekSheet('<div style="text-align:center"><div style="font-size:44px">🎉</div><h2 style="margin:4px 0">'+tr("Registration കഴിഞ്ഞു!","Registration हो गया!","You are registered!")+'</h2><div class="card" style="text-align:left"><div>'+tr("Username","Username","Username")+': <b style="font-size:20px;user-select:all">'+esc(r.username)+'</b></div><div>PIN: <b>'+tr("നീ ഉണ്ടാക്കിയ 6 അക്കം","आपका बनाया 6 अंकों का PIN","the 6 digits you chose")+'</b></div><div class="small muted" style="margin-top:6px">'+tr("ഇത് ഒരു പേപ്പറിൽ എഴുതി വെക്കൂ.","इसे कागज़ पर लिख लो।","Write this down on paper.")+'</div></div><div class="muted small">'+tr("Ma\'am verify ചെയ്യുന്നതുവരെ dashboard കാണാം.","Ma\'am verify करने तक dashboard देख सकते हो।","You can look around until Ma\'am verifies your account.")+'</div><button class="btn block" data-x id="rgDone" style="margin-top:10px">'+tr("തുടരൂ","आगे","Continue")+'</button></div>',"regDone");
         m.onclick=function(ev){ if(ev.target.closest("[data-x]")){ m.remove(); start(); } };
@@ -1531,25 +1615,25 @@ function regOpen(kind){ var d=REGI; if(!d) return; if(!d.open){ window.open(waLi
   $("rgKind").querySelectorAll("[data-k]").forEach(function(b){ b.onclick=function(){ K=b.dataset.k; body(); }; });
   body(); }
 // ----- 🌐 public landing page -----
-function landShow(){ show("landing"); if(REGI) landDraw(REGI); api("/api/register/info").then(function(d){ REGI=d; landDraw(d); }).catch(function(){ if(!REGI) landDraw({classes:[]}); }); }
+function landShow(){ show("landing"); if($("lnLangBox") && !$("lnLangBox").innerHTML) $("lnLangBox").innerHTML=langSel(); pubI18n(); if(REGI) landDraw(REGI); api("/api/register/info").then(function(d){ REGI=d; landDraw(d); }).catch(function(){ if(!REGI) landDraw({classes:[]}); }); }
 function landDraw(d){ var cls=d.classes||[], exams=cls.filter(function(c){ return EXAM_RE.test((c.board||"")+" "+c.name); }), school=cls.filter(function(c){ return exams.indexOf(c)<0; });
   var has=function(re){ return exams.some(function(c){ return re.test((c.board||"")+" "+c.name); }); };
   var nums=school.map(function(c){ return Number((c.name.match(/\d+/)||[])[0]); }).filter(Boolean), rng=nums.length? "Class "+Math.min.apply(null,nums)+(Math.max.apply(null,nums)>Math.min.apply(null,nums)?"–"+Math.max.apply(null,nums):"") : "Classes 3–12";
-  var T=[["🎒","School","CBSE "+rng+" · notes, daily quiz, practice tests and board-style mock exams for every subject.", true, "student"],
-         ["🏛️","Kerala PSC","LDC, LGS, Degree level and more · topic-wise practice and timed mock tests.", has(/PSC/i), "candidate"],
-         ["🚆","Railway &amp; SSC","RRB NTPC, Group D, SSC · maths, reasoning, GK and full-length mocks.", has(/RRB|Railway|SSC/i), "candidate"]];
-  $("lnTracks").innerHTML=T.map(function(t,i){ return '<div class="tr" data-tr="'+i+'"><span class="tg'+(t[3]?'':' soon')+'">'+(t[3]?'Open now':'Coming soon')+'</span><div class="ic">'+t[0]+'</div><h3>'+t[1]+'</h3><p>'+t[2]+'</p></div>'; }).join("");
+  var T=[["🎒","School","CBSE "+rng+" · "+tr("notes, daily quiz, practice tests, എല്ലാ subject-നും board-style mock exams.","notes, daily quiz, practice tests और हर subject के board-style mock exams।","notes, daily quiz, practice tests and board-style mock exams for every subject."), true, "student"],
+         ["🏛️","Kerala PSC",tr("LDC, LGS, Degree level തുടങ്ങിയവ · topic തിരിച്ചുള്ള പരിശീലനം, സമയബന്ധിത mock tests.","LDC, LGS, Degree level आदि · topic-wise अभ्यास और समयबद्ध mock tests।","LDC, LGS, Degree level and more · topic-wise practice and timed mock tests."), has(/PSC/i), "candidate"],
+         ["🚆","Railway &amp; SSC",tr("RRB NTPC, Group D, SSC · maths, reasoning, GK, full-length mocks.","RRB NTPC, Group D, SSC · maths, reasoning, GK और full-length mocks।","RRB NTPC, Group D, SSC · maths, reasoning, GK and full-length mocks."), has(/RRB|Railway|SSC/i), "candidate"]];
+  $("lnTracks").innerHTML=T.map(function(t,i){ return '<div class="tr" data-tr="'+i+'"><span class="tg'+(t[3]?'':' soon')+'">'+(t[3]?tr("ഇപ്പോൾ തുറന്നു","अभी खुला","Open now"):tr("ഉടൻ വരുന്നു","जल्द आ रहा","Coming soon"))+'</span><div class="ic">'+t[0]+'</div><h3>'+t[1]+'</h3><p>'+t[2]+'</p></div>'; }).join("");
   $("lnTracks").querySelectorAll("[data-tr]").forEach(function(x){ x.onclick=function(){ var t=T[Number(x.dataset.tr)]; if(t[3]) regOpen(t[4]); else window.open(waLink(SUPPORT_WA(),"Hi, please tell me when Ekanthi "+t[1].replace("&amp;","&")+" coaching starts."),"_blank"); }; });
-  ["lnRegTop","lnRegHero","lnRegEnd"].forEach(function(id){ var b=$(id); if(b && d.open===false) b.textContent=id==="lnRegTop"?"Contact":"💬 Talk to Ma'am to join"; });
+  ["lnRegTop","lnRegHero","lnRegEnd"].forEach(function(id){ var b=$(id); if(!b) return; b.textContent= d.open===false? (id==="lnRegTop"? tr("ബന്ധപ്പെടുക","संपर्क","Contact") : "💬 "+tr("ചേരാൻ Ma\'am-നോട് സംസാരിക്കൂ","जुड़ने के लिए Ma\'am से बात करें","Talk to Ma\'am to join")) : id==="lnRegTop"? "Register" : id==="lnRegHero"? tr("പഠനം തുടങ്ങാം — Register","पढ़ाई शुरू करें — Register","Start learning — register") : tr("ഇപ്പോൾ Register ചെയ്യൂ","अभी Register करें","Register now"); });
   var tz=""; try{ tz=Intl.DateTimeFormat().resolvedOptions().timeZone||""; }catch(e){} var c=tz==="Asia/Muscat"?"om":"in";
   var pl=(d.plans||[]), priced=!IN_APP && pl.some(function(p){ return p.in||p.om; });
   $("lnPlansWrap").classList.toggle("hidden", !priced);
-  if(priced) $("lnPlans").innerHTML=pl.map(function(p){ var pr=p[c]||p.in, L=p.limits||{};
-    return '<div class="pc'+(p.k==="pro"?' pro':'')+'"><h3>'+TIER_NM[p.k]+'</h3><div class="pr">'+(pr?(Number(pr.amount)===0?'Free':moneyTxt(pr)):'—')+(pr&&Number(pr.amount)>0?' <small>/ '+esc(d.period||"month")+'</small>':'')+'</div><ul><li>Daily quiz, notes &amp; study plan</li><li>'+(L.practice||0)+' practice test'+(L.practice===1?'':'s')+' a day</li>'+(L.mock?'<li>'+L.mock+' mock exam'+(L.mock===1?'':'s')+' a day</li>':'')+'<li>'+(L.chat||0)+' Ekanthi Agent doubts a day</li>'+(L.check?'<li>'+L.check+' answer checks a day</li>':'')+'</ul><button class="'+(p.k==="pro"?'b1':'b2 dk')+'" style="margin-top:16px;width:100%" data-go="reg">Choose '+({lite:"Lite",basic:"Basic",pro:"Pro"})[p.k]+'</button></div>'; }).join("");
+  if(priced) $("lnPlans").innerHTML=pl.map(function(p){ var pr=p.in, L=p.limits||{};
+    return '<div class="pc'+(p.k==="pro"?' pro':'')+'"><h3>'+TIER_NM[p.k]+'</h3><div class="pr">'+(pr?(Number(pr.amount)===0?'Free':moneyTxt(pr)):'—')+(pr&&Number(pr.amount)>0?' <small>/ '+esc(d.period||"month")+'</small>':'')+'</div><ul><li>'+tr("Daily quiz, notes, study plan","Daily quiz, notes और study plan","Daily quiz, notes &amp; study plan")+'</li><li>'+tr("ദിവസം "+(L.practice||0)+" practice test","रोज़ "+(L.practice||0)+" practice test",(L.practice||0)+" practice test"+(L.practice===1?"":"s")+" a day")+'</li>'+(L.mock?'<li>'+tr("ദിവസം "+L.mock+" mock exam","रोज़ "+L.mock+" mock exam",L.mock+" mock exam"+(L.mock===1?"":"s")+" a day")+'</li>':'')+'<li>'+tr("ദിവസം "+(L.chat||0)+" Ekanthi Agent സംശയങ്ങൾ","रोज़ "+(L.chat||0)+" Ekanthi Agent doubts",(L.chat||0)+" Ekanthi Agent doubts a day")+'</li>'+(L.check?'<li>'+tr("ദിവസം "+L.check+" answer checks","रोज़ "+L.check+" answer checks",L.check+" answer checks a day")+'</li>':'')+'</ul><button class="'+(p.k==="pro"?'b1':'b2 dk')+'" style="margin-top:16px;width:100%" data-go="reg">'+tr(({lite:"Lite",basic:"Basic",pro:"Pro"})[p.k]+" തിരഞ്ഞെടുക്കൂ",({lite:"Lite",basic:"Basic",pro:"Pro"})[p.k]+" चुनें","Choose "+({lite:"Lite",basic:"Basic",pro:"Pro"})[p.k])+'</button></div>'; }).join("");
   var B=d.biz||{}; $("lnBiz").innerHTML=B.name? 'Ekanthi is a brand of <b>'+esc(B.name)+'</b>'+(B.gstin?' · GSTIN '+esc(B.gstin):'')+(B.address?' · '+esc(B.address):'')+(B.email?' · <a href="mailto:'+esc(B.email)+'">'+esc(B.email)+'</a>':'')+' · WhatsApp <a target="_blank" rel="noopener" href="'+esc(waLink(SUPPORT_WA(),"Hi, I have a question about Ekanthi."))+'">+'+esc(SUPPORT_WA())+'</a>' : '';
-  $("lnApk").classList.toggle("hidden", IN_APP); $("lnWa").href=waLink(SUPPORT_WA(),"Hi, I have a question about Ekanthi."); $("lnWa").target="_blank"; }
+  $("lnApk").classList.toggle("hidden", IN_APP || !IS_ANDROID && IS_MOBILE); $("lnWa").href=waLink(SUPPORT_WA(),"Hi, I have a question about Ekanthi."); $("lnWa").target="_blank"; }
 document.addEventListener("click", function(e){ var g=e.target.closest("[data-go]"); if(!g || !g.closest("#landing")) return; e.preventDefault(); var v=g.dataset.go;
-  if(v==="top") window.scrollTo({top:0,behavior:"smooth"}); else if(v==="login"){ show("login"); regCheck(); } else if(v==="reg"){ if(REGI) regOpen("student"); else api("/api/register/info").then(function(d){ REGI=d; regOpen("student"); }).catch(function(x){ toast(x.message); }); } });
+  if(v==="top") window.scrollTo({top:0,behavior:"smooth"}); else if(v==="login"){ if($("lgLangBox") && !$("lgLangBox").innerHTML) $("lgLangBox").innerHTML=langSel(); pubI18n(); show("login"); regCheck(); } else if(v==="reg"){ if(REGI) regOpen("student"); else api("/api/register/info").then(function(d){ REGI=d; regOpen("student"); }).catch(function(x){ toast(x.message); }); } });
 // ----- admin: 🆕 registrations, 💳 payments, 🛒 plans & extras settings -----
 var RG={}, PY={all:false}, SH={};
 function regCard(){ api("/api/admin/registrations").then(function(d){ RG.d=d; regDraw(); }).catch(function(){ var b=$("rgBox"); if(b) b.innerHTML='<div class="muted small">Registrations could not load.</div>'; }); }
@@ -1557,7 +1641,7 @@ function regDraw(){ var b=$("rgBox"), d=RG.d; if(!b||!d) return; var it=d.items;
   var h='<div class="row between"><h2>🆕 New registrations</h2><span class="pill'+(it.length?' warn':'')+'">'+it.length+' waiting</span></div>';
   if(!it.length) h+='<div class="muted small">No one is waiting. Students register from the login page when “Registration open” is on in 🛒 Plans &amp; extras.</div>';
   else h+='<div class="small muted" style="margin:2px 0 8px">They can log in and look around, but tests, notes and the Agent stay closed until you approve. Call or WhatsApp the parent first.</div>'+it.map(function(r){ var i=r.info||{};
-    return '<div class="card" style="margin:0 0 8px"><div class="row between" style="gap:8px;flex-wrap:wrap"><div><b>'+esc(r.name)+'</b> · '+esc(r.cls||"")+' · <span class="muted">'+esc(r.username)+'</span><div class="small">'+(i.kind==="candidate"?'🏛️ <b>Exam candidate</b> · 📱 '+esc(r.phone||""):'👪 '+esc(i.parent_name||"")+' · '+esc(r.parent_phone||""))+' · '+({in:"🇮🇳 India",om:"🇴🇲 Oman"}[i.country]||"🌍 Other")+(i.school?' · 🏫 '+esc(i.school):'')+'</div><div class="small muted">Wants <b>'+(TIER_NM[i.want]||"Lite")+'</b> · '+fmtDT(r.created_at)+(i.app?' · from app':'')+(r.last_at?' · seen '+fmtDT(r.last_at):'')+'</div></div>'+
+    return '<div class="card" style="margin:0 0 8px"><div class="row between" style="gap:8px;flex-wrap:wrap"><div><b>'+esc(r.name)+'</b> · '+esc(r.cls||"")+' · <span class="muted">'+esc(r.username)+'</span><div class="small">'+(i.kind==="candidate"?'🏛️ <b>Exam candidate</b> · 📱 '+esc(r.phone||""):'👪 '+esc(i.parent_name||"")+' · '+esc(r.parent_phone||""))+' · '+(i.country&&/^[a-z]{2}$/.test(i.country)? ctryFlag(i.country.toUpperCase())+' '+esc(ctryName(i.country.toUpperCase())) : "🌍 Other")+(i.school?' · 🏫 '+esc(i.school):'')+'</div><div class="small muted">Wants <b>'+(TIER_NM[i.want]||"Lite")+'</b> · '+fmtDT(r.created_at)+(i.app?' · from app':'')+(r.last_at?' · seen '+fmtDT(r.last_at):'')+'</div></div>'+
       '<div class="row" style="gap:4px;flex-wrap:wrap"><a class="btn ghost sm" target="_blank" rel="noopener" href="'+esc(waLink(r.parent_phone||r.phone||"", "Hello "+(i.parent_name||r.name)+", this is Ma'am from Ekanthi. "+r.name+" registered on Ekanthi ("+(r.cls||"")+", username "+r.username+")."))+'">💬</a>'+
       ['lite','basic','pro'].map(function(t){ return '<button class="btn '+(t===(i.want||'lite')?'':'ghost')+' sm" data-rga="'+r.id+'" data-t="'+t+'">✅ '+TIER_NM[t]+'</button>'; }).join("")+'<button class="btn danger sm" data-rgx="'+r.id+'">✖</button></div></div></div>'; }).join("");
   b.innerHTML=h;
@@ -1579,7 +1663,7 @@ function shDraw(){ var b=$("shBox"), d=SH.d; if(!b||!d) return; var P=d.pay||{},
   var h='<div class="row between"><h2>🛒 Plans, prices &amp; extras</h2><span class="muted small">'+(c.lite||0)+' on Lite</span></div>'+
     '<div class="small muted" style="margin:2px 0 8px">Prices and payment details show <b>only on the website</b>. Inside the Android app students and parents only see “Ask Ma\'am” (Google Play rule). Daily limits for each plan are in ⭐ Plans &amp; daily limits.</div>'+
     '<div class="row" style="gap:16px;flex-wrap:wrap"><label class="row small" style="gap:6px"><input type="checkbox" id="shOn" style="width:auto"'+(d.on?' checked':'')+'> <b>Show plans &amp; extras</b> to students / parents</label><label class="row small" style="gap:6px"><input type="checkbox" id="shReg" style="width:auto"'+(d.reg?' checked':'')+'> <b>Registration open</b> (“New student? Register” on the login page)</label></div>'+
-    '<table style="margin-top:10px"><thead><tr><th>Plan</th><th>₹ India</th><th>OMR Oman</th><th>Short note (optional)</th></tr></thead><tbody>'+['lite','basic','pro'].map(function(k){ var x=d.plans[k]||{}; return '<tr><td><b>'+TIER_NM[k]+'</b></td><td><input data-pp="'+k+'" data-c="in" value="'+esc(x.in||"")+'" placeholder="'+(k==="lite"?"0 = free":"")+'" style="width:80px"></td><td><input data-pp="'+k+'" data-c="om" value="'+esc(x.om||"")+'" style="width:80px"></td><td><input data-pp="'+k+'" data-c="note" value="'+esc(x.note||"")+'" maxlength="160"></td></tr>'; }).join("")+'</tbody></table>'+
+    '<table style="margin-top:10px"><thead><tr><th>Plan</th><th>Price ₹</th><th>Short note (optional)</th></tr></thead><tbody>'+['lite','basic','pro'].map(function(k){ var x=d.plans[k]||{}; return '<tr><td><b>'+TIER_NM[k]+'</b></td><td><input data-pp="'+k+'" data-c="in" value="'+esc(x.in||"")+'" placeholder="'+(k==="lite"?"0 = free":"")+'" style="width:80px"></td><td><input data-pp="'+k+'" data-c="note" value="'+esc(x.note||"")+'" maxlength="160"></td></tr>'; }).join("")+'</tbody></table>'+
     '<div class="row small" style="gap:6px;margin-top:4px">Price is per <select id="shPer" style="width:auto">'+['month','term','year'].map(function(p){ return '<option'+(d.period===p?' selected':'')+'>'+p+'</option>'; }).join("")+'</select></div>'+
     '<h3 style="margin:14px 0 4px">🎁 Extras</h3><div id="shAdd"></div><button class="btn ghost sm" id="shNew">+ Add extra</button>'+
     '<h3 style="margin:14px 0 4px">🏢 Business (shown on receipts and the website footer)</h3><div class="row" style="gap:8px;flex-wrap:wrap"><div style="flex:2;min-width:200px"><label class="f">Legal name</label><input id="bzName" value="'+esc((d.biz||{}).name||"")+'"></div><div style="flex:1;min-width:160px"><label class="f">GSTIN</label><input id="bzGst" maxlength="15" value="'+esc((d.biz||{}).gstin||"")+'"></div></div>'+
@@ -1589,13 +1673,13 @@ function shDraw(){ var b=$("shBox"), d=SH.d; if(!b||!d) return; var P=d.pay||{},
     '<h3 style="margin:14px 0 4px">💳 Payment details <span class="small muted">(the small line students see under the price)</span></h3>'+
     '<div class="row" style="gap:8px;flex-wrap:wrap"><div><label class="f">UPI ID</label><input id="shUpi" value="'+esc(P.upi||"")+'" placeholder="name@okaxis"></div><div><label class="f">UPI name</label><input id="shUpiN" value="'+esc(P.upiName||"")+'" placeholder="Name shown in UPI"></div></div>'+
     '<label class="f">India — extra line (optional)</label><input id="shIn" value="'+esc(P.in||"")+'" maxlength="300" placeholder="e.g. or GPay 98xxxxxxx">'+
-    '<label class="f">Oman / other countries</label><input id="shOm" value="'+esc(P.om||"")+'" maxlength="300" placeholder="e.g. Bank Muscat transfer to 0xxx… / Mobile 9xxxxxxx (name)">'+
+    '<label class="f">Students outside India (optional extra line, e.g. Oman bank / mobile transfer). Prices stay in ₹.</label><input id="shOm" value="'+esc(P.om||"")+'" maxlength="300" placeholder="e.g. Bank Muscat transfer to 0xxx… / Mobile 9xxxxxxx (name)">'+
     '<label class="f">Note after paying</label><input id="shNote" value="'+esc(P.note||"")+'" maxlength="300">'+
     '<button class="btn" id="shSave" style="margin-top:12px">Save plans &amp; extras</button>';
   b.innerHTML=h; SH.add=(d.addons||[]).map(function(a){ return Object.assign({},a); });
   function drawAdd(){ $("shAdd").innerHTML=SH.add.map(function(a,i){ return '<div class="card" style="margin:0 0 8px;padding:10px"><div class="row" style="gap:6px;flex-wrap:wrap"><input data-ad="'+i+'" data-f="name" value="'+esc(a.name||"")+'" placeholder="Name, e.g. Talk to Ma\'am — 3 sessions" style="flex:2;min-width:180px"><select data-ad="'+i+'" data-f="kind" style="width:auto">'+Object.keys(d.kinds).map(function(k){ return '<option value="'+k+'"'+(a.kind===k?' selected':'')+'>'+esc(d.kinds[k])+'</option>'; }).join("")+'</select></div>'+
       '<input data-ad="'+i+'" data-f="desc" value="'+esc(a.desc||"")+'" placeholder="Short description" style="margin-top:6px">'+
-      '<div class="row" style="gap:6px;margin-top:6px;flex-wrap:wrap;align-items:flex-end"><div style="flex:2;min-width:140px"><label class="f">'+valLbl[a.kind||"other"]+'</label><input data-ad="'+i+'" data-f="value" value="'+esc(a.value||"")+'"></div><div><label class="f">₹</label><input data-ad="'+i+'" data-f="in" value="'+esc(a.in||"")+'" style="width:70px"></div><div><label class="f">OMR</label><input data-ad="'+i+'" data-f="om" value="'+esc(a.om||"")+'" style="width:70px"></div><label class="row small" style="gap:4px"><input type="checkbox" data-ad="'+i+'" data-f="active" style="width:auto"'+(a.active?' checked':'')+'> On</label><button class="btn danger sm" data-adx="'+i+'">🗑</button></div></div>'; }).join("")||'<div class="muted small">No extras yet.</div>';
+      '<div class="row" style="gap:6px;margin-top:6px;flex-wrap:wrap;align-items:flex-end"><div style="flex:2;min-width:140px"><label class="f">'+valLbl[a.kind||"other"]+'</label><input data-ad="'+i+'" data-f="value" value="'+esc(a.value||"")+'"></div><div><label class="f">₹</label><input data-ad="'+i+'" data-f="in" value="'+esc(a.in||"")+'" style="width:70px"></div><label class="row small" style="gap:4px"><input type="checkbox" data-ad="'+i+'" data-f="active" style="width:auto"'+(a.active?' checked':'')+'> On</label><button class="btn danger sm" data-adx="'+i+'">🗑</button></div></div>'; }).join("")||'<div class="muted small">No extras yet.</div>';
     $("shAdd").querySelectorAll("[data-ad]").forEach(function(x){ x.oninput=x.onchange=function(){ var a=SH.add[Number(x.dataset.ad)]; a[x.dataset.f]= x.type==="checkbox"? x.checked : x.value; if(x.dataset.f==="kind") drawAdd(); }; });
     $("shAdd").querySelectorAll("[data-adx]").forEach(function(x){ x.onclick=function(){ SH.add.splice(Number(x.dataset.adx),1); drawAdd(); }; }); }
   drawAdd(); $("shNew").onclick=function(){ SH.add.push({name:"", kind:"support", value:"3", in:"", om:"", active:true}); drawAdd(); };
@@ -4502,12 +4586,17 @@ function pKidsWire(){ document.querySelectorAll("[data-kid]").forEach(function(b
 var P_DID={quiz:["📝","Daily quiz"],practice:["🧪","Practice test"],homework:["📚","Homework"],mock:["📄","Mock exam"],imp:["⭐","Important Qs"],checkin:["✅","Study check-in"],revision:["🔁","Revision"],chat:["💬","Asked a doubt"],corrections:["✍️","Corrections"]};
 function pDraw(){ var d=PC.d, r=d.report||{}, P=PH.perms||{}, first=d.name.split(" ")[0], h=pKids();
   var st={green:["🟢",tr("നന്നായി പോകുന്നു","अच्छा चल रहा है","On track"),"#e8f8ee","#16a34a"], amber:["🟠",tr("കുറച്ചു കൂടി ശ്രദ്ധ വേണം","थोड़ा और ध्यान चाहिए","Needs a little push"),"#fff6e5","#d97706"], red:["🔴",tr("ശ്രദ്ധിക്കണം","ध्यान देना ज़रूरी","Needs attention"),"#fdecec","#dc2626"]}[r.status||"amber"];
-  h+='<div class="card p-hero" style="background:linear-gradient(135deg,'+st[2]+',#fff);border-left:6px solid '+st[3]+'"><div class="row between" style="gap:10px;flex-wrap:wrap"><div><div style="font-size:22px;font-weight:800">'+esc(d.name)+'</div><div class="muted">'+esc(r.cls||"")+'</div></div><div style="font-size:18px;font-weight:700;color:'+st[3]+'">'+st[0]+' '+st[1]+'</div></div>'+(d.locked?'<div class="small" style="margin-top:6px;color:#b91c1c">🔒 '+tr("App ഇപ്പോൾ lock ആണ് — Ma\'am-നെ WhatsApp ചെയ്യൂ.","App अभी lock है — Ma\'am को WhatsApp कीजिए।","The app is locked right now — please WhatsApp Ma\'am.")+'</div>':'')+'</div>';
+  h+='<div class="card p-hero" style="background:linear-gradient(135deg,'+st[2]+',#fff);border-top-color:'+st[3]+'"><div class="row between" style="gap:10px;flex-wrap:wrap"><div><div style="font-size:22px;font-weight:800">'+esc(d.name)+'</div><div class="muted">'+esc(r.cls||"")+'</div></div><div style="font-size:18px;font-weight:700;color:'+st[3]+'">'+st[0]+' '+st[1]+'</div></div>'+(d.locked?'<div class="small" style="margin-top:6px;color:#b91c1c">🔒 '+tr("App ഇപ്പോൾ lock ആണ് — Ma\'am-നെ WhatsApp ചെയ്യൂ.","App अभी lock है — Ma\'am को WhatsApp कीजिए।","The app is locked right now — please WhatsApp Ma\'am.")+'</div>':'')+'</div>';
   if(d.today){ var t=d.today, did=Object.keys(t.did||{}); h+='<div class="card"><h2>📅 '+tr("ഇന്ന്","आज","Today")+'</h2><div class="kpis" style="margin-top:8px">'+
     '<div class="card kpi"><span class="muted">'+tr("App തുറന്നോ","App खोला?","Opened the app")+'</span><b>'+(t.opened? '✅ '+t.mins+' min' : '❌ '+tr("ഇല്ല","नहीं","Not yet"))+'</b></div>'+
     '<div class="card kpi"><span class="muted">'+tr("പഠിച്ചോ","पढ़ाई की?","Studied")+'</span><b>'+(did.length? '✅ '+did.length+' '+tr("കാര്യം","काम","things") : '❌ '+tr("ഇല്ല","नहीं","Not yet"))+'</b></div>'+
     '<div class="card kpi"><span class="muted">🔥 Streak</span><b>'+((r.week||{}).streak||0)+' '+tr("ദിവസം","दिन",((r.week||{}).streak===1?"day":"days"))+'</b></div></div>'+
     (did.length? '<div class="dev-chips">'+did.map(function(k){ var x=P_DID[k]||["•",k]; return '<span class="dev-chip">'+x[0]+' '+x[1]+(t.did[k]>1?' ×'+t.did[k]:'')+'</span>'; }).join("")+'</div>' : '<div class="small muted" style="margin-top:6px">'+(t.lastSeen? tr("അവസാനം കണ്ടത്: ","आख़िरी बार: ","Last seen: ")+fmtDT(t.lastSeen) : '')+'</div>')+'</div>'; }
+  if(r.homework){ var hw=r.homework; h+='<div class="card"><h2>📚 Homework</h2><div class="small" style="margin-bottom:6px">'+tr("ചെയ്തത്","किया","Done")+': <b>'+hw.done+' / '+hw.due+'</b>'+(hw.late?' · '+tr("വൈകി","देर से","late")+': '+hw.late:'')+'</div>'+(hw.pending&&hw.pending.length? hw.pending.map(function(x){ return '<div class="p-row"><span style="flex:1">'+esc(x.title)+'</span><span class="small" style="color:'+(x.overdue?'#dc2626':'inherit')+'">'+(x.overdue?'⚠️ '+tr("വൈകി","देर","overdue")+' · ':'')+(x.due_date?fmtDate(x.due_date):'')+'</span></div>'; }).join("") : '<div class="muted small">✅ '+tr("ബാക്കി ഒന്നുമില്ല","कुछ बाकी नहीं","Nothing pending")+'</div>')+'</div>'; }
+  if(r.exams && r.exams.length) h+='<div class="card"><h2>🗓️ '+tr("പരീക്ഷകൾ","परीक्षाएँ","Exams")+'</h2>'+r.exams.map(function(x){ return '<div class="p-row"><span style="flex:1"><b>'+esc(x.name)+'</b></span><span>'+fmtDate(x.date)+' · <b>'+x.days+' '+tr("ദിവസം","दिन","days")+'</b></span></div>'; }).join("")+'</div>';
+  if(r.marks && r.marks.length){ h+='<div class="card"><h2>🎯 '+tr("മാർക്കുകൾ","अंक","Marks")+'</h2>'+r.marks.map(function(m){ var c=m.pct>=75?"#16a34a":m.pct>=50?"#d97706":"#dc2626"; return '<div class="p-row"><span class="p-date">'+fmtDate(m.date)+'</span><span style="flex:1">'+esc(m.title)+' <span class="pill p0">'+esc(m.type)+'</span></span><b style="color:'+c+'">'+esc(m.score)+' · '+m.pct+'%</b></div>'; }).join("")+'</div>'; }
+  if((r.weak&&r.weak.length)||(r.strong&&r.strong.length)) h+='<div class="card"><h2>💡 '+tr("ശക്തിയും ദൗർബല്യവും","मज़बूत और कमज़ोर","Strong & weak topics")+'</h2>'+(r.strong||[]).map(function(x){ return '<div class="p-row"><span style="flex:1">💪 '+esc(x.name||x.chapter||"")+'</span><b style="color:#16a34a">'+x.pct+'%</b></div>'; }).join("")+(r.weak||[]).map(function(x){ return '<div class="p-row"><span style="flex:1">⚠️ '+esc(x.name||x.chapter||"")+'</span><b style="color:#dc2626">'+x.pct+'%</b></div>'; }).join("")+'</div>';
+  if((r.remarks&&r.remarks.length)||r.summary) h+='<div class="card"><h2>👩‍🏫 '+tr("Ma\'am പറയുന്നത്","Ma\'am कहती हैं","From Ma\'am")+'</h2>'+(r.summary?'<div style="white-space:pre-wrap;margin-bottom:6px">'+esc(r.summary.text)+'</div>':'')+(r.remarks||[]).map(function(x){ return '<div class="p-row"><span class="p-date">'+fmtDate(String(x.created_at).slice(0,10))+'</span><span style="flex:1">'+esc(x.text)+'</span></div>'; }).join("")+'</div>';
   var PRO=[]; var locked=function(k){ return PH.perms && PH.perms[k]==="locked"; };
   if(d.usage && d.usage!=="locked"){ var u=d.usage; h+='<div class="card"><div class="row between"><h2>📱 '+tr("App ഉപയോഗം","App का इस्तेमाल","App usage")+'</h2><span style="font-weight:700;color:'+(u.online?'#16a34a':'#64748b')+'">'+(u.online? '🟢 '+tr("ഇപ്പോൾ online","अभी online","Online now") : '⚪ '+tr("Offline","Offline","Offline"))+'</span></div>'+
     '<div class="p-row"><span style="flex:1">'+tr("ഇപ്പോൾ എവിടെ","अभी कहाँ","Where in the app")+'</span><b>'+(u.online? esc(u.place||"—") : '—')+'</b></div>'+
@@ -4529,11 +4618,6 @@ function pDraw(){ var d=PC.d, r=d.report||{}, P=PH.perms||{}, first=d.name.split
     '<div class="row" style="gap:16px;margin-top:8px;flex-wrap:wrap" class="small"><span>📚 '+tr("പഠിച്ച ദിവസം","पढ़ाई के दिन","Study days")+': <b>'+((r.week||{}).studyDays||0)+' / 7</b></span>'+((r.week||{}).quizAvg!==null&&(r.week||{}).quizAvg!==undefined?'<span>📝 Quiz avg: <b>'+r.week.quizAvg+'%</b></span>':'')+(r.avg!==null&&r.avg!==undefined?'<span>🎯 '+tr("മാർക്ക് ശരാശരി","औसत अंक","Average marks")+': <b>'+r.avg+'%</b></span>':'')+'</div></div>'; }
   if(d.studied){ h+='<div class="card"><h2>📖 '+tr(first+" പഠിച്ച ഭാഗങ്ങൾ",first+" ने क्या पढ़ा","What "+first+" studied")+'</h2><div class="small muted" style="margin-bottom:6px">'+tr("കുട്ടി തന്നെ രേഖപ്പെടുത്തിയത് (2 ആഴ്ച)","बच्चे ने खुद लिखा (2 हफ्ते)","Marked by "+first+" (last 2 weeks)")+'</div>'+
     (d.studied.length? d.studied.map(function(c){ var u=["","😕","🙂","😃"][c.understood||0]||""; return '<div class="p-row"><span class="p-date">'+fmtDate(c.date)+'</span><span style="flex:1"><b>'+esc(c.subject||tr("പഠനം","पढ़ाई","Study session"))+'</b>'+(c.chapter?' · '+esc(c.chapter):'')+(c.note?'<div class="small muted">“'+esc(c.note)+'”</div>':'')+'</span><span class="small">'+(c.minutes?c.minutes+' min ':'')+u+'</span></div>'; }).join("") : '<div class="muted">'+tr("ഇതുവരെ ഒന്നും രേഖപ്പെടുത്തിയിട്ടില്ല","अभी तक कुछ नहीं लिखा","Nothing marked yet")+'</div>')+'</div>'; }
-  if(r.marks && r.marks.length){ h+='<div class="card"><h2>🎯 '+tr("മാർക്കുകൾ","अंक","Marks")+'</h2>'+r.marks.map(function(m){ var c=m.pct>=75?"#16a34a":m.pct>=50?"#d97706":"#dc2626"; return '<div class="p-row"><span class="p-date">'+fmtDate(m.date)+'</span><span style="flex:1">'+esc(m.title)+' <span class="pill p0">'+esc(m.type)+'</span></span><b style="color:'+c+'">'+esc(m.score)+' · '+m.pct+'%</b></div>'; }).join("")+'</div>'; }
-  if(r.homework){ var hw=r.homework; h+='<div class="card"><h2>📚 Homework</h2><div class="small" style="margin-bottom:6px">'+tr("ചെയ്തത്","किया","Done")+': <b>'+hw.done+' / '+hw.due+'</b>'+(hw.late?' · '+tr("വൈകി","देर से","late")+': '+hw.late:'')+'</div>'+(hw.pending&&hw.pending.length? hw.pending.map(function(x){ return '<div class="p-row"><span style="flex:1">'+esc(x.title)+'</span><span class="small" style="color:'+(x.overdue?'#dc2626':'inherit')+'">'+(x.overdue?'⚠️ '+tr("വൈകി","देर","overdue")+' · ':'')+(x.due_date?fmtDate(x.due_date):'')+'</span></div>'; }).join("") : '<div class="muted small">✅ '+tr("ബാക്കി ഒന്നുമില്ല","कुछ बाकी नहीं","Nothing pending")+'</div>')+'</div>'; }
-  if(r.exams && r.exams.length) h+='<div class="card"><h2>🗓️ '+tr("പരീക്ഷകൾ","परीक्षाएँ","Exams")+'</h2>'+r.exams.map(function(x){ return '<div class="p-row"><span style="flex:1"><b>'+esc(x.name)+'</b></span><span>'+fmtDate(x.date)+' · <b>'+x.days+' '+tr("ദിവസം","दिन","days")+'</b></span></div>'; }).join("")+'</div>';
-  if((r.weak&&r.weak.length)||(r.strong&&r.strong.length)) h+='<div class="card"><h2>💡 '+tr("ശക്തിയും ദൗർബല്യവും","मज़बूत और कमज़ोर","Strong & weak topics")+'</h2>'+(r.strong||[]).map(function(x){ return '<div class="p-row"><span style="flex:1">💪 '+esc(x.name||x.chapter||"")+'</span><b style="color:#16a34a">'+x.pct+'%</b></div>'; }).join("")+(r.weak||[]).map(function(x){ return '<div class="p-row"><span style="flex:1">⚠️ '+esc(x.name||x.chapter||"")+'</span><b style="color:#dc2626">'+x.pct+'%</b></div>'; }).join("")+'</div>';
-  if((r.remarks&&r.remarks.length)||r.summary) h+='<div class="card"><h2>👩‍🏫 '+tr("Ma\'am പറയുന്നത്","Ma\'am कहती हैं","From Ma\'am")+'</h2>'+(r.summary?'<div style="white-space:pre-wrap;margin-bottom:6px">'+esc(r.summary.text)+'</div>':'')+(r.remarks||[]).map(function(x){ return '<div class="p-row"><span class="p-date">'+fmtDate(String(x.created_at).slice(0,10))+'</span><span style="flex:1">'+esc(x.text)+'</span></div>'; }).join("")+'</div>';
   // give a test (feature shown to all; works only when Ma'am allows)
   if(PH.perms && PH.perms.test===false){} else h+='<div class="card" style="border:2px solid '+(PH.allowTest?'#c7dcf7':'#f2c14e')+';background:'+(PH.allowTest?'#f8fbff':'linear-gradient(135deg,#fff8e1,#fff)')+'"><div class="row between"><h2>🧪 '+tr(first+"-ന് ഒരു test കൊടുക്കാം","Give "+first+" a test","Give "+first+" a test")+'</h2>'+(PH.allowTest?'':'<span class="pill" style="background:#f2c14e;color:#3b2f00">⭐ Pro</span>')+'</div>'+
     '<div class="small muted" style="margin:4px 0 8px">'+tr("പാഠം തിരഞ്ഞെടുക്കൂ — Ekanthi ചോദ്യങ്ങൾ തയ്യാറാക്കും, കുട്ടിക്ക് homework ആയി കിട്ടും, മാർക്ക് ഇവിടെ കാണാം.","पाठ चुनिए — Ekanthi सवाल बनाएगा, बच्चे को homework में मिलेगा, अंक यहीं दिखेंगे।","Pick the chapters — Ekanthi makes the questions, "+first+" gets it as homework, and you see the marks here.")+'</div>'+
@@ -4575,7 +4659,7 @@ function movedNote(){ if(lsGet("ek_moved")!=="1") return; lsDel("ek_moved"); if(
   var d=document.createElement("div"); d.className="m-sheet-wrap"; d.style.cssText="position:fixed;left:12px;right:12px;bottom:14px;z-index:9999;background:#0b2239;color:#fff;border-radius:14px;padding:14px 16px;box-shadow:0 8px 30px rgba(0,0,0,.3);font-size:14px;line-height:1.45";
   d.innerHTML='<b>🏠 '+tr("Ekanthi-യുടെ പുതിയ address: www.ekanthi.in","Ekanthi का नया पता: www.ekanthi.in","Ekanthi has a new address: www.ekanthi.in")+'</b><br>'+tr("Login അതുപോലെ തന്നെ ഉണ്ട്. Home screen-ൽ Ekanthi icon ഉണ്ടായിരുന്നെങ്കിൽ, browser menu-വിൽ നിന്ന് “Add to Home screen” വീണ്ടും ചെയ്യൂ.","आपका login वैसे ही है। अगर Home screen पर Ekanthi icon था, तो browser menu से “Add to Home screen” फिर से करें।","You are still logged in. If you had Ekanthi on your home screen, add it again from the browser menu (“Add to Home screen”).")+'<div style="text-align:right;margin-top:8px"><button class="btn sm" style="background:#fff;color:#0b2239">OK</button></div>';
   document.body.appendChild(d); d.querySelector("button").onclick=function(){ d.remove(); }; }
-function start(){ setTimeout(movedNote,1500); var rp=(location.search.match(/[?&]r=([a-f0-9]{40})/)||[])[1]; if(rp) return startReport(rp); if(!token){ if(location.hash==="#login"){ regCheck(); return show("login"); } return landShow(); } if(role==="tutor") startTutor(); else if(role==="parent") startParent(); else startStudent(); }
+function start(){ setTimeout(movedNote,1500); var rp=(location.search.match(/[?&]r=([a-f0-9]{40})/)||[])[1]; if(rp) return startReport(rp); if(!token){ if($("lgLangBox") && !$("lgLangBox").innerHTML) $("lgLangBox").innerHTML=langSel(); pubI18n(); if(location.hash==="#login"){ regCheck(); return show("login"); } return landShow(); } if(role==="tutor") startTutor(); else if(role==="parent") startParent(); else startStudent(); }
 start();
 })();
 </script>
