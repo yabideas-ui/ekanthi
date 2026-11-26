@@ -693,12 +693,11 @@ body.on-break #brkBtn,body.on-break #askBtn{display:none!important}
 }
 
 
-/* ☀️ soft glowing sun (no cartoon rays) */
-.sk-sun{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 45% 42%,#fffef6 0,#fff6c9 30%,#ffe08a 58%,#ffc94a 74%,rgba(255,201,74,0) 76%);box-shadow:0 0 18px 6px rgba(255,226,140,.55),0 0 60px 22px rgba(255,214,110,.22),0 0 120px 50px rgba(255,214,110,.10)}
-.sk-sun i{position:absolute;inset:-26px;border-radius:50%;background:radial-gradient(circle,rgba(255,244,200,.38) 0,rgba(255,236,170,.14) 45%,transparent 70%);-webkit-mask:none;mask:none;animation:skGlow 6s ease-in-out infinite}
-@keyframes skGlow{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.18);opacity:1}}
-.sk-sun.low{width:40px;height:40px;background:radial-gradient(circle at 45% 42%,#fff4e0 0,#ffd9a0 32%,#ffa95a 60%,#ff7a3d 74%,rgba(255,122,61,0) 76%);box-shadow:0 0 20px 8px rgba(255,150,80,.55),0 0 70px 28px rgba(255,120,60,.25),0 0 140px 60px rgba(255,120,60,.10)}
-.sk-sun.low i{background:radial-gradient(circle,rgba(255,190,130,.4) 0,rgba(255,150,90,.14) 45%,transparent 70%)}
+/* ☀️ golden sun: warm core, soft glow and a faint slow corona */
+.sk-sun{width:36px;height:36px;border-radius:50%;background:radial-gradient(circle at 42% 38%,#fffbe0 0,#ffe066 34%,#ffc21a 66%,#ff9f0a 100%);box-shadow:0 0 0 3px rgba(255,214,90,.25),0 0 22px 8px rgba(255,196,40,.6),0 0 70px 26px rgba(255,180,40,.28)}
+.sk-sun i{position:absolute;inset:-18px;border-radius:50%;background:repeating-conic-gradient(rgba(255,214,100,.5) 0 4deg,rgba(255,214,100,0) 4deg 22deg);-webkit-mask:radial-gradient(circle,transparent 50%,#000 54%,rgba(0,0,0,.35) 78%,transparent 82%);mask:radial-gradient(circle,transparent 50%,#000 54%,rgba(0,0,0,.35) 78%,transparent 82%);filter:blur(1.2px);animation:skSpin 40s linear infinite}
+.sk-sun.low{width:42px;height:42px;background:radial-gradient(circle at 42% 38%,#fff1d0 0,#ffc36b 34%,#ff8a2b 68%,#f0561e 100%);box-shadow:0 0 0 3px rgba(255,150,80,.22),0 0 24px 10px rgba(255,120,50,.55),0 0 80px 32px rgba(255,110,50,.25)}
+.sk-sun.low i{background:repeating-conic-gradient(rgba(255,160,90,.45) 0 4deg,rgba(255,160,90,0) 4deg 22deg)}
 .sk-sun.dim{opacity:.55;filter:blur(1px)}
 /* ✨ RICH LOOK 2026 — one premium style for student, parent, tutor and admin */
 :root{--ivory:#f6f2e9;--hair:rgba(176,141,62,.18);--g1:#c99a3c;--g2:#f3d48a;--serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Noto Serif Malayalam","Noto Sans Malayalam",serif}
@@ -713,8 +712,8 @@ body{background:radial-gradient(1100px 520px at 50% -260px,#e3eaf5 0%,rgba(227,2
 #parent .card h2{font-size:19px}
 #tMain h2{font-size:22px}
 /* layered header: the first cards float up over the header */
-#student .s-head,#parent .s-head{padding-bottom:40px;border-radius:0 0 30px 30px}
-#student .s-main,#parent .s-main{position:relative;z-index:3;margin-top:-28px}
+#student .s-head,#parent .s-head{border-radius:0 0 28px 28px}
+#student .s-main,#parent .s-main{position:relative;z-index:3;padding-top:16px}
 .s-head .hi{font-family:var(--serif);letter-spacing:-.01em}
 .t-head .logo{font-family:var(--serif);letter-spacing:.01em}
 /* today's tasks: a deep navy card with a gold ring */
@@ -923,7 +922,7 @@ if(window.top!==window.self){ document.documentElement.style.display="none"; try
 "use strict";
 // ===================== SETTINGS =====================
 var API_URL = "https://ekanthi-tutor.yabideas.workers.dev";
-var APP_VERSION = 91; // bump on every release: open apps notice and refresh themselves
+var APP_VERSION = 92; // bump on every release: open apps notice and refresh themselves
 var WHATSAPP_NUMBER = "96893376228";   // Ma'am (students / parents chat)
 function SUPPORT_WA(){ var b=(REGI&&REGI.biz)||(SHOP&&SHOP.d&&SHOP.d.biz)||{}; return String(b.wa||"").replace(/\D/g,"")||WHATSAPP_NUMBER; }   // public support line (admin 🛒 → 🏢 Business)
 var SITE_URL = /(^|\.)ekanthi\.(in|com)$|cyberkalari\.com$/.test(location.hostname) ? location.origin : "https://www.ekanthi.in";   // works on the old and the new domain
