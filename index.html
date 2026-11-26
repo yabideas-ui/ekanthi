@@ -922,7 +922,7 @@ if(window.top!==window.self){ document.documentElement.style.display="none"; try
 "use strict";
 // ===================== SETTINGS =====================
 var API_URL = "https://ekanthi-tutor.yabideas.workers.dev";
-var APP_VERSION = 92; // bump on every release: open apps notice and refresh themselves
+var APP_VERSION = 93; // bump on every release: open apps notice and refresh themselves
 var WHATSAPP_NUMBER = "96893376228";   // Ma'am (students / parents chat)
 function SUPPORT_WA(){ var b=(REGI&&REGI.biz)||(SHOP&&SHOP.d&&SHOP.d.biz)||{}; return String(b.wa||"").replace(/\D/g,"")||WHATSAPP_NUMBER; }   // public support line (admin 🛒 → 🏢 Business)
 var SITE_URL = /(^|\.)ekanthi\.(in|com)$|cyberkalari\.com$/.test(location.hostname) ? location.origin : "https://www.ekanthi.in";   // works on the old and the new domain
@@ -5015,7 +5015,7 @@ function movedNote(){ if(lsGet("ek_moved")!=="1") return; lsDel("ek_moved"); if(
   var d=document.createElement("div"); d.className="m-sheet-wrap"; d.style.cssText="position:fixed;left:12px;right:12px;bottom:14px;z-index:9999;background:#0b2239;color:#fff;border-radius:14px;padding:14px 16px;box-shadow:0 8px 30px rgba(0,0,0,.3);font-size:14px;line-height:1.45";
   d.innerHTML='<b>🏠 '+tr("Ekanthi-യുടെ പുതിയ address: www.ekanthi.in","Ekanthi का नया पता: www.ekanthi.in","Ekanthi has a new address: www.ekanthi.in")+'</b><br>'+tr("Login അതുപോലെ തന്നെ ഉണ്ട്. Home screen-ൽ Ekanthi icon ഉണ്ടായിരുന്നെങ്കിൽ, browser menu-വിൽ നിന്ന് “Add to Home screen” വീണ്ടും ചെയ്യൂ.","आपका login वैसे ही है। अगर Home screen पर Ekanthi icon था, तो browser menu से “Add to Home screen” फिर से करें।","You are still logged in. If you had Ekanthi on your home screen, add it again from the browser menu (“Add to Home screen”).")+'<div style="text-align:right;margin-top:8px"><button class="btn sm" style="background:#fff;color:#0b2239">OK</button></div>';
   document.body.appendChild(d); d.querySelector("button").onclick=function(){ d.remove(); }; }
-function start(){ setTimeout(movedNote,1500); var rp=(location.search.match(/[?&]r=([a-f0-9]{40})/)||[])[1]; if(rp) return startReport(rp); if(!token){ if($("lgLangBox") && !$("lgLangBox").innerHTML) $("lgLangBox").innerHTML=langSel(); pubI18n(); if(location.hash==="#login"){ regCheck(); return show("login"); } return landShow(); } if(role==="tutor") startTutor(); else if(role==="parent") startParent(); else startStudent(); }
+function start(){ setTimeout(movedNote,1500); var rp=(location.search.match(/[?&]r=([a-f0-9]{40})/)||[])[1]; if(rp) return startReport(rp); if(!token){ if($("lgLangBox") && !$("lgLangBox").innerHTML) $("lgLangBox").innerHTML=langSel(); pubI18n(); if(location.hash==="#login" || IN_APP){ regCheck(); return show("login"); } return landShow(); } if(role==="tutor") startTutor(); else if(role==="parent") startParent(); else startStudent(); }
 start();
 })();
 </script>
