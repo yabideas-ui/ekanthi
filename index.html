@@ -330,7 +330,7 @@ a.btn{text-decoration:none;display:inline-block}
 .s-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
 .hchip{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#fff;border-radius:999px;padding:5px 11px;font-size:13px;backdrop-filter:blur(6px)}
 .hchip.gold{background:linear-gradient(180deg,rgba(255,211,107,.95),rgba(242,182,50,.95));color:#2a1d00;border:0;font-weight:700}
-.hquote{width:100%;color:#d6e3f2;font-size:13px;font-style:italic;margin-top:4px}
+.hquote{width:100%;color:#d6e3f2;font-size:12.5px;font-style:italic;margin-top:6px;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .appc{display:flex;gap:12px;align-items:center;background:linear-gradient(135deg,#0b2239,#1d4f80);color:#fff;border-radius:18px;padding:14px;margin-bottom:12px;box-shadow:var(--shadow)}
 .appc .muted{color:#c9d8ea!important}.appi{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:22px;flex:none}
 body.staff .owner-only{display:none!important}
@@ -716,19 +716,19 @@ body{background:radial-gradient(1100px 520px at 50% -260px,#e3eaf5 0%,rgba(227,2
 #student .s-main,#parent .s-main{position:relative;z-index:3;padding-top:16px}
 .s-head .hi{font-family:var(--serif);letter-spacing:-.01em}
 .t-head .logo{font-family:var(--serif);letter-spacing:.01em}
-/* today's tasks: a deep navy card with a gold ring */
-#sv-today .tk-card{background:radial-gradient(420px 200px at 105% -10%,rgba(243,212,138,.26),transparent 60%),radial-gradient(300px 160px at -10% 110%,rgba(80,150,230,.22),transparent 60%),linear-gradient(155deg,#0e2846 0%,#163f6a 100%)!important;border:1px solid rgba(243,212,138,.25)!important;color:#fff;box-shadow:0 22px 44px -18px rgba(11,34,57,.55)!important}
-#sv-today .tk-card h3{color:#fff}
-#sv-today .tk-card .muted{color:#c3d1e4!important}
-#sv-today .tk-card .tk-ring{background:conic-gradient(var(--g2) calc(var(--p)*1%),rgba(255,255,255,.14) 0);color:#fff;width:52px;height:52px;box-shadow:0 0 22px rgba(243,212,138,.25)}
-#sv-today .tk-card .tk-ring span{background:#123a62;width:42px;height:42px}
-#sv-today .tk-card .task{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.11);color:#fff;backdrop-filter:blur(6px)}
-#sv-today .tk-card .task:hover{background:rgba(255,255,255,.11)}
-#sv-today .tk-card .task.done{background:rgba(52,190,120,.16);border-color:rgba(110,220,160,.35)}
-#sv-today .tk-card .task .t{color:#fff;font-size:15.5px}
-#sv-today .tk-card .task .dot{order:3;margin-left:auto;border-color:rgba(255,255,255,.35);width:24px;height:24px}
-#sv-today .tk-card .task.done .dot{background:linear-gradient(180deg,#4ade80,#16a34a);border-color:transparent}
+/* today's tasks: a light cream card with a gold ring (calmer than the old deep-navy card) */
+#sv-today .tk-card{background:linear-gradient(180deg,#fffdf8,#fbf6ea)!important;border:1px solid rgba(201,154,60,.35)!important;color:#0e2742;box-shadow:0 16px 36px -18px rgba(28,40,70,.28)!important}
+#sv-today .tk-card h3{color:#0e2742}
+#sv-today .tk-card .tk-ring{background:conic-gradient(var(--g1) calc(var(--p)*1%),#efe6d2 0);color:#0e2742;width:50px;height:50px}
+#sv-today .tk-card .tk-ring span{background:#fffdf8;width:40px;height:40px}
+#sv-today .tk-card .task{background:#fff;border:1px solid #efe7d6;color:#0e2742}
+#sv-today .tk-card .task:hover{background:#fffaf0}
+#sv-today .tk-card .task.done{background:#f1faf4;border-color:#cdebd8}
+#sv-today .tk-card .task .t{color:#0e2742;font-size:15.5px}
+#sv-today .tk-card .task .dot{order:3;margin-left:auto;border-color:#d6cdb8;width:24px;height:24px}
+#sv-today .tk-card .task.done .dot{background:linear-gradient(180deg,#4ade80,#16a34a);border-color:transparent;color:#fff}
 #sv-today .tk-card .task .go{display:none}
+.tk-exam{display:inline-flex;align-items:center;gap:5px;margin-top:7px;padding:3px 10px;border-radius:999px;background:#fff3d6;color:#7a5200;font-size:12.5px;font-weight:700}
 .tk-ic{width:42px;height:42px;border-radius:14px;flex:none;display:grid;place-items:center;font-size:21px;background:linear-gradient(145deg,var(--a),var(--b));box-shadow:0 8px 18px -6px var(--a),inset 0 1px 0 rgba(255,255,255,.35)}
 /* stat tiles */
 .ts{background:linear-gradient(180deg,#fff,#fffaf0)!important;border:1px solid var(--hair)!important;border-radius:20px!important;box-shadow:0 12px 26px -14px rgba(28,40,70,.25)!important;position:relative;overflow:hidden}
@@ -922,7 +922,7 @@ if(window.top!==window.self){ document.documentElement.style.display="none"; try
 "use strict";
 // ===================== SETTINGS =====================
 var API_URL = "https://ekanthi-tutor.yabideas.workers.dev";
-var APP_VERSION = 95; // bump on every release: open apps notice and refresh themselves
+var APP_VERSION = 96; // bump on every release: open apps notice and refresh themselves
 var WHATSAPP_NUMBER = "96893376228";   // Ma'am (students / parents chat)
 function SUPPORT_WA(){ var b=(REGI&&REGI.biz)||(SHOP&&SHOP.d&&SHOP.d.biz)||{}; return String(b.wa||"").replace(/\D/g,"")||WHATSAPP_NUMBER; }   // public support line (admin 🛒 → 🏢 Business)
 var SITE_URL = /(^|\.)ekanthi\.(in|com)$|cyberkalari\.com$/.test(location.hostname) ? location.origin : "https://www.ekanthi.in";   // works on the old and the new domain
@@ -1682,6 +1682,7 @@ function studyTestOffer(subject, chapter){ var a=S&&S.proFeats&&S.proFeats.study
     '<button class="btn ghost block" data-x style="margin-top:8px">'+tr("പിന്നെ","बाद में","Later")+'</button></div>';
   w.onclick=function(e){ if(e.target===w||e.target.closest("[data-x]")) w.remove(); }; document.body.appendChild(w);
   if($("stGo")) $("stGo").onclick=function(){ w.remove(); var nb=document.querySelector("#sNav [data-v='quiz']"); if(nb) nb.click(); qMode="practice"; P=null; pSel={subject:subject, chapters:[chapter], n:10}; setTimeout(function(){ loadQuiz(); setTimeout(startPractice, 400); }, 200); }; }
+var HEAD_EXAM=null;
 function headRender(){
   if(!S||!S.student) return;
   var now=new Date(), g=greet(now.getHours()), first=S.student.name.split(" ")[0];
@@ -1689,10 +1690,10 @@ function headRender(){
   $("sSub").textContent=now.toLocaleDateString("en-IN",{weekday:"short",day:"numeric",month:"short"})+" · "+now.toLocaleTimeString("en-IN",{hour:"numeric",minute:"2-digit"})+(S.cls? " · "+S.cls.board+" "+S.cls.name : "");
   var chips=[];
   if(WX.w && WX.w.temp!==undefined && WX.w.temp!==null){ var ic=WXI[WX.w.code]||["🌡️","🌡️",""]; chips.push('<span class="hchip">'+(WX.w.day?ic[0]:ic[1])+' <b>'+WX.w.temp+'°</b>'+(WX.w.city?' '+esc(WX.w.city):'')+'</span>'); }
-  var di=dayInfo(); themeApply(di); chips=chips.concat(dayChips(di)); try{ skyRender(); }catch(e){}
+  var di=dayInfo(); themeApply(di); chips=chips.concat(dayChips(di).slice(0,1)); try{ skyRender(); }catch(e){}
   var t=S.today, nx=(S.subjects||[]).filter(function(x){return x.exam_date && x.exam_date>=t;}).sort(function(a,b){return a.exam_date<b.exam_date?-1:1;})[0];
-  if(nx){ var dl=daysBetween(t,nx.exam_date); chips.push('<span class="hchip gold">📅 '+esc(nx.name)+' '+(dl===0?tr("പരീക്ഷ ഇന്ന്!","exam आज!","exam today!"):tr("പരീക്ഷയ്ക്ക് "+dl+" ദിവസം","exam में "+dl+" दिन","exam in "+dl+" days"))+'</span>'); }
-  if(S.streak) chips.push('<span class="hchip">🔥 '+S.streak+' '+tr("ദിവസം","दिन","day")+(S.streak>1&&LANG==="en"?"s":"")+'</span>');
+  HEAD_EXAM=null; if(nx){ var dl=daysBetween(t,nx.exam_date); HEAD_EXAM={name:nx.name, dl:dl}; if(false) chips.push('<span class="hchip gold">📅 '+esc(nx.name)+' '+(dl===0?tr("പരീക്ഷ ഇന്ന്!","exam आज!","exam today!"):tr("പരീക്ഷയ്ക്ക് "+dl+" ദിവസം","exam में "+dl+" दिन","exam in "+dl+" days"))+'</span>'); }
+  if(false && S.streak) chips.push('<span class="hchip">🔥 '+S.streak+' '+tr("ദിവസം","दिन","day")+(S.streak>1&&LANG==="en"?"s":"")+'</span>');
   var q=QUOTES[(Number(t.replace(/-/g,""))+S.student.id)%QUOTES.length];
   $("sChips").innerHTML=chips.join("")+'<div class="hquote">“'+esc(tr(q[0],q[1],q[2]))+'”</div>';
   clearTimeout(headTimer); headTimer=setTimeout(headRender, 30000);
@@ -1716,7 +1717,7 @@ function renderToday(){
   var h='';
   var ac=S.access||{}; if(ac.days_left!==null && ac.days_left!==undefined && ac.days_left<=3) h+='<div class="access"><div><b>'+(ac.plan==="trial"?tr("Trial ","Trial ","Trial "):"")+tr("അവസാനിക്കുന്നു: ","खत्म होगा: ","ends: ")+fmtDate(ac.valid_until)+'</b><div class="small muted">'+(ac.days_left===0?tr("ഇന്ന് അവസാന ദിവസം","आज आखिरी दिन","Today is the last day"):tr(ac.days_left+" ദിവസം കൂടി",ac.days_left+" दिन बाकी",ac.days_left+" days left"))+' · '+tr("തുടരാൻ tutor-നോട് പറയൂ","जारी रखने के लिए tutor से बात करो","Talk to your tutor to continue")+'</div></div><a class="btn gold sm" target="_blank" rel="noopener" href="'+waLink(WHATSAPP_NUMBER,"Hi, I want to continue Ekanthi — "+S.student.name)+'">WhatsApp</a></div>';
   var tdone=(todayCi.length?1:0)+(qDone?1:0), L0=levelOf(S.xpAll||0), gp0=S.goal? Math.min(100,pct(S.studyToday||0,S.goal)) : 0; setTimeout(achPeek, 300);
-  var T1='<div class="card tk-card"><div class="tk-head"><div><h3>'+tr("ഇന്നത്തെ പണികൾ","आज के काम","Today\'s tasks")+'</h3><div class="small muted" style="margin-top:3px">'+(tdone>=2? tr("എല്ലാം കഴിഞ്ഞു — സൂപ്പർ! 🎉","सब हो गया — शाबाश! 🎉","All done — great work! 🎉") : tr("2 ചെറിയ പണികൾ · ഏകദേശം 15 മിനിറ്റ്","2 छोटे काम · लगभग 15 मिनट","2 small tasks · about 15 minutes"))+'</div></div><div class="tk-ring" style="--p:'+(tdone*50)+'"><span>'+tdone+'/2</span></div></div>'+
+  var T1='<div class="card tk-card"><div class="tk-head"><div><h3>'+tr("ഇന്നത്തെ പണികൾ","आज के काम","Today\'s tasks")+'</h3><div class="small muted" style="margin-top:3px">'+(tdone>=2? tr("എല്ലാം കഴിഞ്ഞു — സൂപ്പർ! 🎉","सब हो गया — शाबाश! 🎉","All done — great work! 🎉") : tr("2 ചെറിയ പണികൾ · ഏകദേശം 15 മിനിറ്റ്","2 छोटे काम · लगभग 15 मिनट","2 small tasks · about 15 minutes"))+'</div>'+(HEAD_EXAM? '<div class="tk-exam">📅 '+esc(HEAD_EXAM.name)+' '+(HEAD_EXAM.dl===0?tr("പരീക്ഷ ഇന്ന്!","exam आज!","exam today!"):tr("പരീക്ഷയ്ക്ക് "+HEAD_EXAM.dl+" ദിവസം","exam में "+HEAD_EXAM.dl+" दिन","exam in "+HEAD_EXAM.dl+" days"))+'</div>' : '')+'</div><div class="tk-ring" style="--p:'+(tdone*50)+'"><span>'+tdone+'/2</span></div></div>'+
     '<div class="task'+(qDone?' done':'')+'" data-go="quiz"><div class="tk-ic" style="--a:#7c5cff;--b:#b69cff">📝</div><div class="dot">'+(qDone?'✓':'')+'</div><div><div class="t">'+tr("Daily quiz","Daily quiz","Daily quiz")+'</div><div class="muted small">'+(qDone? tr("Score ","Score ","Score ")+qz.score+"/"+qz.total : tr("5 ചോദ്യം · 5 മിനിറ്റ്","5 सवाल · 5 मिनट","5 questions · 5 minutes"))+'</div></div><span class="go">›</span></div>'+
     '<div class="task'+(todayCi.length?' done':'')+'" data-go="checkin"><div class="tk-ic" style="--a:#e0890f;--b:#ffc65a">📖</div><div class="dot">'+(todayCi.length?'✓':'')+'</div><div><div class="t">'+tr("Study check-in","Study check-in","Study check-in")+'</div><div class="muted small">'+(todayCi.length? tr(mins+" മിനിറ്റ് രേഖപ്പെടുത്തി",mins+" मिनट दर्ज",mins+" min logged today") : tr("ഇന്ന് എന്ത് പഠിച്ചു?","आज क्या पढ़ा?","What did you study today?"))+'</div></div><span class="go">›</span></div>'+
     '<div class="task" data-go="assist"><div class="tk-ic" style="--a:#0f9bb3;--b:#5fd6e8">🤖</div><div class="dot" style="border-style:dashed"></div><div><div class="t">'+tr("സംശയം ചോദിക്കൂ","डाउट पूछो","Ask a doubt")+'</div><div class="muted small">Ekanthi Agent · Malayalam / English · voice</div></div><span class="go">›</span></div></div>';
