@@ -699,6 +699,14 @@ body.on-break #brkBtn,body.on-break #askBtn{display:none!important}
 .sk-sun.low{width:42px;height:42px;background:radial-gradient(circle at 42% 38%,#fff1d0 0,#ffc36b 34%,#ff8a2b 68%,#f0561e 100%);box-shadow:0 0 0 3px rgba(255,150,80,.22),0 0 24px 10px rgba(255,120,50,.55),0 0 80px 32px rgba(255,110,50,.25)}
 .sk-sun.low i{background:repeating-conic-gradient(rgba(255,160,90,.45) 0 4deg,rgba(255,160,90,0) 4deg 22deg)}
 .sk-sun.dim{opacity:.55;filter:blur(1px)}
+
+/* ✨ soft glass touch: a light blooms where the finger touches and the element gives a little (off in tests) */
+.gtl{position:fixed;pointer-events:none;overflow:hidden;z-index:9999}
+.gtl i{position:absolute;border-radius:50%;transform:scale(.12);opacity:.75;animation:gtl .5s cubic-bezier(.2,.7,.2,1) forwards;background:radial-gradient(circle,rgba(255,255,255,.9) 0,rgba(170,200,245,.34) 22%,rgba(170,200,245,.1) 45%,rgba(255,255,255,0) 62%)}
+.gtl.warm i{background:radial-gradient(circle,rgba(255,246,214,.85) 0,rgba(243,212,138,.4) 24%,rgba(243,212,138,.12) 46%,rgba(255,255,255,0) 62%)}
+@keyframes gtl{to{transform:scale(1);opacity:0}}
+.gpress{transform:scale(.975);transition:transform .18s cubic-bezier(.2,.8,.2,1)}
+@media (prefers-reduced-motion:reduce){.gtl{display:none}.gpress{transform:none}}
 /* ✨ RICH LOOK 2026 — one premium style for student, parent, tutor and admin */
 :root{--ivory:#f6f2e9;--hair:rgba(176,141,62,.18);--g1:#c99a3c;--g2:#f3d48a;--serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Noto Serif Malayalam","Noto Sans Malayalam",serif}
 body{background:radial-gradient(1100px 520px at 50% -260px,#e3eaf5 0%,rgba(227,234,245,0) 62%),linear-gradient(180deg,#f8f5ee 0%,#f2ede2 100%) fixed}
@@ -922,7 +930,7 @@ if(window.top!==window.self){ document.documentElement.style.display="none"; try
 "use strict";
 // ===================== SETTINGS =====================
 var API_URL = "https://ekanthi-tutor.yabideas.workers.dev";
-var APP_VERSION = 96; // bump on every release: open apps notice and refresh themselves
+var APP_VERSION = 98; // bump on every release: open apps notice and refresh themselves
 var WHATSAPP_NUMBER = "96893376228";   // Ma'am (students / parents chat)
 function SUPPORT_WA(){ var b=(REGI&&REGI.biz)||(SHOP&&SHOP.d&&SHOP.d.biz)||{}; return String(b.wa||"").replace(/\D/g,"")||WHATSAPP_NUMBER; }   // public support line (admin 🛒 → 🏢 Business)
 var SITE_URL = /(^|\.)ekanthi\.(in|com)$|cyberkalari\.com$/.test(location.hostname) ? location.origin : "https://www.ekanthi.in";   // works on the old and the new domain
@@ -1055,7 +1063,7 @@ function skHome(){ var b=skBox(), d=SK.d||{skills:{}}, a=d.access||skAcc();
   ["abacus","speed","english"].forEach(function(k){ if(a[k]!==true && a[k]!=="locked" && a[k]!=="ask") return; var I=SK_INFO[k], p=(d.skills||{})[k]||{level:1,week:{}}, lock=a[k]==="locked", ask=a[k]==="ask", L=(d.limits||{})[k]||{}, full=a[k]===true&&L.perDay&&L.used>=L.perDay;
     var limTxt= a[k]===true&&L.perDay? '<div class="small" style="margin-top:3px;color:'+(full?'#1f8a5b':'#1d4f80')+';font-weight:700">'+(full? '✅ '+tr("ഇന്നത്തെ "+L.perDay+" sessions കഴിഞ്ഞു — നാളെ വരൂ!","आज के "+L.perDay+" sessions पूरे — कल आना!","Today's "+L.perDay+" sessions done — see you tomorrow!") : '🎯 '+tr("ഇന്ന് ","आज ","Today ")+L.used+' / '+L.perDay)+(L.until?' · 📅 '+tr("വരെ ","तक ","till ")+skDate(L.until):'')+'</div>' : (ask&&L.ended? '<div class="small" style="color:#b26a00">'+tr("കാലാവധി കഴിഞ്ഞു ","समय खत्म ","Ended ")+skDate(L.until)+'</div>' : '');
     var sub= k==="abacus"? tr("Level "+p.level+" / 10","Level "+p.level+" / 10","Level "+p.level+" of 10") : k==="speed"? tr("Sprint best: ","Sprint best: ","Sprint best: ")+(((p.best||{})["sprint:1"]||(p.best||{})["sprint:2"]||{}).s||0) : tr("ഈ ആഴ്ച കൃത്യത: ","इस हफ़्ते सटीकता: ","This week: ")+(p.week&&p.week.acc!==null&&p.week.acc!==undefined? p.week.acc+"%" : "—");
-    h+=('<div class="card skcard'+(lock||ask?' locked':'')+'" data-sk="'+k+'"><div class="skic">'+I[0]+'</div><div style="flex:1;min-width:0"><div style="font-weight:800;font-size:17px">'+tr(I[2],I[3],I[4])+(lock?' <span class="pill" style="background:#fff3c4;color:#7a5a00">⭐ Pro</span>':'')+(ask?' <span class="pill" style="background:#eef0f3;color:#5b6472">🔒</span>':'')+'</div><div class="small muted">'+(ask? esc(SK_DESC[k]())+'<br><b style="color:#b26a00">'+tr("Ma\'am on ആക്കിയാൽ തുറക്കും","Ma\'am चालू करें तो खुलेगा","Opens when Ma\'am switches it on")+'</b></div></div><span class="go" style="font-size:22px;color:#b0b8c4">›</span></div>' : sub+' · '+tr((p.week&&p.week.n||0)+" sessions ഈ ആഴ്ച",(p.week&&p.week.n||0)+" sessions इस हफ़्ते",(p.week&&p.week.n||0)+" sessions this week")+'</div>'+limTxt+'</div><span class="go" style="font-size:22px;color:#b0b8c4">›</span></div>')); });
+    h+=('<div class="card skcard'+(lock||ask?' locked':'')+'" data-sk="'+k+'"><div class="skic">'+I[0]+'</div><div style="flex:1;min-width:0"><div style="font-weight:800;font-size:17px">'+tr(I[2],I[3],I[4])+(lock?' <span class="pill" style="background:#fff3c4;color:#7a5a00">⭐ Pro</span>':'')+(ask?' <span class="pill" style="background:#eef0f3;color:#5b6472">🔒</span>':'')+(L.gift?' <span class="pill" style="background:#fff3d6;color:#7a5200">🎁 Gift</span>':'')+'</div><div class="small muted">'+(ask? esc(SK_DESC[k]())+'<br><b style="color:#b26a00">'+tr("Ma\'am on ആക്കിയാൽ തുറക്കും","Ma\'am चालू करें तो खुलेगा","Opens when Ma\'am switches it on")+'</b></div></div><span class="go" style="font-size:22px;color:#b0b8c4">›</span></div>' : sub+' · '+tr((p.week&&p.week.n||0)+" sessions ഈ ആഴ്ച",(p.week&&p.week.n||0)+" sessions इस हफ़्ते",(p.week&&p.week.n||0)+" sessions this week")+'</div>'+limTxt+'</div><span class="go" style="font-size:22px;color:#b0b8c4">›</span></div>')); });
   b.innerHTML=h;
   b.querySelectorAll("[data-sk]").forEach(function(x){ x.onclick=function(){ var k=x.dataset.sk; if(a[k]==="ask"){ skAsk(k); return; } var L0=(d.limits||{})[k]; if(a[k]===true && L0 && L0.used>=L0.perDay){ toast("✅ "+tr("ഇന്നത്തെ sessions കഴിഞ്ഞു — നാളെ വീണ്ടും!","आज के sessions पूरे — कल फिर!","Today's sessions are done — come back tomorrow!")); return; } if(a[k]==="locked"){ if(S&&S.shopOn) shopOpen(); else toast(tr("ഇത് Pro ആണ് — Ma\'am-നോട് ചോദിക്കൂ","यह Pro है — Ma\'am से पूछें","This is Pro — ask Ma\'am")); return; } if(k==="abacus") skAbacus(); else if(k==="speed") skSpeed(); else skEnglish(); }; }); }
 var SK_DESC={abacus:function(){ return tr("Bead-കൾ നീക്കി കണക്ക് — level 1 മുതൽ 10 വരെ, flash anzan മനക്കണക്ക്.","Beads से गिनती — level 1 से 10, flash anzan मानसिक गणित।","Bead counting on a real abacus, levels 1–10, and flash-anzan mental maths."); }, speed:function(){ return tr("60 സെക്കൻഡ് sprint, ഗുണനപ്പട്ടിക race, Vedic എളുപ്പവഴികൾ.","60 सेकंड sprint, पहाड़ा race, Vedic ट्रिक्स।","60-second sprints, times-tables races and Vedic shortcuts."); }, english:function(){ return tr("വാക്യം കേട്ട് ഉറക്കെ പറയൂ — ഓരോ വാക്കും ശരിയായോ എന്ന് കാണാം.","वाक्य सुनो और बोलो — हर शब्द की जाँच।","Listen, then say the sentence aloud — every word is checked."); }};
@@ -1199,6 +1207,27 @@ function skEnglish(){ stopAll(); SK.view="english"; var b=skBox(), lvl=1;
     show(); }
   run(); }
 
+
+// ✨ soft glass touch (all consoles; never during tests)
+(function(){
+  var SEL='button,.task,.ts,.ex2,.skcard,[data-go],[data-sk],a.btn,.chip';
+  var last=null;
+  document.addEventListener("pointerdown",function(e){
+    try{
+      if(document.body.classList.contains("in-test")) return;
+      var el=e.target.closest && e.target.closest(SEL); if(!el || el.disabled) return;
+      if(el.closest("input,select,textarea,.gtl,.sp-pad,.ab-frame")) return;
+      var r=el.getBoundingClientRect(); if(r.width<8||r.height<8) return;
+      var cs=getComputedStyle(el), L=document.createElement("div"), size=Math.max(r.width,r.height)*1.7, warm=!!el.closest(".s-head,.t-head,#pHead,.tk-dark");
+      L.className="gtl"+(warm?" warm":""); L.style.left=r.left+"px"; L.style.top=r.top+"px"; L.style.width=r.width+"px"; L.style.height=r.height+"px"; L.style.borderRadius=cs.borderRadius;
+      var dot=document.createElement("i"); dot.style.width=dot.style.height=size+"px"; dot.style.left=(e.clientX-r.left-size/2)+"px"; dot.style.top=(e.clientY-r.top-size/2)+"px";
+      L.appendChild(dot); document.body.appendChild(L); setTimeout(function(){ L.remove(); },560);
+      if(!el.closest(".navbar")){ el.classList.add("gpress"); last=el; }
+    }catch(err){}
+  },{passive:true});
+  function up(){ if(last){ var x=last; last=null; setTimeout(function(){ x.classList.remove("gpress"); },60); } }
+  ["pointerup","pointercancel","pointerleave","scroll"].forEach(function(t){ document.addEventListener(t,up,{passive:true,capture:true}); });
+})();
 function setSView(v){
   sView=v; setTimeout(saveUI,0);
   document.querySelectorAll("#sNav button").forEach(function(x){x.classList.toggle("on",x.dataset.v===v);});
@@ -1490,7 +1519,7 @@ function applyLang(){
 }
 function langBtn(l){ return l==="ml"?"മലയാളം":l==="hi"?"हिंदी":"English"; }
 function snapKey(){ try{ var t=(token||"").slice(-12); return "ek_snap_"+t; }catch(e){ return "ek_snap"; } }
-function loadMe(){ return api("/api/me").then(function(d){ S=d; try{ skillsNav(); }catch(e){} setTimeout(clearBadge, 1500); xpNews(); setTimeout(function(){ dykShow(); }, 1200); try{ var js=JSON.stringify(d); if(js.length<400000) lsSet(snapKey(), js); }catch(e){} setTimeout(ssWarn, 1200); appOnlyGate(); if(d.lang && d.lang!==LANG){ LANG=d.lang; applyLang(); } headRender(); setWatermark(); checkLevelUp(); if(!WX.at || Date.now()-WX.at>20*60000){ WX.at=Date.now(); api("/api/weather").then(function(w){ WX.w=w.ok?w:null; headRender(); }).catch(function(){}); } }); }
+function loadMe(){ return api("/api/me").then(function(d){ S=d; try{ skillsNav(); }catch(e){} setTimeout(function(){ try{ giftPop(); }catch(e){} }, 900); setTimeout(clearBadge, 1500); xpNews(); setTimeout(function(){ dykShow(); }, 1200); try{ var js=JSON.stringify(d); if(js.length<400000) lsSet(snapKey(), js); }catch(e){} setTimeout(ssWarn, 1200); appOnlyGate(); if(d.lang && d.lang!==LANG){ LANG=d.lang; applyLang(); } headRender(); setWatermark(); checkLevelUp(); if(!WX.at || Date.now()-WX.at>20*60000){ WX.at=Date.now(); api("/api/weather").then(function(w){ WX.w=w.ok?w:null; headRender(); }).catch(function(){}); } }); }
 var WX={at:0,w:null}, headTimer=null;
 var WXI={0:["☀️","🌙","Clear"],1:["🌤️","🌙","Mostly clear"],2:["⛅","☁️","Partly cloudy"],3:["☁️","☁️","Cloudy"],45:["🌫️","🌫️","Fog"],48:["🌫️","🌫️","Fog"],51:["🌦️","🌧️","Drizzle"],53:["🌦️","🌧️","Drizzle"],55:["🌦️","🌧️","Drizzle"],61:["🌧️","🌧️","Rain"],63:["🌧️","🌧️","Rain"],65:["🌧️","🌧️","Heavy rain"],71:["🌨️","🌨️","Snow"],80:["🌦️","🌧️","Showers"],81:["🌧️","🌧️","Showers"],82:["⛈️","⛈️","Heavy showers"],95:["⛈️","⛈️","Thunderstorm"],96:["⛈️","⛈️","Thunderstorm"],99:["⛈️","⛈️","Thunderstorm"]};
 function greet(h){ return h<5? [tr("ഇനി ഉറങ്ങാം","अब सो जाओ","Time to sleep"),"🌙"] : h<12? [tr("സുപ്രഭാതം","सुप्रभात","Good morning"),"☀️"] : h<17? [tr("ശുഭ ഉച്ച","शुभ दोपहर","Good afternoon"),"🌤️"] : h<21? [tr("ശുഭ സന്ധ്യ","शुभ संध्या","Good evening"),"🌆"] : [tr("ശുഭ രാത്രി","शुभ रात्रि","Good night"),"🌙"]; }
@@ -1641,9 +1670,10 @@ var DYK=[["🌳","The Amazon is the largest rainforest on Earth — bigger than 
  ["🐪","Camels store fat — not water — in their humps."],["🎨","Mixing red, green and blue light can make almost any colour on your screen."],["🌿","Plants make their food from sunlight, water and carbon dioxide — and give out oxygen."],
  ["🏏","A cricket ball bowled at 150 km/h reaches the batter in under half a second."],["🧬","If you uncoiled all the DNA in one of your cells, it would be about 2 metres long."],["💡","Thomas Edison tested thousands of materials before his light bulb worked — mistakes are part of learning."]];
 var TDYK=null;
-function dykPick(){ var custom=(role==="student"? (S&&S.dykCustom) : role==="parent"? (PH&&PH.dyk&&PH.dyk.custom) : (TDYK&&TDYK.custom))||[], d=Math.floor(Date.now()/86400000); if(custom.length && d%2===0) return ["💡", custom[(d/2|0)%custom.length]]; return DYK[d%DYK.length]; }
+function dykSlot(){ var h=new Date().getHours(); return h<12?0:h<17?1:2; }
+function dykPick(){ var custom=(role==="student"? (S&&S.dykCustom) : role==="parent"? (PH&&PH.dyk&&PH.dyk.custom) : (TDYK&&TDYK.custom))||[], d=Math.floor(Date.now()/86400000)*3+dykSlot(); if(custom.length && d%2===0) return ["💡", custom[(d/2|0)%custom.length]]; return DYK[d%DYK.length]; }
 function dykShow(force){ var ok= role==="student"? !!(S && S.proFeats && S.proFeats.dyk===true) : role==="parent"? !!(PH && PH.dyk && PH.dyk.on) : role==="tutor"? !!(TDYK && TDYK.on) : false; if(!ok) return;
-  var t=ymd(new Date()), key="ek_dyk_"+role; if(!force && lsGet(key)===t) return;
+  var t=ymd(new Date())+"-"+dykSlot(), key="ek_dyk_"+role; if(!force && lsGet(key)===t) return;
   if(document.body.classList.contains("in-test") || $("lockScr") || $("dykPop")) return; lsSet(key, t);
   var f=dykPick(), words=String(f[1]).split(/\\s+/).length, secs=Math.max(4, Math.min(14, Math.round(words/3)+2));
   var w=document.createElement("div"); w.id="dykPop"; w.innerHTML='<div class="dyk-in"><div class="dyk-ic">'+f[0]+'</div><div style="flex:1"><div class="dyk-h">'+tr("നിങ്ങൾക്കറിയാമോ?","क्या आप जानते हो?","Did you know?")+'</div><div class="dyk-t">'+esc(f[1])+'</div></div><button class="dyk-x" aria-label="Close">✕</button></div><i class="dyk-bar" style="animation-duration:'+secs+'s"></i>';
@@ -3315,6 +3345,7 @@ function renderOverview(){
   if(lsGet("ek_owner")!=="0"){ h+='<div class="card" style="margin-top:14px" id="plBox"><span class="spinner"></span></div>'; setTimeout(plansCard, 0); h+='<div class="card" style="margin-top:14px" id="shBox"><span class="spinner"></span></div>'; setTimeout(shopCard, 0); }
   if(lsGet("ek_owner")!=="0"){ h+='<div class="card" style="margin-top:14px" id="sfBox"><span class="spinner"></span></div>'; setTimeout(sfCard, 0); }
   h+='<div class="card" style="margin-top:14px" id="skBoxA"><span class="spinner"></span></div>'; setTimeout(skAdminCard, 0);
+  h+='<div class="card" style="margin-top:14px" id="gfBoxA"><span class="spinner"></span></div>'; setTimeout(gfCard, 0);
   if(lsGet("ek_owner")!=="0"){ h+='<div class="card" style="margin-top:14px" id="paBox"><span class="spinner"></span></div>'; setTimeout(parentsCard, 0); } h+='<div id="lkBox2" style="margin-top:14px"></div>'; setTimeout(loadLocked, 0);
   h+='<div class="card" style="margin-top:14px" id="devBox"><span class="spinner"></span></div>'; setTimeout(devicesCard, 0);
   h+='<div class="card" style="margin-top:14px" id="holBox"><span class="spinner"></span></div>'; setTimeout(holidaysCard, 0);
@@ -3757,6 +3788,55 @@ function skAdminDraw(d){ var b=$("skBoxA"); if(!b) return; var md=d.modes||{}, D
         .then(function(){ toast("✅ Saved for "+rows.length); skAdminCard(); }).catch(function(e){ toast(e.message); skAdminCard(); }); }; });
   $("skFind").oninput=function(){ var q=this.value.trim().toLowerCase(); b.querySelectorAll("tr[data-skrow]").forEach(function(r){ r.style.display= !q||r.dataset.nm.indexOf(q)>=0 ? "" : "none"; }); };
 }
+
+// ===== 🎁 Rewards: give Pro or a skill to chosen students on chosen days, with tries per day =====
+var GF={sel:{}, kind:"abacus", uses:1, dates:[], q:"", cls:""};
+var GF_K=[["pro","⭐","Pro features"],["abacus","🧮","Abacus"],["speed","⚡","Speed maths"],["english","🗣️","Spoken English"]];
+function gfName(k){ var x=GF_K.filter(function(y){ return y[0]===k; })[0]; return x? x[1]+" "+x[2] : k; }
+function gfAdd(t,n){ var d=new Date(t+"T00:00:00Z"); d.setUTCDate(d.getUTCDate()+n); return d.toISOString().slice(0,10); }
+function gfFmt(d){ try{ return new Date(d+"T00:00:00").toLocaleDateString("en-IN",{weekday:"short",day:"numeric",month:"short"}); }catch(e){ return d; } }
+function gfCard(){ api("/api/admin/gifts").then(function(d){ GF.d=d; if(!GF.dates.length) GF.dates=[d.today]; gfDraw(); }).catch(function(e){ var b=$("gfBoxA"); if(b) b.innerHTML='<div class="small muted">🎁 Rewards: '+esc(e.message)+'</div>'; }); }
+function gfDraw(){ var b=$("gfBoxA"), d=GF.d; if(!b||!d) return; var t=d.today, cls=[]; (d.students||[]).forEach(function(x){ if(x.cls && cls.indexOf(x.cls)<0) cls.push(x.cls); });
+  var list=(d.students||[]).filter(function(x){ return (!GF.cls||x.cls===GF.cls) && (!GF.q || (x.name+" "+(x.cls||"")).toLowerCase().indexOf(GF.q)>=0); }), nSel=Object.keys(GF.sel).filter(function(k){ return GF.sel[k]; }).length;
+  var h='<h3>🎁 Rewards — give a feature as a gift</h3><div class="small muted" style="margin:4px 0 10px">Pick students, what to give and on which days. Skills open for the number of tries you set each day; ⭐ Pro opens all Pro features for those days. Students see a gift pop-up; parents see it too. It switches off by itself.</div>';
+  h+='<div class="small" style="font-weight:700;margin-bottom:4px">1. Students <span class="muted">('+nSel+' chosen)</span></div><div class="row" style="gap:6px;flex-wrap:wrap;margin-bottom:6px"><input id="gfQ" type="search" placeholder="Find…" value="'+esc(GF.q)+'" style="max-width:170px"><select id="gfCls" style="width:auto"><option value="">All classes</option>'+cls.map(function(c){ return '<option'+(c===GF.cls?' selected':'')+'>'+esc(c)+'</option>'; }).join("")+'</select><button class="btn ghost sm" id="gfAll">Select shown</button><button class="btn ghost sm" id="gfNone">Clear</button></div>';
+  h+='<div class="scroll" style="max-height:200px;border:1px solid var(--line);border-radius:12px;padding:4px 8px;margin-bottom:10px">'+(list.length? list.map(function(x){ return '<label class="row" style="gap:8px;padding:6px 2px;font-weight:600;cursor:pointer"><input type="checkbox" data-gs="'+x.id+'"'+(GF.sel[x.id]?' checked':'')+' style="width:auto">'+esc(x.name)+' <span class="small muted">'+esc(x.cls||"")+'</span></label>'; }).join("") : '<div class="small muted" style="padding:8px">No students</div>')+'</div>';
+  h+='<div class="small" style="font-weight:700;margin-bottom:4px">2. What to give</div><div class="row" style="gap:6px;flex-wrap:wrap;margin-bottom:10px">'+GF_K.map(function(k){ return '<button class="chip'+(GF.kind===k[0]?' on':'')+'" data-gk="'+k[0]+'">'+k[1]+' '+k[2]+'</button>'; }).join("")+'</div>';
+  if(GF.kind!=="pro") h+='<div class="small" style="font-weight:700;margin-bottom:4px">Tries per day</div><div class="row" style="gap:6px;margin-bottom:10px">'+[1,2,3,5].map(function(n){ return '<button class="chip'+(GF.uses===n?' on':'')+'" data-gu="'+n+'">'+n+'</button>'; }).join("")+'</div>';
+  h+='<div class="small" style="font-weight:700;margin-bottom:4px">3. Days</div><div class="row" style="gap:6px;flex-wrap:wrap;margin-bottom:6px"><button class="btn ghost sm" data-gq="1">Today</button><button class="btn ghost sm" data-gq="t1">Tomorrow</button><button class="btn ghost sm" data-gq="3">Next 3 days</button><button class="btn ghost sm" data-gq="7">Next 7 days</button><input type="date" id="gfDate" min="'+t+'" max="'+gfAdd(t,60)+'" style="width:auto"><button class="btn ghost sm" id="gfDateAdd">+ Add day</button></div>';
+  h+='<div class="row" style="gap:6px;flex-wrap:wrap;margin-bottom:10px">'+(GF.dates.length? GF.dates.map(function(x){ return '<span class="chip on" data-gd="'+x+'" title="Remove">'+gfFmt(x)+' ✕</span>'; }).join("") : '<span class="small muted">No day chosen</span>')+'</div>';
+  h+='<input id="gfNote" maxlength="120" placeholder="Message for the student (optional), e.g. Great test score!" value="'+esc(GF.note||"")+'" style="margin-bottom:10px"><button class="btn" id="gfGive">🎁 Give '+esc(gfName(GF.kind))+(GF.kind!=="pro"?' · '+GF.uses+' '+(GF.uses===1?'try':'tries')+'/day':'')+' to '+nSel+' student'+(nSel===1?'':'s')+'</button>';
+  var gl=(d.gifts||[]); h+='<div class="small" style="font-weight:700;margin:14px 0 4px">Recent rewards</div>'+(gl.length? '<div class="scroll" style="max-height:260px"><table><thead><tr><th>Student</th><th>Gift</th><th>Days</th><th></th></tr></thead><tbody>'+gl.map(function(g){ var live=g.dates.indexOf(t)>=0, past=g.dates[g.dates.length-1]<t;
+      return '<tr><td><b>'+esc(g.name)+'</b><div class="small muted">by '+esc(g.by||"")+(g.seen?' · seen ✓':'')+'</div></td><td>'+esc(gfName(g.kind))+(g.kind!=="pro"?'<div class="small muted">'+g.uses+' tries/day</div>':'')+(g.note?'<div class="small muted">“'+esc(g.note)+'”</div>':'')+'</td><td class="small">'+g.dates.map(gfFmt).join(", ")+(live?' <span class="pill" style="background:#e7f7ee;color:#1f8a5b">today</span>':past?' <span class="muted">· ended</span>':'')+'</td><td><button class="btn ghost sm" data-gdel="'+g.id+'" title="Remove">🗑️</button></td></tr>'; }).join("")+'</tbody></table></div>' : '<div class="small muted">No rewards given yet.</div>');
+  b.innerHTML=h;
+  var keep=function(){ var n=$("gfNote"); if(n) GF.note=n.value; };
+  $("gfQ").oninput=function(){ GF.q=this.value.trim().toLowerCase(); keep(); gfDraw(); var q=$("gfQ"); q.focus(); q.setSelectionRange(q.value.length,q.value.length); };
+  $("gfCls").onchange=function(){ GF.cls=this.value; keep(); gfDraw(); };
+  $("gfAll").onclick=function(){ list.forEach(function(x){ GF.sel[x.id]=true; }); keep(); gfDraw(); };
+  $("gfNone").onclick=function(){ GF.sel={}; keep(); gfDraw(); };
+  b.querySelectorAll("[data-gs]").forEach(function(c){ c.onchange=function(){ GF.sel[c.dataset.gs]=c.checked; keep(); gfDraw(); }; });
+  b.querySelectorAll("[data-gk]").forEach(function(c){ c.onclick=function(){ GF.kind=c.dataset.gk; keep(); gfDraw(); }; });
+  b.querySelectorAll("[data-gu]").forEach(function(c){ c.onclick=function(){ GF.uses=Number(c.dataset.gu); keep(); gfDraw(); }; });
+  b.querySelectorAll("[data-gq]").forEach(function(c){ c.onclick=function(){ var v=c.dataset.gq; GF.dates= v==="t1"? [gfAdd(t,1)] : Array.apply(null,{length:Number(v)}).map(function(_,i){ return gfAdd(t,i); }); keep(); gfDraw(); }; });
+  $("gfDateAdd").onclick=function(){ var v=$("gfDate").value; if(!v) return toast("Pick a date first"); if(v<t) return toast("Pick today or a later day"); if(GF.dates.indexOf(v)<0) GF.dates.push(v); GF.dates.sort(); keep(); gfDraw(); };
+  b.querySelectorAll("[data-gd]").forEach(function(c){ c.onclick=function(){ GF.dates=GF.dates.filter(function(x){ return x!==c.dataset.gd; }); keep(); gfDraw(); }; });
+  $("gfGive").onclick=function(){ keep(); var ids=Object.keys(GF.sel).filter(function(k){ return GF.sel[k]; }).map(Number); if(!ids.length) return toast("Choose at least one student"); if(!GF.dates.length) return toast("Choose at least one day"); var bt=this; bt.disabled=true;
+    api("/api/admin/gifts/give",{student_ids:ids, kind:GF.kind, uses:GF.uses, dates:GF.dates, note:GF.note||""}).then(function(r){ toast("🎁 Given to "+r.count+" student"+(r.count===1?"":"s")); GF.sel={}; GF.note=""; gfCard(); try{ skAdminCard(); }catch(e){} }).catch(function(e){ bt.disabled=false; toast(e.message); }); };
+  b.querySelectorAll("[data-gdel]").forEach(function(c){ c.onclick=function(){ if(!confirm("Remove this reward?")) return; api("/api/admin/gifts/delete",{id:Number(c.dataset.gdel)}).then(function(){ toast("Removed"); gfCard(); }).catch(function(e){ toast(e.message); }); }; });
+}
+// student: gift pop-up (once per gift)
+var GIFT_TRY=0;
+function giftPop(){ var g=(S&&S.giftNew)||[]; if(!g.length || $("giftSheet") || document.body.classList.contains("in-test")) return;
+  // wait until other pop-ups (setup, news, did-you-know) are closed, so the gift is never hidden behind one
+  if((document.querySelector(".modal:not(#giftSheet),.m-sheet:not(#giftSheet)") || $("dykPop") || $("lockScr")) && GIFT_TRY<40){ GIFT_TRY++; return setTimeout(giftPop, 1500); }
+  var first=(S.student&&S.student.name||"").split(" ")[0];
+  var h='<div style="text-align:center"><div style="font-size:54px;line-height:1">🎁</div><h2 style="margin:6px 0 2px">'+tr("Ma\'am-ന്റെ സമ്മാനം!","Ma\'am का तोहफ़ा!","A gift from Ma\'am!")+'</h2><div class="muted" style="margin-bottom:12px">'+tr(esc(first)+", ഇത് നിനക്കാണ്",esc(first)+", यह तुम्हारे लिए है",esc(first)+", this is for you")+'</div>'+
+    g.map(function(x){ var ds=x.dates||[], when= ds.length===1? (ds[0]===S.today? tr("ഇന്ന്","आज","Today") : gfFmt(ds[0])) : ds.length+" "+tr("ദിവസം","दिन","days")+" · "+gfFmt(ds[0])+" →";
+      return '<div class="card" style="text-align:left;background:linear-gradient(180deg,#fffdf5,#fff6e0);border-color:#f3dc9b;margin:8px 0"><div style="font-weight:800;font-size:17px">'+esc(gfName(x.kind))+'</div><div class="small muted">'+when+(x.kind!=="pro"? ' · '+x.uses+' '+tr("തവണ / ദിവസം","बार / दिन",(x.uses===1?"try":"tries")+" a day") : '')+'</div>'+(x.note?'<div style="margin-top:6px">💬 '+esc(x.note)+'</div>':'')+'</div>'; }).join("")+
+    '<button class="btn block" id="giftGo" style="margin-top:6px">'+tr("തുറക്കൂ","खोलो","Open it")+' →</button><button class="btn ghost block" data-x style="margin-top:8px">OK</button></div>';
+  var w=ekSheet(h,"giftSheet"); try{ confetti(120); }catch(e){}
+  api("/api/gifts/seen",{}).catch(function(){}); S.giftNew=[];
+  $("giftGo").onclick=function(){ w.remove(); var k=g[0].kind; if(k==="pro") setSView("today"); else { setSView("skills"); } }; }
 function stuEdit(a){ var m=$("stuEd"); if(m) m.remove(); m=document.createElement("div"); m.className="modal"; m.id="stuEd";
   m.innerHTML='<div class="box" style="max-width:560px;width:94vw;max-height:90vh;overflow:auto;text-align:left;padding:18px;background:#fff;color:var(--ink)"><div class="row between"><h2>✏️ Edit student</h2><button class="btn ghost sm" data-x>✕</button></div>'+
     '<label class="f" style="margin-top:10px">Full name</label><input id="seName" type="text" maxlength="80" value="'+esc(a.name)+'" placeholder="e.g. Arhan Mohammed">'+
@@ -4961,6 +5041,7 @@ function pDraw(){ var d=PC.d, r=d.report||{}, P=PH.perms||{}, first=d.name.split
     '<div class="p-row"><span style="flex:1">'+tr("ഇന്ന് അവസാനം","आज आख़िरी बार","Last used today")+'</span><b>'+(u.lastToday? new Date(u.lastToday).toLocaleTimeString([], {hour:"numeric", minute:"2-digit"}) : '—')+'</b></div>'+
     '<div class="p-row"><span style="flex:1">'+tr("ഇന്ന് ആകെ","आज कुल","Total today")+'</span><b>'+u.minsToday+' min · '+u.opensToday+'× '+tr("തുറന്നു","खोला","opened")+'</b></div>'+
     (u.device?'<div class="p-row"><span style="flex:1">'+tr("ഉപകരണം","डिवाइस","Device")+'</span><b>'+esc(u.device)+'</b></div>':'')+'</div>'; } else if(d.usage==="locked") PRO.push(["📱","App usage — online / offline, open & close times"]);
+  if(d.gifts && d.gifts.length){ h+='<div class="card" style="background:linear-gradient(180deg,#fffdf5,#fff6e0);border-color:#f3dc9b"><h2>🎁 '+tr("Ma\'am-ന്റെ സമ്മാനം — ഇന്ന്","Ma\'am का तोहफ़ा — आज","Reward from Ma\'am — today")+'</h2>'+d.gifts.map(function(g){ return '<div style="margin-top:6px"><b>'+esc(gfName(g.kind))+'</b>'+(g.kind!=="pro"?' <span class="small muted">· '+g.uses+' '+tr("തവണ","बार",(g.uses===1?"try":"tries"))+'</span>':'')+(g.note?'<div class="small muted">💬 '+esc(g.note)+'</div>':'')+'</div>'; }).join("")+'</div>'; }
   if(d.skills && d.skills!=="locked"){ var SKP=d.skills; h+='<div class="card"><h2>🧠 '+tr(first+"-ന്റെ Skills",first+" की Skills",first+"'s skills")+'</h2>'+["abacus","speed","english"].map(function(k){ var x=SKP[k]; if(!x) return ""; var I=SK_INFO[k], w=x.week||{};
       return '<div class="p-row" style="align-items:flex-start"><span style="font-size:22px">'+I[0]+'</span><span style="flex:1"><b>'+tr(I[2],I[3],I[4])+'</b><div class="small muted">'+(x.on? (x.lim?'🎯 '+tr("ഇന്ന് ","आज ","Today ")+x.lim.used+'/'+x.lim.perDay+(x.lim.until?' · 📅 '+tr("വരെ ","तक ","till ")+skDate(x.lim.until):'')+'<br>':'')+(k==="abacus"?'Level '+x.level+' / 10 · ':'')+tr(w.n+" sessions ഈ ആഴ്ച",w.n+" sessions इस हफ़्ते",w.n+" sessions this week")+(w.mins?' · '+w.mins+' min':'')+(w.acc!==null&&w.acc!==undefined?' · '+w.acc+'% '+tr("ശരി","सही","right"):'')+(x.sessions?'':'<br>'+tr("ഇതുവരെ തുടങ്ങിയില്ല","अभी शुरू नहीं किया","Not started yet")) : x.state==="pro"? '⭐ Pro' : (x.lim&&x.lim.ended)? '⌛ '+tr("കാലാവധി കഴിഞ്ഞു ("+skDate(x.lim.until)+") — Ma\'am-നോട് ചോദിക്കൂ","समय खत्म ("+skDate(x.lim.until)+") — Ma\'am से पूछें","Ended on "+skDate(x.lim.until)+" — ask Ma\'am to renew") : '🔒 '+tr("Ma\'am ഇനിയും on ആക്കിയിട്ടില്ല","Ma\'am ने अभी चालू नहीं किया","Not switched on yet — ask Ma\'am"))+'</div></span>'+(x.on?'<span class="pill" style="background:#e7f7ee;color:#1f8a5b">ON</span>':'')+'</div>'; }).join("")+'</div>'; }
   else if(d.skills==="locked") PRO.push(["🧠","Skills progress — Abacus, Speed maths, Spoken English"]);
