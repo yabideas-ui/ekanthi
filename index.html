@@ -922,7 +922,7 @@ if(window.top!==window.self){ document.documentElement.style.display="none"; try
 "use strict";
 // ===================== SETTINGS =====================
 var API_URL = "https://ekanthi-tutor.yabideas.workers.dev";
-var APP_VERSION = 93; // bump on every release: open apps notice and refresh themselves
+var APP_VERSION = 95; // bump on every release: open apps notice and refresh themselves
 var WHATSAPP_NUMBER = "96893376228";   // Ma'am (students / parents chat)
 function SUPPORT_WA(){ var b=(REGI&&REGI.biz)||(SHOP&&SHOP.d&&SHOP.d.biz)||{}; return String(b.wa||"").replace(/\D/g,"")||WHATSAPP_NUMBER; }   // public support line (admin 🛒 → 🏢 Business)
 var SITE_URL = /(^|\.)ekanthi\.(in|com)$|cyberkalari\.com$/.test(location.hostname) ? location.origin : "https://www.ekanthi.in";   // works on the old and the new domain
@@ -1440,14 +1440,16 @@ function checkLevelUp(){
 document.addEventListener("click", function(e){ var b=e.target.closest && e.target.closest("#sMenuBtn"), m=$("sMenu");
   if(b){ e.stopPropagation(); if(m){ m.remove(); return; } m=document.createElement("div"); m.className="smenu"; m.id="sMenu";
     m.innerHTML='<button data-sm="help">▶ '+tr("Ekanthi ഉപയോഗിക്കുന്ന വിധം","Ekanthi कैसे चलाएँ","How to use Ekanthi")+'</button>'+(S&&S.shopOn?'<button data-sm="shop">⭐ '+tr("Plans & extras","Plans & extras","Plans & extras")+'</button>':'')+'<button data-sm="ach">🏆 '+tr("എന്റെ achievements","मेरी achievements","My achievements")+'</button><button data-sm="out" style="color:#c0392b">⎋ '+tr("Log out","Log out","Log out")+'</button>';
-    document.querySelector("#student .s-head").appendChild(m); return; }
+    menuPlace(m,b); return; }
   if(m && !e.target.closest("#sMenu") && !e.target.closest("#pMenuBtn")){ m.remove(); return; }
   var it=e.target.closest && e.target.closest("[data-sm]"); if(!it) return; if(m) m.remove();
   var k=it.dataset.sm; if(k==="help") $("sHelp").click(); else if(k==="out") $("sLogout").click(); else if(k==="shop") shopOpen(); else if(k==="ach") achOpen(); else if(k==="pout") $("pOut").click(); else if(k==="pshop") shopOpen(PC.id); else if(k==="prefresh") pLoad(PC.id); else if(k==="ppdf") pPrint(); });
 document.addEventListener("click", function(e){ var b=e.target.closest && e.target.closest("#pMenuBtn"); if(!b) return; e.stopPropagation(); var m=$("sMenu"); if(m){ m.remove(); return; }
   m=document.createElement("div"); m.className="smenu"; m.id="sMenu";
   m.innerHTML='<button data-sm="prefresh">↻ '+tr("പുതുക്കുക","Refresh","Refresh")+'</button>'+(PH&&PH.perms&&PH.perms.pdf===true?'<button data-sm="ppdf">📄 '+tr("Report card (PDF)","Report card (PDF)","Report card (PDF)")+'</button>':'')+'<button data-sm="pshop">⭐ Plans & extras</button><button data-sm="pout" style="color:#c0392b">⎋ Log out</button>';
-  $("pHead").appendChild(m); });
+  menuPlace(m,b); });
+function menuPlace(m,b){ document.body.appendChild(m); var r=b.getBoundingClientRect(); m.style.position="fixed"; m.style.top=Math.round(r.bottom+6)+"px"; var w=m.offsetWidth||200; m.style.right="auto"; m.style.left=Math.max(8,Math.min(Math.round(r.left), window.innerWidth-w-8))+"px"; m.style.zIndex="300"; }
+window.addEventListener("scroll", function(){ var m=$("sMenu"); if(m) m.remove(); }, {passive:true});
 function setWatermark(){
   if(!S||!S.student) return; var d=new Date(), hh=d.getHours(), mm=("0"+d.getMinutes()).slice(-2), test=document.body.classList.contains("in-test");
   var clean=function(x){ return String(x).replace(/[<>&"]/g,""); };
