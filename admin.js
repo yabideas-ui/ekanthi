@@ -1,4 +1,4 @@
-/*EKA 113*/
+/*EKA 114*/
 // Ekanthi admin code — loaded by the page with adminLoad(). Do not edit: built from src/index.src.html by tools/split.py
 // ----- admin: 🆕 registrations, 💳 payments, 🛒 plans & extras settings -----
 var RG={}, PY={all:false}, SH={};
@@ -154,7 +154,7 @@ function playbook(){ var tips=[
 // 🗂️ admin home in sections: the same cards as before, grouped so the page is short; "All" shows everything like before
 var OV={sec:(function(){ try{ return localStorage.getItem("ek_ovsec")||"home"; }catch(e){ return "home"; } })(), load:{}};
 var OV_SECS=[["home","🏠 Home"],["students","👦 Students"],["parents","👨‍👩‍👧 Parents"],["learn","📚 Learning & books"],["money","💳 Money"],["settings","⚙️ Settings"],["all","☰ All"]];
-var OV_MAP={bkAskTop:"home learn", tdBox:"home", coachBoard:"home students", stuCard:"home students", usBox:"students", lkBox2:"students", devBox:"students", paBox:"parents", bkBoxA:"learn", skBoxA:"learn", gfBoxA:"learn", rwBox:"learn", rgBox:"money", pyBox:"money", plBox:"money", shBox:"money", sfBox:"settings", holBox:"settings"};
+var OV_MAP={bkAskTop:"home learn", tdBox:"home", coachBoard:"home students", stuCard:"home students", usBox:"students", lkBox2:"students", devBox:"students", paBox:"parents", bkBoxA:"learn", skBoxA:"learn", gfBoxA:"learn", rwBox:"learn", rgBox:"money", pyBox:"money", plBox:"money", shBox:"money", sfBox:"settings", holBox:"settings", lgBox:"settings"};
 function ovTabs(){ return '<div class="ov-tabs">'+OV_SECS.map(function(x){ return '<button class="chip'+(OV.sec===x[0]?' on':'')+'" data-ovs="'+x[0]+'">'+x[1]+'</button>'; }).join("")+'</div>'; }
 function ovLater(id, fn){ OV.load[id]=fn; }
 function ovApply(){ var sec=OV.sec;
@@ -180,6 +180,7 @@ function renderOverview(){
   if(lsGet("ek_owner")!=="0"){ h+='<div class="card" style="margin-top:14px" id="paBox"><span class="spinner"></span></div>'; ovLater("paBox", parentsCard); } h+='<div id="lkBox2" style="margin-top:14px"></div>'; ovLater("lkBox2", loadLocked);
   h+='<div class="card" style="margin-top:14px" id="devBox"><span class="spinner"></span></div>'; ovLater("devBox", devicesCard);
   h+='<div class="card" style="margin-top:14px" id="holBox"><span class="spinner"></span></div>'; ovLater("holBox", holidaysCard);
+  if(lsGet("ek_owner")!=="0"){ h+='<div class="card" style="margin-top:14px" id="lgBox"><span class="spinner"></span></div>'; ovLater("lgBox", logsCard); }
   h+='<div class="card" style="margin-top:14px" id="coachBoard"><div class="row between"><h2>🎯 Who needs help most</h2><span class="muted small">Ranked by what is holding each student back · click to open their coach plan</span></div><div id="cbBody" style="margin-top:8px"><span class="spinner"></span></div></div>';
   h+='<div class="card" style="margin-top:14px" id="stuCard"><div class="row between" style="margin-bottom:10px"><h2>Students</h2><div class="row" style="gap:6px"><button class="btn ghost sm" id="aiTest">Test Ekanthi Agent</button><button class="btn sm" id="addStu">+ Add student</button></div></div><div id="aiOut"></div>';
   if(T.newCreds) h+=credsCard(T.newCreds);
@@ -340,6 +341,44 @@ function tdDraw(){ var b=$("tdBox"), d=TD.d; if(!b||!d) return; var R=d.rows, ow
         '<table><thead><tr><th>Time</th><th>Device</th><th>Country</th><th>Network (IP)</th><th></th></tr></thead><tbody>'+x.tries.map(function(t){ return '<tr><td class="small">'+fmtDT(t.at)+'</td><td class="small">'+esc(uaShort(t.ua)||"?")+'</td><td class="small">'+esc(t.country||"")+'</td><td class="small"><code>'+esc(t.ip||"—")+'</code></td><td class="small">'+(x.student? (mine(t)? '📱 looks like the student\'s own device' : '<span class="pill alert">⚠️ different device</span>') : '')+'</td></tr>'; }).join("")+'</tbody></table>'+
         '<div class="small muted" style="margin-top:4px">Same device = the student probably forgot the PIN. Different device / country = maybe someone else trying — give a new PIN.</div></div>'; }).catch(function(e){ box.innerHTML='<div class="muted small">'+esc(e.message)+'</div>'; }); }; }); }
 // ----- 🎉 Holidays (tutor console): today in India / Oman, coming days, Ma'am's tuition holidays -----
+// 🧹 Log cleanup & archive (owner only): keep-days per log, auto delete on/off, download CSV / PDF before delete
+var LG={};
+function logsCard(){ api("/api/admin/logs/cfg").then(function(d){ LG=d; lgDraw(); }).catch(function(e){ var b=$("lgBox"); if(b) b.innerHTML='<div class="muted small">Log settings could not load: '+esc(e.message)+'</div>'; }); }
+function lgDate(x){ if(!x) return "—"; return String(x).slice(0,10); }
+function lgDraw(){ var b=$("lgBox"); if(!b) return; var c=LG.cfg, opts=[0,7,15,30,45,60,90,180,365,730];
+  var sel=function(k,v){ var o=opts.slice(); if(o.indexOf(v)<0){ o.push(v); o.sort(function(a,b2){ return a-b2; }); } return '<select data-lgk="'+k+'" style="width:auto;padding:4px 6px">'+o.map(function(n){ return '<option value="'+n+'"'+(n===v?' selected':'')+'>'+(n? n+' days' : 'Keep forever')+'</option>'; }).join("")+'</select>'; };
+  var rows=LG.info.map(function(x){ var keep=c.keep[x.k], st= !keep? '<span class="muted">kept</span>' : !x.old? '<span class="muted">nothing old</span>' : c.archiveFirst? (x.ready? '✅ '+x.ready+' downloaded — will delete' : '⬇️ '+x.old+' waiting for download') : '🗑️ '+x.old+' will delete';
+    return '<tr><td><b>'+esc(x.label)+'</b><div class="small muted">'+x.rows+' rows · oldest '+lgDate(x.oldest)+'</div></td><td>'+sel(x.k, keep)+'</td><td class="small">'+st+'</td><td style="white-space:nowrap"><button class="btn ghost sm" data-lgcsv="'+x.k+'" title="Download CSV (opens in Excel)">⬇️ CSV</button> <button class="btn ghost sm" data-lgpdf="'+x.k+'" title="Print / Save as PDF">🖨️ PDF</button></td></tr>'; }).join("");
+  var L=c.last, last= L? 'Last cleanup: '+fmtDT(L.at)+' · '+(L.total? L.total+' rows removed' : 'nothing to remove')+(L.manual?' (by you)':' (automatic)') : 'No cleanup has run yet.';
+  b.innerHTML='<div class="row between"><h2>🧹 Log cleanup &amp; archive</h2><span class="muted small">Only activity logs — marks, quizzes, homework, payments and books read are never deleted</span></div>'+
+    '<label style="display:flex;gap:8px;align-items:flex-start;margin:8px 0 4px"><input type="checkbox" id="lgOn" style="width:auto;margin-top:3px"'+(c.on?' checked':'')+'><span><b>Auto-delete old logs</b><div class="small muted">Runs once a day. Off = nothing is deleted automatically.</div></span></label>'+
+    '<label style="display:flex;gap:8px;align-items:flex-start;margin:4px 0 8px"><input type="checkbox" id="lgArch" style="width:auto;margin-top:3px"'+(c.archiveFirst?' checked':'')+'><span><b>Download before delete</b><div class="small muted">Rows are deleted only after you download them (⬇️ CSV or 🖨️ PDF). Keep the files in Google Drive or your PC.</div></span></label>'+
+    '<div style="overflow-x:auto"><table class="tbl" style="width:100%;font-size:13px"><thead><tr><th style="text-align:left">Log</th><th style="text-align:left">Keep for</th><th style="text-align:left">Status</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
+    '<div class="row" style="gap:6px;margin-top:10px;flex-wrap:wrap"><button class="btn sm" id="lgSave">Save</button><button class="btn ghost sm" id="lgAll">⬇️ Download all old rows (CSV)</button><button class="btn ghost sm" id="lgNow">🧹 Clean now</button></div>'+
+    '<div class="small muted" style="margin-top:6px">'+last+' · CSV = full data for Excel/Google Sheets. PDF = printable copy (browser Print → Save as PDF). Shortest keep time is 7 days.</div>';
+  var save=function(){ var keep={}; b.querySelectorAll("[data-lgk]").forEach(function(s2){ keep[s2.dataset.lgk]=Number(s2.value); }); return api("/api/admin/logs/save",{on:$("lgOn").checked, archiveFirst:$("lgArch").checked, keep:keep}); };
+  $("lgSave").onclick=function(){ save().then(function(){ toast("✅ Saved"); logsCard(); }).catch(function(e){ toast(e.message); }); };
+  $("lgNow").onclick=function(){ save().then(function(r){ var cf=r.cfg, n=0; LG.info.forEach(function(x){ if(cf.keep[x.k]) n+= cf.archiveFirst? x.ready : x.old; });
+      if(!confirm(cf.archiveFirst? "Delete the old rows you have already downloaded? This cannot be undone." : "Delete all rows older than the keep time now? This cannot be undone.\n\nTip: download them first (⬇️ CSV).")) return null;
+      return api("/api/admin/logs/purge",{}); }).then(function(r){ if(!r) return; toast(r.last&&r.last.total? "🧹 "+r.last.total+" rows removed" : "Nothing to remove"); logsCard(); }).catch(function(e){ toast(e.message); }); };
+  b.querySelectorAll("[data-lgcsv]").forEach(function(x){ x.onclick=function(){ lgGet(x.dataset.lgcsv).then(function(r){ if(r) lgCsv(r); }); }; });
+  b.querySelectorAll("[data-lgpdf]").forEach(function(x){ x.onclick=function(){ lgGet(x.dataset.lgpdf).then(function(r){ if(r) lgPdf(r); }); }; });
+  $("lgAll").onclick=function(){ var ks=LG.info.filter(function(x){ return c.keep[x.k] && x.old; }).map(function(x){ return x.k; }); if(!ks.length){ toast("No old rows to download"); return; }
+    var i=0, next=function(){ if(i>=ks.length){ toast("✅ "+ks.length+" files downloaded"); logsCard(); return; } api("/api/admin/logs/export?k="+ks[i++]+"&scope=old").then(function(r){ lgCsv(r, true); setTimeout(next, 700); }).catch(function(e){ toast(e.message); }); }; next(); }; }
+function lgGet(k){ var x=null; LG.info.forEach(function(y){ if(y.k===k) x=y; }); var keep=LG.cfg.keep[k], scope= keep && x && x.old ? "old" : "all";
+  if(scope==="all" && !confirm("No rows are old enough to delete yet. Download ALL rows of this log instead?")) return Promise.resolve(null);
+  return api("/api/admin/logs/export?k="+k+"&scope="+scope).catch(function(e){ toast(e.message); return null; }); }
+function lgCsv(r, quiet){ if(!r.rows.length){ if(!quiet) toast("No rows"); return; } var cols=Object.keys(r.rows[0]);
+  var q=function(v){ v= v==null? "" : String(v); if(/^[=+\-@]/.test(v)) v="'"+v; return /[",\n\r]/.test(v)? '"'+v.replace(/"/g,'""')+'"' : v; };
+  var csv="﻿"+cols.join(",")+"\r\n"+r.rows.map(function(o){ return cols.map(function(c2){ return q(o[c2]); }).join(","); }).join("\r\n");
+  var a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"})); a.download="ekanthi-log-"+r.k+"-"+String(r.at).slice(0,10)+".csv"; document.body.appendChild(a); a.click(); a.remove();
+  if(!quiet){ toast(r.more? "⬇️ First 20,000 rows — download again after cleanup for the rest" : "⬇️ "+r.rows.length+" rows downloaded"); setTimeout(logsCard, 400); } }
+function lgPdf(r){ if(!r.rows.length){ toast("No rows"); return; } var cols=Object.keys(r.rows[0]), max=3000, rs=r.rows.slice(0,max);
+  var h='<div style="font:11px/1.35 Arial,sans-serif"><h2 style="margin:0 0 4px">Ekanthi — '+esc(r.label)+'</h2><div style="margin-bottom:8px">'+(r.cut? 'Rows older than '+esc(String(r.cut).slice(0,10)) : 'All rows')+' · '+r.rows.length+' rows · downloaded '+esc(fmtDT(r.at))+(r.rows.length>max? ' · first '+max+' shown (full data in CSV)' : '')+'</div>'+
+    '<table style="width:100%;border-collapse:collapse"><thead><tr>'+cols.map(function(c2){ return '<th style="border:1px solid #999;padding:3px;text-align:left;background:#eee">'+esc(c2)+'</th>'; }).join("")+'</tr></thead><tbody>'+
+    rs.map(function(o){ return '<tr>'+cols.map(function(c2){ return '<td style="border:1px solid #ccc;padding:3px;word-break:break-word">'+esc(o[c2]==null?"":String(o[c2]).slice(0,160))+'</td>'; }).join("")+'</tr>'; }).join("")+'</tbody></table></div>';
+  var pa=$("printArea"); if(!pa){ pa=document.createElement("div"); pa.id="printArea"; document.body.appendChild(pa); } pa.innerHTML=h; document.body.classList.add("printing");
+  setTimeout(function(){ window.print(); setTimeout(function(){ document.body.classList.remove("printing"); pa.innerHTML=""; logsCard(); }, 500); }, 100); }
 function holidaysCard(){ api("/api/admin/holidays").then(function(d){ T.holidays=d.items; T.holSettings=d.settings; holDraw(); }).catch(function(){ var b=$("holBox"); if(b) b.innerHTML='<div class="muted small">Holidays could not load.</div>'; }); }
 function holDraw(){ var b=$("holBox"); if(!b) return; var now=new Date(), t=ymd(now), owner=lsGet("ek_owner")!=="0"; var hs=holSet();
   var reg=function(r){ return r==="om"?"🇴🇲 Oman":r==="in"?"🇮🇳 India":"🌏 Both"; };
