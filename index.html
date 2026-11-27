@@ -994,7 +994,7 @@ var RV={d:null, f:{class_id:null, subject_id:null, chapters:[], who:"class", sid
 var TRACK_BOARD={school:"CBSE", psc:"Kerala PSC", rail:"Railway", exam:"Exam"};
 // ===================== SETTINGS =====================
 var API_URL = "https://ekanthi-tutor.yabideas.workers.dev";
-var APP_VERSION = 115; // bump on every release: open apps notice and refresh themselves
+var APP_VERSION = 117; // bump on every release: open apps notice and refresh themselves
 var WHATSAPP_NUMBER = "96893376228";   // Ma'am (students / parents chat)
 function SUPPORT_WA(){ var b=(REGI&&REGI.biz)||(SHOP&&SHOP.d&&SHOP.d.biz)||{}; return String(b.wa||"").replace(/\D/g,"")||WHATSAPP_NUMBER; }   // public support line (admin 🛒 → 🏢 Business)
 var SITE_URL = /(^|\.)ekanthi\.(in|com)$|cyberkalari\.com$/.test(location.hostname) ? location.origin : "https://www.ekanthi.in";   // works on the old and the new domain
@@ -3334,7 +3334,7 @@ function bkRecSheet(B, base, D){ D=D||{}; var all=(base==="/api/books"? (BK.d&&B
   if($("recFin")) $("recFin").onclick=function(){ api(base+"/progress",{id:B.id, page:0, secs:0, done:true}).then(function(){ done(); if($("recRev")) $("recRev").style.display=""; }).catch(function(e){ toast(e.message); }); };
   w.addEventListener("click", function(e){ if(e.target===w || e.target.closest("[data-x]")){ if(base==="/api/books"&&SK.view==="books") bkLib(); else if(base==="/api/parent/library") pLibLoad(); } }); }
 // books grouped by shelf (open books first inside each shelf)
-function bkShelves(L){ var g={}, order=[]; L.forEach(function(x){ var k=x.shelf||""; if(!g[k]){ g[k]=[]; order.push(k); } g[k].push(x); }); order.sort(function(a,c){ return (a===""?1:0)-(c===""?1:0); }); return order.map(function(k){ return [order.length>1? (k||tr("മറ്റു കഥകൾ","और कहानियाँ","More stories")) : "", g[k].sort(function(a,c){ return (a.ask?1:0)-(c.ask?1:0); })]; }); }
+function bkShelves(L){ var g={}, order=[]; L.forEach(function(x){ var k=x.shelf||""; if(!g[k]){ g[k]=[]; order.push(k); } g[k].push(x); }); order.sort(function(a,c){ return (a===""?1:0)-(c===""?1:0); }); var adm= role==="tutor" && lsGet("ek_owner")!=="0"; return order.map(function(k){ return [order.length>1? ((adm? k : String(k).replace(/\s*\([^)]*\)\s*$/,""))||tr("മറ്റു കഥകൾ","और कहानियाँ","More stories")) : "", g[k].sort(function(a,c){ return (a.ask?1:0)-(c.ask?1:0); })]; }); }
 function bkAskSheet(id, base){ var all=(base==="/api/books"? (BK.d&&BK.d.books) : (BK.pl&&BK.pl.books))||[], x=all.filter(function(y){ return y.id===id; })[0]||{title:"", cover:"📘"};
   var w=ekSheet('<div style="text-align:center">'+bkCover(x,true)+'<h2 style="margin:10px 0 2px">'+esc(x.title)+'</h2><div class="small muted">'+(BK_LANG[x.lang]||"")+(x.pages?' · '+x.pages+' '+tr("പേജ്","पेज","pages"):'')+'</div><div class="card" style="margin:12px 0;background:#fffaf0;border-color:#f3dc9b">🔒 '+tr("ഈ book Ma'am തുറന്നു തന്നാൽ വായിക്കാം.","यह book Ma'am खोलेंगी तब पढ़ सकते हो।","Ma'am will open this book for you.")+'</div>'+
     (x.asked?'<div class="small" style="color:#1d4f80;font-weight:700;margin-bottom:8px">⏳ '+tr("ചോദിച്ചിട്ടുണ്ട് — Ma'am നോക്കും","पूछ लिया है — Ma'am देखेंगी","Already asked — Ma'am will see it")+'</div>':'<button class="btn block" id="bkAskGo">🙋 '+tr("വായിക്കാൻ ചോദിക്കൂ","पढ़ने के लिए पूछो","Ask to read")+'</button>')+'<button class="btn ghost block" data-x style="margin-top:8px">OK</button></div>',"bkAskS");

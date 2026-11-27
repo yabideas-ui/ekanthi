@@ -1,4 +1,4 @@
-/*EKA 115*/
+/*EKA 117*/
 // Ekanthi parent code — loaded by the page with parentLoad(). Do not edit: built from src/index.src.html by tools/split.py
 // ---------- parent: what the child read, and arrange the shelf ----------
 function pBooksLoad(child){ var box=$("pBooks"); if(!box) return; api("/api/parent/books?child="+child).then(function(d){ if(!d.state||d.state.state==="off"){ box.innerHTML=""; return; } BK.p=d; BK.pc=child; pBooksDraw(); }).catch(function(){ box.innerHTML=""; }); }
