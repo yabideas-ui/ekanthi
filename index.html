@@ -212,6 +212,7 @@ body.bk-open{overflow:hidden}
 .t-main{max-width:1180px;margin:0 auto;padding:20px}
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .kpi b{display:block;font-size:28px;font-weight:800;margin-top:4px}
+.kpi[data-kpi]{cursor:pointer;position:relative;transition:transform .12s}.kpi[data-kpi]:active{transform:scale(.97)}.kpi[data-kpi]:after{content:'Tap ›';position:absolute;right:10px;bottom:8px;font-size:11px;color:#94a3b8;font-weight:600}
 @media(max-width:800px){.kpis{grid-template-columns:repeat(2,1fr)}}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
@@ -994,7 +995,7 @@ var RV={d:null, f:{class_id:null, subject_id:null, chapters:[], who:"class", sid
 var TRACK_BOARD={school:"CBSE", psc:"Kerala PSC", rail:"Railway", exam:"Exam"};
 // ===================== SETTINGS =====================
 var API_URL = "https://ekanthi-tutor.yabideas.workers.dev";
-var APP_VERSION = 117; // bump on every release: open apps notice and refresh themselves
+var APP_VERSION = 118; // bump on every release: open apps notice and refresh themselves
 var WHATSAPP_NUMBER = "96893376228";   // Ma'am (students / parents chat)
 function SUPPORT_WA(){ var b=(REGI&&REGI.biz)||(SHOP&&SHOP.d&&SHOP.d.biz)||{}; return String(b.wa||"").replace(/\D/g,"")||WHATSAPP_NUMBER; }   // public support line (admin 🛒 → 🏢 Business)
 var SITE_URL = /(^|\.)ekanthi\.(in|com)$|cyberkalari\.com$/.test(location.hostname) ? location.origin : "https://www.ekanthi.in";   // works on the old and the new domain
