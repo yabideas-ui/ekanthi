@@ -1,4 +1,4 @@
-/*EKA 118*/
+/*EKA 119*/
 // Ekanthi admin code — loaded by the page with adminLoad(). Do not edit: built from src/index.src.html by tools/split.py
 // ----- admin: 🆕 registrations, 💳 payments, 🛒 plans & extras settings -----
 var RG={}, PY={all:false}, SH={};
@@ -162,7 +162,7 @@ function playbook(){ var tips=[
 // 🗂️ admin home in sections: the same cards as before, grouped so the page is short; "All" shows everything like before
 var OV={sec:(function(){ try{ return localStorage.getItem("ek_ovsec")||"home"; }catch(e){ return "home"; } })(), load:{}};
 var OV_SECS=[["home","🏠 Home"],["students","👦 Students"],["parents","👨‍👩‍👧 Parents"],["learn","📚 Learning & books"],["money","💳 Money"],["settings","⚙️ Settings"],["all","☰ All"]];
-var OV_MAP={bkAskTop:"home learn", tdBox:"home", coachBoard:"home students", stuCard:"home students", usBox:"students", lkBox2:"students", devBox:"students", paBox:"parents", bkBoxA:"learn", skBoxA:"learn", gfBoxA:"learn", rwBox:"learn", rgBox:"money", pyBox:"money", plBox:"money", shBox:"money", sfBox:"settings", holBox:"settings", lgBox:"settings"};
+var OV_MAP={bkAskTop:"home learn", tdBox:"home", coachBoard:"home students", stuCard:"home students", usBox:"students", lkBox2:"students", devBox:"students", paBox:"parents", bkBoxA:"learn", skBoxA:"learn", gfBoxA:"learn", rwBox:"learn", rgBox:"money", pyBox:"money", plBox:"money", shBox:"money", sfBox:"settings", holBox:"settings", lgBox:"settings", slBoxA:"students settings"};
 function ovTabs(){ return '<div class="ov-tabs">'+OV_SECS.map(function(x){ return '<button class="chip'+(OV.sec===x[0]?' on':'')+'" data-ovs="'+x[0]+'">'+x[1]+'</button>'; }).join("")+'</div>'; }
 function ovLater(id, fn){ OV.load[id]=fn; }
 function ovApply(){ var sec=OV.sec;
@@ -194,6 +194,7 @@ function renderOverview(){
   h+='<div class="card" style="margin-top:14px" id="devBox"><span class="spinner"></span></div>'; ovLater("devBox", devicesCard);
   h+='<div class="card" style="margin-top:14px" id="holBox"><span class="spinner"></span></div>'; ovLater("holBox", holidaysCard);
   if(lsGet("ek_owner")!=="0"){ h+='<div class="card" style="margin-top:14px" id="lgBox"><span class="spinner"></span></div>'; ovLater("lgBox", logsCard); }
+  h+='<div class="card" style="margin-top:14px" id="slBoxA"><span class="spinner"></span></div>'; ovLater("slBoxA", slAdminCard);
   h+='<div class="card" style="margin-top:14px" id="coachBoard"><div class="row between"><h2>🎯 Who needs help most</h2><span class="muted small">Ranked by what is holding each student back · click to open their coach plan</span></div><div id="cbBody" style="margin-top:8px"><span class="spinner"></span></div></div>';
   h+='<div class="card" style="margin-top:14px" id="stuCard"><div class="row between" style="margin-bottom:10px"><h2>Students</h2><div class="row" style="gap:6px"><button class="btn ghost sm" id="aiTest">Test Ekanthi Agent</button><button class="btn sm" id="addStu">+ Add student</button></div></div><div id="aiOut"></div>';
   if(T.newCreds) h+=credsCard(T.newCreds);
@@ -374,6 +375,19 @@ function tdDraw(){ var b=$("tdBox"), d=TD.d; if(!b||!d) return; var R=d.rows, ow
         '<table><thead><tr><th>Time</th><th>Device</th><th>Country</th><th>Network (IP)</th><th></th></tr></thead><tbody>'+x.tries.map(function(t){ return '<tr><td class="small">'+fmtDT(t.at)+'</td><td class="small">'+esc(uaShort(t.ua)||"?")+'</td><td class="small">'+esc(t.country||"")+'</td><td class="small"><code>'+esc(t.ip||"—")+'</code></td><td class="small">'+(x.student? (mine(t)? '📱 looks like the student\'s own device' : '<span class="pill alert">⚠️ different device</span>') : '')+'</td></tr>'; }).join("")+'</tbody></table>'+
         '<div class="small muted" style="margin-top:4px">Same device = the student probably forgot the PIN. Different device / country = maybe someone else trying — give a new PIN.</div></div>'; }).catch(function(e){ box.innerHTML='<div class="muted small">'+esc(e.message)+'</div>'; }); }; }); }
 // ----- 🎉 Holidays (tutor console): today in India / Oman, coming days, Ma'am's tuition holidays -----
+// 📌 Study Lock (admin): settings, who is locked now, how each lock ended
+function slAdminCard(body){ api("/api/admin/studylock", body||{}).then(function(d){ var b=$("slBoxA"); if(!b) return; var c=d.cfg, act=d.items.filter(function(x){ return !x.ended; }), past=d.items.filter(function(x){ return x.ended; });
+  var h='<div class="row between"><h2>📌 Study Lock</h2><span class="muted small">Android app only · parent PIN to stop early</span></div><div class="small muted" style="margin-bottom:8px">The child\'s phone stays inside Ekanthi (Android screen pinning) until the time ends or a parent types their Ekanthi PIN. Coming out is reported to the parent and you. Who can use it: ⚙️ Student extra features → 📌 and Parent features → 📌.</div>';
+  h+='<h3 style="margin:6px 0">🔒 Locked now ('+act.length+')</h3>'+(act.length? act.map(function(x){ var left=x.until? Math.max(0,Math.ceil((Date.parse(x.until)-Date.now())/60000)) : null; return '<div class="row between" style="gap:8px;padding:6px 0;border-bottom:1px dashed var(--line)"><span><b>'+esc(x.name)+'</b> <span class="small muted">'+(x.waiting?'⏳ waiting for the child to open the app':left+' min left')+' · by '+(x.by==="p"?"parent":"student")+' '+esc(x.byName||"")+(x.breaks?' · <span style="color:#b91c1c">⚠️ came out '+x.breaks+'×</span>':'')+'</span></span><button class="btn ghost sm" data-slstop="'+x.sid+'">Stop</button></div>'; }).join("") : '<div class="small muted">Nobody.</div>');
+  if(past.length) h+='<details style="margin-top:8px"><summary class="small" style="cursor:pointer;font-weight:700">History ('+past.length+')</summary>'+past.slice(0,40).map(function(x){ return '<div class="small" style="padding:4px 0;border-bottom:1px dashed var(--line)"><b>'+esc(x.name)+'</b> · '+fmtDT(x.created)+' · '+x.mins+' min · by '+(x.by==="p"?"parent":"student")+' · '+esc(x.howTxt||x.how||"")+(x.breaks?' · <span style="color:#b91c1c">⚠️ came out '+x.breaks+'×</span>':'')+'</div>'; }).join("")+'</details>';
+  if(d.owner) h+='<div class="card" style="background:#fafbfd;margin-top:10px"><b>⚙️ Settings</b><div class="row" style="gap:10px;flex-wrap:wrap;align-items:flex-end;margin-top:6px"><div><label class="f">Default minutes</label><input type="number" id="slDef" min="5" max="480" value="'+c.def+'" style="width:80px"></div><div><label class="f">Longest allowed</label><input type="number" id="slMax" min="10" max="480" value="'+c.max+'" style="width:80px"></div></div>'+
+    '<label class="small" style="display:flex;gap:6px;margin-top:6px"><input type="checkbox" id="slSelf" style="width:auto"'+(c.self?' checked':'')+'>Student (or parent on the child\'s phone) can start it from the student app</label>'+
+    '<label class="small" style="display:flex;gap:6px;margin-top:4px"><input type="checkbox" id="slRem" style="width:auto"'+(c.remote?' checked':'')+'>Parent can start it from their own phone (locks when the child opens Ekanthi)</label>'+
+    '<label class="small" style="display:flex;gap:6px;margin-top:4px"><input type="checkbox" id="slAl" style="width:auto"'+(c.alert?' checked':'')+'>Alert the parent and Ma\'am when the child comes out / tries wrong PINs</label><button class="btn sm" id="slSave" style="margin-top:8px">Save</button></div>';
+  b.innerHTML=h;
+  b.querySelectorAll("[data-slstop]").forEach(function(x){ x.onclick=function(){ if(!confirm("Stop Study Lock for this student?")) return; slAdminCard({stop:Number(x.dataset.slstop)}); toast("🔓 Stopped"); }; });
+  if($("slSave")) $("slSave").onclick=function(){ slAdminCard({cfg:{def:Number($("slDef").value), max:Number($("slMax").value), self:$("slSelf").checked, remote:$("slRem").checked, alert:$("slAl").checked}}); toast("✅ Saved"); };
+}).catch(function(e){ var b=$("slBoxA"); if(b) b.innerHTML='<div class="muted small">Study Lock could not load: '+esc(e.message)+'</div>'; }); }
 // 🧹 Log cleanup & archive (owner only): keep-days per log, auto delete on/off, download CSV / PDF before delete
 var LG={};
 function logsCard(){ api("/api/admin/logs/cfg").then(function(d){ LG=d; lgDraw(); }).catch(function(e){ var b=$("lgBox"); if(b) b.innerHTML='<div class="muted small">Log settings could not load: '+esc(e.message)+'</div>'; }); }

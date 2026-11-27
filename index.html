@@ -995,7 +995,7 @@ var RV={d:null, f:{class_id:null, subject_id:null, chapters:[], who:"class", sid
 var TRACK_BOARD={school:"CBSE", psc:"Kerala PSC", rail:"Railway", exam:"Exam"};
 // ===================== SETTINGS =====================
 var API_URL = "https://ekanthi-tutor.yabideas.workers.dev";
-var APP_VERSION = 118; // bump on every release: open apps notice and refresh themselves
+var APP_VERSION = 119; // bump on every release: open apps notice and refresh themselves
 var WHATSAPP_NUMBER = "96893376228";   // Ma'am (students / parents chat)
 function SUPPORT_WA(){ var b=(REGI&&REGI.biz)||(SHOP&&SHOP.d&&SHOP.d.biz)||{}; return String(b.wa||"").replace(/\D/g,"")||WHATSAPP_NUMBER; }   // public support line (admin 🛒 → 🏢 Business)
 var SITE_URL = /(^|\.)ekanthi\.(in|com)$|cyberkalari\.com$/.test(location.hostname) ? location.origin : "https://www.ekanthi.in";   // works on the old and the new domain
@@ -1751,6 +1751,46 @@ function dykShow(force){ var ok= role==="student"? !!(S && S.proFeats && S.proFe
   w.addEventListener("pointerup", function(){ started=Date.now(); timer=setTimeout(close, Math.max(1500,left)); if(bar) bar.style.animationPlayState="running"; });
   w.querySelector(".dyk-x").onclick=function(e){ e.stopPropagation(); clearTimeout(timer); close(); }; }
 // ----- 💪 Mind coach (student Pro): this week's plan for weak areas + pressure tips + 1-minute breathing -----
+// ----- 📌 Study Lock (Android app): the phone stays inside Ekanthi till the time ends or a parent types their PIN -----
+var SL={d:null, cur:null, phase:"", t:null, poll:null, at:0, rep:false};
+function slCan(){ try{ return IN_APP && window.EkanthiApp && typeof EkanthiApp.pinStart==="function"; }catch(e){ return false; } }
+function slPinned(){ try{ return Number(EkanthiApp.pinState())>0; }catch(e){ return false; } }
+function slCard(){ if(role!=="student" || !slCan() || !(S&&S.proFeats&&S.proFeats.studylock===true)) return ''; slInit();
+  return '<div class="card" style="background:linear-gradient(135deg,#eef6ff,#fff);border-color:#bfdbfe;cursor:pointer" onclick="slOpen()"><div class="row between"><b>📌 '+tr("സ്റ്റഡി ലോക്ക്","स्टडी लॉक","Study Lock")+'</b><span class="pill p3">'+(SL.cur&&!SL.cur.waiting?tr("ഓൺ","चालू","On"):tr("തുടങ്ങൂ","शुरू करो","Start"))+' ›</span></div><div class="small muted" style="margin-top:4px">'+tr("ഫോൺ Ekanthi-ൽ മാത്രം — വേറെ app ഒന്നും തുറക്കില്ല. Parent-ന് വിശ്വാസം!","फ़ोन सिर्फ़ Ekanthi में — कोई और app नहीं खुलेगा। Parent निश्चिंत!","Phone stays only in Ekanthi — no other app opens. Parents can relax!")+'</div></div>'; }
+function slInit(){ if(SL.poll) return; SL.poll=setInterval(slSync, 30000); slSync(); }
+function slSync(){ if(role!=="student" || !slCan()) return; api("/api/studylock").then(function(d){ SL.d=d; var c=d.cur;
+  if(c && c.waiting){ if(SL.phase!=="starting") slStart(c.mins, true); return; }
+  if(c){ var first=!SL.cur; SL.cur=c; slBar(); slTick();
+    if(first && SL.phase!=="starting" && !slPinned()){ SL.phase="running"; api("/api/studylock/broken",{why:"app opened without the pin"}).catch(function(){}); slRepin(); } else if(!SL.phase) SL.phase="running"; return; }
+  if(SL.cur){ slEnd(tr("Study Lock കഴിഞ്ഞു","Study Lock खत्म","Study Lock ended")); } else if(slPinned() && SL.phase!=="starting"){ try{ EkanthiApp.pinStop(); }catch(e){} } }).catch(function(){}); }
+function slOpen(){ var d=SL.d||{cfg:{def:45,max:180,self:true}}, c=SL.cur;
+  if(c && !c.waiting){ slUnlockSheet(); return; }
+  if(!d.cfg.self){ toast(tr("Parent-ന്റെ phone-ൽ നിന്ന് തുടങ്ങണം","Parent के phone से शुरू करना होगा","Your parent starts it from their phone")); return; }
+  var opts=[15,30,45,60,90,120,180].filter(function(m){ return m<=d.cfg.max; }); if(opts.indexOf(d.cfg.def)<0) opts.push(d.cfg.def); opts.sort(function(a,b){ return a-b; });
+  var w=ekSheet('<h2 style="margin:0 0 6px">📌 '+tr("സ്റ്റഡി ലോക്ക്","स्टडी लॉक","Study Lock")+'</h2><div class="small" style="margin-bottom:10px">'+tr("ഈ സമയം കഴിയുന്നത് വരെ ഫോൺ Ekanthi-ൽ മാത്രം ഇരിക്കും. Home, മറ്റു apps, notifications ഒന്നും തുറക്കില്ല. നേരത്തെ നിർത്താൻ parent-ന്റെ Ekanthi PIN വേണം.","इस समय तक फ़ोन सिर्फ़ Ekanthi में रहेगा। Home, दूसरे apps नहीं खुलेंगे। पहले बंद करने के लिए parent का Ekanthi PIN चाहिए।","Until the time ends the phone stays in Ekanthi — Home and other apps won't open. To stop early, a parent types their Ekanthi PIN.")+(d.hasParent?'':'<div style="color:#b45309;margin-top:6px">⚠️ '+tr("Parent account ഇല്ല — സമയം കഴിയും വരെ നിർത്താൻ പറ്റില്ല.","Parent account नहीं — समय खत्म होने तक बंद नहीं होगा।","No parent account is linked — it can only end when the time is over.")+'</div>')+'</div>'+
+    '<div class="row" style="gap:6px;flex-wrap:wrap">'+opts.map(function(m){ return '<button class="btn '+(m===d.cfg.def?'':'ghost')+'" data-slm="'+m+'">'+m+' min</button>'; }).join("")+'</div>'+
+    '<div class="small muted" style="margin-top:10px">'+tr("ഫോൺ ചോദിച്ചാൽ “Pin” / “Got it” അമർത്തൂ.","फ़ोन पूछे तो “Pin” / “Got it” दबाओ।","If the phone asks, tap “Pin” / “Got it”.")+'</div><button class="btn ghost block" data-x style="margin-top:10px">'+tr("വേണ്ട","रहने दो","Cancel")+'</button>',"slSheet");
+  w.querySelectorAll("[data-slm]").forEach(function(x){ x.onclick=function(){ w.remove(); slStart(Number(x.dataset.slm)); }; }); }
+function slStart(mins, fromParent){ SL.phase="starting"; api("/api/studylock/start",{mins:mins}).then(function(r){ SL.cur=r.cur; SL.at=Date.now();
+    if(fromParent) toast("📌 "+tr("Parent Study Lock തുടങ്ങി — ","Parent ने Study Lock शुरू किया — ","Your parent started Study Lock — ")+r.cur.mins+" min");
+    try{ EkanthiApp.pinStart(); }catch(e){} slBar(); slTick(); if(SL.t) clearInterval(SL.t); SL.t=setInterval(slTick, 4000); }).catch(function(e){ SL.phase=""; toast(e.message); }); }
+function slRepin(){ try{ EkanthiApp.pinStart(); }catch(e){} if(!SL.t) SL.t=setInterval(slTick, 4000); }
+function slLeft(){ return SL.cur&&SL.cur.until? Math.max(0, Date.parse(SL.cur.until)-Date.now()) : 0; }
+function slTick(){ var c=SL.cur; if(!c || c.waiting) return; if(!SL.t) SL.t=setInterval(slTick, 4000);
+  if(slLeft()<=0){ slEnd("⏰ "+tr("സമയം കഴിഞ്ഞു — Study Lock ഓഫ്. സൂപ്പർ!","समय पूरा — Study Lock बंद। शाबाश!","Time's up — Study Lock is off. Well done!")); setTimeout(slSync, 1500); return; }
+  var pin=slPinned();
+  if(SL.phase==="starting"){ if(pin){ SL.phase="running"; SL.rep=false; } else if(Date.now()-SL.at>15000){ api("/api/studylock/declined",{}).catch(function(){}); slEnd(""); slHelp(); return; } }
+  else if(SL.phase==="running"){ if(pin) SL.rep=false; else if(!SL.rep){ SL.rep=true; api("/api/studylock/broken",{why:"unpinned"}).catch(function(){}); toast("⚠️ "+tr("Study Lock-ൽ നിന്ന് പുറത്തു പോയി — parent-നെ അറിയിച്ചു","Study Lock से बाहर गए — parent को बताया गया","You came out of Study Lock — your parent was told")); slRepin(); } }
+  slBar(); }
+function slBar(){ var c=SL.cur, b=$("slBar"); if(!c || c.waiting){ if(b) b.remove(); return; }
+  if(!b){ b=document.createElement("div"); b.id="slBar"; b.style.cssText="position:fixed;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top,0px) + 6px);z-index:9998;background:#16324F;color:#fff;border-radius:999px;padding:6px 8px 6px 14px;font-size:13px;font-weight:700;display:flex;gap:8px;align-items:center;box-shadow:0 6px 18px rgba(0,0,0,.25)"; document.body.appendChild(b); }
+  var m=Math.ceil(slLeft()/60000), pin=slPinned();
+  b.innerHTML='<span>📌 '+(pin?'':'⚠️ ')+m+' min</span><button class="btn sm" style="padding:4px 10px;background:#F2B632;color:#16324F" id="slUn">🔓</button>'; $("slUn").onclick=slUnlockSheet; }
+function slUnlockSheet(){ var c=SL.cur; if(!c) return; var w=ekSheet('<h2 style="margin:0 0 4px">🔓 '+tr("Study Lock നിർത്തണോ?","Study Lock बंद करें?","Stop Study Lock?")+'</h2><div class="small muted" style="margin-bottom:8px">'+tr("ഇനി "+Math.ceil(slLeft()/60000)+" മിനിറ്റ്. Parent-ന്റെ Ekanthi PIN വേണം.","अभी "+Math.ceil(slLeft()/60000)+" मिनट बाकी। Parent का Ekanthi PIN चाहिए।",Math.ceil(slLeft()/60000)+" min left. A parent types their Ekanthi PIN.")+'</div><input type="password" id="slPin" placeholder="Parent PIN" autocomplete="off"><button class="btn block" id="slGo" style="margin-top:8px">'+tr("നിർത്തുക","बंद करो","Stop")+'</button><button class="btn ghost block" data-x style="margin-top:6px">'+tr("തുടരുക","जारी रखो","Keep going")+'</button>',"slSheet");
+  $("slGo").onclick=function(){ var b=this; b.disabled=true; api("/api/studylock/stop",{pin:$("slPin").value}).then(function(){ w.remove(); slEnd("🔓 "+tr("Study Lock നിർത്തി","Study Lock बंद","Study Lock stopped")); }).catch(function(e){ b.disabled=false; toast(e.message); }); }; }
+function slEnd(msg){ SL.cur=null; SL.phase=""; SL.rep=false; if(SL.t){ clearInterval(SL.t); SL.t=null; } try{ EkanthiApp.pinStop(); }catch(e){} var b=$("slBar"); if(b) b.remove(); if(msg) toast(msg); }
+function slHelp(){ ekSheet('<h2 style="margin:0 0 6px">📌 '+tr("ഫോണിൽ App pinning ഓൺ ആക്കണം","फ़ोन में App pinning चालू करें","Turn on App pinning on this phone")+'</h2><ol class="small" style="padding-left:18px;line-height:1.6"><li>Settings → Security (or Security &amp; privacy → More) → <b>App pinning</b> → On</li><li><b>Ask for PIN before unpinning</b> → On ('+tr("parent-ന്റെ phone PIN","parent का phone PIN","the parent\'s phone PIN")+')</li><li>'+tr("വീണ്ടും Study Lock തുടങ്ങൂ, “Pin” അമർത്തൂ.","फिर Study Lock शुरू करो, “Pin” दबाओ।","Start Study Lock again and tap “Pin”.")+'</li></ol><button class="btn block" data-x>OK</button>',"slSheet"); }
+function goalMin(){ var g=S&&S.goal; return g&&typeof g==="object"? (g.min||45) : (Number(g)||45); }
 function mindCard(){ var a=S&&S.proFeats&&S.proFeats.mind; if(a===true) return '<div class="card" style="background:linear-gradient(135deg,#f5f3ff,#fff);border-color:#ddd6fe;cursor:pointer" onclick="mindOpen()"><div class="row between"><b>💪 '+tr("മൈൻഡ് കോച്ച്","माइंड कोच","Mind coach")+'</b><span class="pill" style="background:#ede9fe;color:#5b21b6">'+tr("തുറക്കൂ","खोलो","Open")+' →</span></div><div class="small muted" style="margin-top:4px">'+tr("ടെൻഷൻ കുറയ്ക്കാം, ദുർബല ഭാഗങ്ങൾ ജയിക്കാം","टेंशन कम करो, कमज़ोर हिस्से जीतो","Beat exam pressure and your weak topics")+'</div></div>';
   if(a==="locked") return '<div class="card" style="background:linear-gradient(135deg,#fff8e1,#fff);border:1px dashed #f2c14e"><div class="row between"><b>💪 '+tr("മൈൻഡ് കോച്ച്","माइंड कोच","Mind coach")+'</b><span class="pill" style="background:#f2c14e;color:#3b2f00">⭐ Pro</span></div><div class="small muted" style="margin-top:4px">'+tr("പരീക്ഷ ടെൻഷനും ദുർബല ഭാഗങ്ങളും നേരിടാൻ നിനക്കായി ഒരു പ്ലാൻ — Ma'am-നോട് ചോദിക്കൂ.","परीक्षा का तनाव और कमज़ोर हिस्सों के लिए तुम्हारा प्लान — Ma'am से पूछो।","A plan just for you to handle exam pressure and weak topics — ask Ma'am.")+'</div></div>';
   return ''; }
@@ -1775,7 +1815,7 @@ function mindLoad(make){ var b=$("mindPlan"); if(!b) return; if(make) b.innerHTM
       '<div class="card" style="margin-top:8px"><b>🧘 '+tr("ടെൻഷൻ വരുമ്പോൾ","जब तनाव हो","When you feel pressure")+'</b><ul class="small" style="margin:6px 0 0;padding-left:18px;line-height:1.7">'+li(p.pressure)+'</ul></div>'+
       (p.mantra?'<div style="text-align:center;font-weight:800;font-size:17px;margin:12px 0 2px;color:#5b21b6">“'+esc(p.mantra)+'”</div>':''); })
   .catch(function(e){ if(b.isConnected) b.innerHTML='<div class="muted small">'+(e.status===429? tr("Ekanthi ഇപ്പോൾ busy ആണ് — കുറച്ചു കഴിഞ്ഞ് ശ്രമിക്കൂ.","Ekanthi अभी busy है — थोड़ी देर बाद।","Ekanthi is busy — try again a little later.") : esc(e.message))+'</div>'; }); }
-window.mindOpen=mindOpen;
+window.mindOpen=mindOpen; window.slOpen=slOpen; window.ekPin=function(){ if(SL.cur) slTick(); };
 // ----- 📝 after a check-in: test yourself on that chapter (Pro) -----
 function studyTestOffer(subject, chapter){ var a=S&&S.proFeats&&S.proFeats.studytest; if(!a || !chapter) return; var ch=(S.chapters||[]).filter(function(c){ return c.id===chapter; })[0]; if(!ch) return;
   var w=document.createElement("div"); w.className="m-sheet"; w.id="stSheet";
@@ -1818,22 +1858,23 @@ function renderToday(){
   var qz=S.quizzes.filter(function(q){return q.date===t;})[0], qDone=qz&&qz.completed_at;
   var h='';
   var ac=S.access||{}; if(ac.days_left!==null && ac.days_left!==undefined && ac.days_left<=3) h+='<div class="access"><div><b>'+(ac.plan==="trial"?tr("Trial ","Trial ","Trial "):"")+tr("അവസാനിക്കുന്നു: ","खत्म होगा: ","ends: ")+fmtDate(ac.valid_until)+'</b><div class="small muted">'+(ac.days_left===0?tr("ഇന്ന് അവസാന ദിവസം","आज आखिरी दिन","Today is the last day"):tr(ac.days_left+" ദിവസം കൂടി",ac.days_left+" दिन बाकी",ac.days_left+" days left"))+' · '+tr("തുടരാൻ tutor-നോട് പറയൂ","जारी रखने के लिए tutor से बात करो","Talk to your tutor to continue")+'</div></div><a class="btn gold sm" target="_blank" rel="noopener" href="'+waLink(WHATSAPP_NUMBER,"Hi, I want to continue Ekanthi — "+S.student.name)+'">WhatsApp</a></div>';
-  var tdone=(todayCi.length?1:0)+(qDone?1:0), L0=levelOf(S.xpAll||0), gp0=S.goal? Math.min(100,pct(S.studyToday||0,S.goal)) : 0; setTimeout(achPeek, 300);
+  var tdone=(todayCi.length?1:0)+(qDone?1:0), L0=levelOf(S.xpAll||0), gp0=Math.min(100,pct(S.studyToday||0,goalMin())); setTimeout(achPeek, 300);
   var T1='<div class="card tk-card"><div class="tk-head"><div><h3>'+tr("ഇന്നത്തെ പണികൾ","आज के काम","Today\'s tasks")+'</h3><div class="small muted" style="margin-top:3px">'+(tdone>=2? tr("എല്ലാം കഴിഞ്ഞു — സൂപ്പർ! 🎉","सब हो गया — शाबाश! 🎉","All done — great work! 🎉") : tr("2 ചെറിയ പണികൾ · ഏകദേശം 15 മിനിറ്റ്","2 छोटे काम · लगभग 15 मिनट","2 small tasks · about 15 minutes"))+'</div>'+(HEAD_EXAM? '<div class="tk-exam">📅 '+esc(HEAD_EXAM.name)+' '+(HEAD_EXAM.dl===0?tr("പരീക്ഷ ഇന്ന്!","exam आज!","exam today!"):tr("പരീക്ഷയ്ക്ക് "+HEAD_EXAM.dl+" ദിവസം","exam में "+HEAD_EXAM.dl+" दिन","exam in "+HEAD_EXAM.dl+" days"))+'</div>' : '')+'</div><div class="tk-ring" style="--p:'+(tdone*50)+'"><span>'+tdone+'/2</span></div></div>'+
     '<div class="task'+(qDone?' done':'')+'" data-go="quiz"><div class="tk-ic" style="--a:#7c5cff;--b:#b69cff">📝</div><div class="dot">'+(qDone?'✓':'')+'</div><div><div class="t">'+tr("Daily quiz","Daily quiz","Daily quiz")+'</div><div class="muted small">'+(qDone? tr("Score ","Score ","Score ")+qz.score+"/"+qz.total : tr("5 ചോദ്യം · 5 മിനിറ്റ്","5 सवाल · 5 मिनट","5 questions · 5 minutes"))+'</div></div><span class="go">›</span></div>'+
     '<div class="task'+(todayCi.length?' done':'')+'" data-go="checkin"><div class="tk-ic" style="--a:#e0890f;--b:#ffc65a">📖</div><div class="dot">'+(todayCi.length?'✓':'')+'</div><div><div class="t">'+tr("Study check-in","Study check-in","Study check-in")+'</div><div class="muted small">'+(todayCi.length? tr(mins+" മിനിറ്റ് രേഖപ്പെടുത്തി",mins+" मिनट दर्ज",mins+" min logged today") : tr("ഇന്ന് എന്ത് പഠിച്ചു?","आज क्या पढ़ा?","What did you study today?"))+'</div></div><span class="go">›</span></div>'+
     '<div class="task" data-go="assist"><div class="tk-ic" style="--a:#0f9bb3;--b:#5fd6e8">🤖</div><div class="dot" style="border-style:dashed"></div><div><div class="t">'+tr("സംശയം ചോദിക്കൂ","डाउट पूछो","Ask a doubt")+'</div><div class="muted small">Ekanthi Agent · Malayalam / English · voice</div></div><span class="go">›</span></div></div>';
   var T2='<div class="tstats"><div class="ts" title="Study streak"><div class="ts-n">🔥 '+S.streak+'</div><div class="ts-l">'+tr("ദിവസം streak","दिन streak",(S.streak===1?"day":"days")+" streak")+'</div></div>'+
-    '<div class="ts" data-go="checkin"><div class="ts-n">'+(S.studyToday||0)+'<small>/'+(S.goal||45)+'</small></div><div class="ts-l">'+tr("മിനിറ്റ് ഇന്ന്","मिनट आज","min today")+'</div><div class="ts-bar"><i style="width:'+gp0+'%"></i></div></div>'+
+    '<div class="ts" data-go="checkin"><div class="ts-n">'+(S.studyToday||0)+'<small>/'+goalMin()+'</small></div><div class="ts-l">'+tr("മിനിറ്റ് ഇന്ന്","मिनट आज","min today")+'</div><div class="ts-bar"><i style="width:'+gp0+'%"></i></div></div>'+
     '<div class="ts" data-ach="1"><div class="ts-n">'+L0.t[1]+' '+L0.n+'</div><div class="ts-l">'+esc(L0.t[0])+' · '+(S.xpAll||0)+' XP</div><div class="ts-bar"><i style="width:'+L0.pc+'%"></i></div></div></div>';
   h+=planStrip();
   h+=T1+T2;
   h+='<div id="hwBox">'+hwListHtml()+'</div>';
   h+=holidayCard(dayInfo());
   h+=mindCard();
+  h+=slCard();
   if(S.goal && S.goal.min){ var gp=Math.min(100, Math.round(S.goal.done/S.goal.min*100)); h+='<div class="card" style="background:linear-gradient(135deg,#f0fdf4,#fff);border-color:#bbf7d0"><div class="row between"><b>🎯 '+tr("Parent വെച്ച ലക്ഷ്യം: "+S.goal.min+" മിനിറ്റ്","Parent का लक्ष्य: "+S.goal.min+" मिनट","Goal from your parent: "+S.goal.min+" min a day")+'</b><b>'+(gp>=100?'✅':gp+'%')+'</b></div><div style="height:8px;border-radius:6px;background:#e5efe8;overflow:hidden;margin-top:6px"><i style="display:block;height:100%;width:'+gp+'%;background:#22c55e"></i></div><div class="small muted" style="margin-top:4px">'+tr("ഇന്ന് "+S.goal.done+" മിനിറ്റ് ആയി","आज "+S.goal.done+" मिनट हुए",S.goal.done+" min done today")+'</div></div>'; }
 
-  var gp=S.goal? Math.min(100,pct(S.studyToday||0,S.goal)) : 0;
+  var gp=Math.min(100,pct(S.studyToday||0,goalMin()));
 
   h+='<div id="appCard"></div><div id="planBox"></div>';
   var lb=S.leaders; if(lb && lb.total>1 && lb.top.length) h+='<div class="card"><div class="row between" style="margin-bottom:6px"><h3>🏆 '+tr("ഈ ആഴ്ചയിലെ class toppers","इस हफ्ते के class toppers","This week in your class")+'</h3><span class="muted small">'+(lb.rank? tr("നിന്റെ rank: ","तुम्हारी rank: ","Your rank: ")+'<b>#'+lb.rank+'</b> / '+lb.total : '')+'</span></div>'+lb.top.map(function(x){ return '<div class="lb-row r'+x.rank+(x.me?' me':'')+'"><div class="lb-rank">'+x.rank+'</div><div style="flex:1"><b>'+esc(x.name)+(x.me?' ('+tr("നീ","तुम","you")+')':'')+'</b></div><div class="small"><b>'+x.xp+'</b> XP</div></div>'; }).join("")+'<div class="small muted" style="margin-top:6px">'+tr("Check-in, quiz, practice, mock — ശരിയായ ഉത്തരങ്ങൾക്കാണ് XP. വായിക്കാതെ ടാപ്പ് ചെയ്താൽ 0 XP. ഓരോ തിങ്കളാഴ്ചയും പുതിയ race!","Check-in, quiz, practice, mock — सही जवाबों पर XP मिलता है। बिना पढ़े टैप किया तो 0 XP। हर हफ्ते नई race!","Check-ins, quizzes, practice and mocks all earn XP. A new race every week!")+'</div></div>';
