@@ -928,7 +928,7 @@ th{background:#f8f4ea;color:#7a6a45}
     <div id="sv-skills" class="stack hidden"></div>
     <div id="sv-assist" class="hidden">
       <div class="row between" style="margin-bottom:10px">
-        <h2>Ekanthi Agent</h2>
+        <div><h2 style="margin:0">Ekanthi Agent</h2><div class="small muted" style="margin-top:2px">🤖 AI helper, not a person · can make mistakes · <a href="ai-safety.html" target="_blank" rel="noopener">Safety</a></div></div>
         <div class="row" style="gap:6px">
           <button class="btn ghost sm" id="chLang">മലയാളം</button>
           <button class="btn ghost sm" id="chSpeak">🔊 Auto</button>
@@ -995,7 +995,7 @@ var RV={d:null, f:{class_id:null, subject_id:null, chapters:[], who:"class", sid
 var TRACK_BOARD={school:"CBSE", psc:"Kerala PSC", rail:"Railway", exam:"Exam"};
 // ===================== SETTINGS =====================
 var API_URL = "https://ekanthi-tutor.yabideas.workers.dev";
-var APP_VERSION = 120; // bump on every release: open apps notice and refresh themselves
+var APP_VERSION = 124; // bump on every release: open apps notice and refresh themselves
 var WHATSAPP_NUMBER = "96893376228";   // Ma'am (students / parents chat)
 function SUPPORT_WA(){ var b=(REGI&&REGI.biz)||(SHOP&&SHOP.d&&SHOP.d.biz)||{}; return String(b.wa||"").replace(/\D/g,"")||WHATSAPP_NUMBER; }   // public support line (admin 🛒 → 🏢 Business)
 var SITE_URL = /(^|\.)ekanthi\.(in|com)$|cyberkalari\.com$/.test(location.hostname) ? location.origin : "https://www.ekanthi.in";   // works on the old and the new domain
