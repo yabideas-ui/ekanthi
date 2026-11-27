@@ -964,7 +964,7 @@ if(window.top!==window.self){ document.documentElement.style.display="none"; try
 "use strict";
 // ===================== SETTINGS =====================
 var API_URL = "https://ekanthi-tutor.yabideas.workers.dev";
-var APP_VERSION = 106; // bump on every release: open apps notice and refresh themselves
+var APP_VERSION = 107; // bump on every release: open apps notice and refresh themselves
 var WHATSAPP_NUMBER = "96893376228";   // Ma'am (students / parents chat)
 function SUPPORT_WA(){ var b=(REGI&&REGI.biz)||(SHOP&&SHOP.d&&SHOP.d.biz)||{}; return String(b.wa||"").replace(/\D/g,"")||WHATSAPP_NUMBER; }   // public support line (admin 🛒 → 🏢 Business)
 var SITE_URL = /(^|\.)ekanthi\.(in|com)$|cyberkalari\.com$/.test(location.hostname) ? location.origin : "https://www.ekanthi.in";   // works on the old and the new domain
@@ -1554,7 +1554,7 @@ function applyLang(){
 }
 function langBtn(l){ return l==="ml"?"മലയാളം":l==="hi"?"हिंदी":"English"; }
 function snapKey(){ try{ var t=(token||"").slice(-12); return "ek_snap_"+t; }catch(e){ return "ek_snap"; } }
-function loadMe(){ return api("/api/me").then(function(d){ S=d; try{ skillsNav(); }catch(e){} setTimeout(function(){ try{ giftPop(); }catch(e){} }, 900); setTimeout(clearBadge, 1500); xpNews(); setTimeout(function(){ dykShow(); }, 1200); try{ var js=JSON.stringify(d); if(js.length<400000) lsSet(snapKey(), js); }catch(e){} setTimeout(ssWarn, 1200); appOnlyGate(); if(d.lang && d.lang!==LANG){ LANG=d.lang; applyLang(); } headRender(); setWatermark(); checkLevelUp(); if(!WX.at || Date.now()-WX.at>20*60000){ WX.at=Date.now(); api("/api/weather").then(function(w){ WX.w=w.ok?w:null; headRender(); }).catch(function(){}); } }); }
+function loadMe(){ return api("/api/me").then(function(d){ S=d; try{ skillsNav(); }catch(e){} setTimeout(function(){ try{ giftPop(); }catch(e){} }, 900); setTimeout(function(){ try{ bkPop(); }catch(e){} }, 1600); setTimeout(clearBadge, 1500); xpNews(); setTimeout(function(){ dykShow(); }, 1200); try{ var js=JSON.stringify(d); if(js.length<400000) lsSet(snapKey(), js); }catch(e){} setTimeout(ssWarn, 1200); appOnlyGate(); if(d.lang && d.lang!==LANG){ LANG=d.lang; applyLang(); } headRender(); setWatermark(); checkLevelUp(); if(!WX.at || Date.now()-WX.at>20*60000){ WX.at=Date.now(); api("/api/weather").then(function(w){ WX.w=w.ok?w:null; headRender(); }).catch(function(){}); } }); }
 var WX={at:0,w:null}, headTimer=null;
 var WXI={0:["☀️","🌙","Clear"],1:["🌤️","🌙","Mostly clear"],2:["⛅","☁️","Partly cloudy"],3:["☁️","☁️","Cloudy"],45:["🌫️","🌫️","Fog"],48:["🌫️","🌫️","Fog"],51:["🌦️","🌧️","Drizzle"],53:["🌦️","🌧️","Drizzle"],55:["🌦️","🌧️","Drizzle"],61:["🌧️","🌧️","Rain"],63:["🌧️","🌧️","Rain"],65:["🌧️","🌧️","Heavy rain"],71:["🌨️","🌨️","Snow"],80:["🌦️","🌧️","Showers"],81:["🌧️","🌧️","Showers"],82:["⛈️","⛈️","Heavy showers"],95:["⛈️","⛈️","Thunderstorm"],96:["⛈️","⛈️","Thunderstorm"],99:["⛈️","⛈️","Thunderstorm"]};
 function greet(h){ return h<5? [tr("ഇനി ഉറങ്ങാം","अब सो जाओ","Time to sleep"),"🌙"] : h<12? [tr("സുപ്രഭാതം","सुप्रभात","Good morning"),"☀️"] : h<17? [tr("ശുഭ ഉച്ച","शुभ दोपहर","Good afternoon"),"🌤️"] : h<21? [tr("ശുഭ സന്ധ്യ","शुभ संध्या","Good evening"),"🌆"] : [tr("ശുഭ രാത്രി","शुभ रात्रि","Good night"),"🌙"]; }
@@ -3869,6 +3869,17 @@ function gfDraw(){ var b=$("gfBoxA"), d=GF.d; if(!b||!d) return; var t=d.today, 
 }
 // student: gift pop-up (once per gift)
 var GIFT_TRY=0;
+// 📚 "Ma'am opened a book for you" pop-up (students and parents), shown once
+var BKPOP_TRY=0;
+function bkPop(){ var L= role==="student"? (S&&S.bookNew) : role==="parent"? (PH&&PH.bookNew) : null; if(!L||!L.length||$("bkNewS")||document.body.classList.contains("in-test")) return;
+  if((document.querySelector(".modal:not(#bkNewS),.m-sheet:not(#bkNewS)") || $("dykPop") || $("lockScr")) && BKPOP_TRY<40){ BKPOP_TRY++; return setTimeout(bkPop, 1500); }
+  var base= role==="student"? "/api/books" : "/api/parent/library";
+  var h='<div style="text-align:center"><div style="font-size:54px;line-height:1">📚</div><h2 style="margin:6px 0 2px">'+tr("നിനക്കായി ഒരു പുതിയ പുസ്തകം!","तुम्हारे लिए नई किताब!",L.length>1?"New books for you!":"A new book for you!")+'</h2><div class="muted" style="margin-bottom:10px">'+tr((L[0].by||"Ma'am")+" തുറന്നു തന്നു",(L[0].by||"Ma'am")+" ने खोली",(L[0].by||"Ma'am")+" opened it for you")+'</div>'+
+    L.map(function(x){ return '<div class="card bk-newb" data-bkn="'+x.id+'" style="display:flex;gap:12px;align-items:center;text-align:left;margin:8px 0;cursor:pointer;background:linear-gradient(135deg,'+esc(x.color||"#e8eefc")+',#fff)"><span style="font-size:34px">'+esc(x.cover||"📘")+'</span><span style="flex:1"><b>'+esc(x.title)+'</b><div class="small muted">'+(x.until? tr(gfFmt(x.until)+" വരെ വായിക്കാം","" +gfFmt(x.until)+" तक पढ़ सकते हो","You can read it till "+gfFmt(x.until)) : tr("എപ്പോഴും വായിക്കാം","कभी भी पढ़ो","Yours to read"))+'</div></span><span style="font-size:20px;color:#1d4f80">›</span></div>'; }).join("")+
+    '<button class="btn ghost block" data-x style="margin-top:6px">'+tr("പിന്നെ","बाद में","Later")+'</button></div>';
+  var w=ekSheet(h,"bkNewS"); try{ confetti(90); }catch(e){}
+  api(base+"/seen",{}).catch(function(){}); if(role==="student") S.bookNew=[]; else PH.bookNew=[];
+  w.querySelectorAll("[data-bkn]").forEach(function(x){ x.onclick=function(){ var id=+x.dataset.bkn; w.remove(); if(role==="student"){ setSView("skills"); setTimeout(function(){ bkLib(); setTimeout(function(){ bkRead(id); }, 700); }, 300); } else bkRead(id, base); }; }); }
 function giftPop(){ var g=(S&&S.giftNew)||[]; if(!g.length || $("giftSheet") || document.body.classList.contains("in-test")) return;
   // wait until other pop-ups (setup, news, did-you-know) are closed, so the gift is never hidden behind one
   if((document.querySelector(".modal:not(#giftSheet),.m-sheet:not(#giftSheet)") || $("dykPop") || $("lockScr")) && GIFT_TRY<40){ GIFT_TRY++; return setTimeout(giftPop, 1500); }
@@ -5308,7 +5319,7 @@ function startTutor(){ setTimeout(function(){ tHead(); if(!WX.at || Date.now()-W
 // ===================== 👨‍👩‍👧 PARENT PORTAL =====================
 var PH=null, PC={id:null, d:null}, pClock=null;
 function startParent(){ show("parent"); LANG=lsGet("ek_plang")||"en"; $("pMain").innerHTML='<div class="card empty"><span class="spinner"></span></div>';
-  api("/api/parent/me").then(function(d){ PH=d; if(d.lang){ LANG=d.lang; lsSet("ek_plang", LANG); } pHead(); if(!lsGet("ek_plang_set")) pLangPick(); else setTimeout(function(){ dykShow(); }, 1200); if(!d.children.length){ $("pMain").innerHTML='<div class="card empty">'+tr("കുട്ടിയെ ചേർത്തിട്ടില്ല — Ma\'am-നെ അറിയിക്കൂ.","बच्चा जुड़ा नहीं है — Ma\'am को बताइए।","No child is linked yet — please tell Ma\'am.")+'</div>'; return; }
+  api("/api/parent/me").then(function(d){ PH=d; setTimeout(function(){ try{ bkPop(); }catch(e){} }, 2200); if(d.lang){ LANG=d.lang; lsSet("ek_plang", LANG); } pHead(); if(!lsGet("ek_plang_set")) pLangPick(); else setTimeout(function(){ dykShow(); }, 1200); if(!d.children.length){ $("pMain").innerHTML='<div class="card empty">'+tr("കുട്ടിയെ ചേർത്തിട്ടില്ല — Ma\'am-നെ അറിയിക്കൂ.","बच्चा जुड़ा नहीं है — Ma\'am को बताइए।","No child is linked yet — please tell Ma\'am.")+'</div>'; return; }
     pLoad(PC.id && d.children.some(function(c){ return c.id===PC.id; })? PC.id : d.children[0].id); })
   .catch(function(e){ if(e.status===401) return logout(true); $("pMain").innerHTML='<div class="card empty">'+esc(e.message)+'</div>'; });
   api("/api/parent/weather").then(function(w){ if(w && w.ok){ WX.w=w; pHead(); } }).catch(function(){});
