@@ -859,6 +859,21 @@ th{background:#f8f4ea;color:#7a6a45}
 .au-ed .pg{border:1px solid var(--line);border-radius:12px;padding:10px;margin:8px 0;background:#fffdf6}
 .au-ed textarea{min-height:130px;font:15px/1.6 Georgia,"Noto Serif Malayalam",serif}
 .au-st{font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px}
+
+#landing .aus{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:22px;align-items:end;margin-top:6px}
+#landing .au-bk{border-radius:4px 16px 16px 4px;padding:20px 16px 16px 24px;min-height:230px;box-shadow:0 22px 44px rgba(0,0,0,.35),inset -6px 0 12px rgba(0,0,0,.18);border:1px solid rgba(242,182,50,.35)}
+#landing .au-bk:before{left:8px;width:3px;background:linear-gradient(var(--gd),var(--gd2));opacity:.8}
+#landing .au-bk:after{content:"";position:absolute;inset:10px 10px 10px 18px;border:1px solid rgba(242,182,50,.35);border-radius:2px 10px 10px 2px;pointer-events:none}
+#landing .au-bk .t{font-size:19px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+#landing .au-bk .a{color:#f5deb0}
+#landing .au-bk.blank{background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px dashed rgba(242,182,50,.55);box-shadow:none;cursor:default;align-items:center;justify-content:center;text-align:center}
+#landing .au-bk.blank .t{color:var(--gd);font-size:17px}#landing .au-bk.blank .a{margin-top:6px;padding-top:0;color:#b8c8dc}
+#landing .au-shelf{height:14px;margin:-4px -10px 0;border-radius:6px;background:linear-gradient(#c28a2c,#8a5a14);box-shadow:0 10px 24px rgba(0,0,0,.4)}
+#landing .au-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+#landing .au-steps>div{border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:18px;background:rgba(255,255,255,.04)}
+#landing .au-steps b{display:block;color:#fff;font-size:16px;margin-bottom:4px}#landing .au-steps span{color:#b8c8dc;font-size:14px;line-height:1.5}
+#landing .au-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+@media(max-width:720px){#landing .au-steps{grid-template-columns:1fr}#landing .aus{grid-template-columns:repeat(2,1fr);gap:14px}}
 </style>
 </head>
 <body>
@@ -906,9 +921,11 @@ th{background:#f8f4ea;color:#7a6a45}
       <div class="st"><span data-i="s3"><b>Study daily</b><span>Open Ekanthi every day for your plan, quiz and tests. Watch your marks climb.</span></span></div>
     </div>
   </div></section>
-  <section class="s hidden" id="lnStoriesWrap"><div class="lw">
-    <div class="kick">Our readers write too</div><h2 class="h2 serif">📚 Stories by Ekanthi students &amp; parents</h2><p class="sub">Real books written by our young authors and parents — checked by Ma'am and published in the Ekanthi library. Read the first pages here.</p>
+  <section class="s dark hidden" id="lnStoriesWrap"><div class="lw">
+    <div class="kick" style="color:var(--gd)">Young Authors · Our Stories</div><h2 class="h2 serif">📚 Stories by Ekanthi students &amp; parents</h2><p class="sub">Our readers write too. Every book is checked by Ma'am, then published in the Ekanthi library — and the best ones appear here.</p>
     <div class="aus" id="lnStories"></div>
+    <div class="au-shelf"></div>
+    <div class="au-steps"><div><b>✍️ Write</b><span>Students and parents write a short book in the Ekanthi app — up to 20 pages.</span></div><div><b>👩‍🏫 Ma'am checks</b><span>Every page is read and checked before anything is published.</span></div><div><b>🎉 Published</b><span id="lnAuRw">It joins the Ekanthi library shelf for everyone to read.</span></div></div>
   </div></section>
   <section class="s" id="lnPlansWrap"><div class="lw">
     <div class="kick">Plans</div><h2 class="h2 serif"><span data-i="plh2">Simple plans. Start free.</span></h2><p class="sub"><span data-i="plsub">Begin on Lite and move up when you are ready. Exam-time boosts are available.</span></p>
@@ -1047,7 +1064,7 @@ var RV={d:null, f:{class_id:null, subject_id:null, chapters:[], who:"class", sid
 var TRACK_BOARD={school:"CBSE", psc:"Kerala PSC", rail:"Railway", exam:"Exam"};
 // ===================== SETTINGS =====================
 var API_URL = "https://ekanthi-tutor.yabideas.workers.dev";
-var APP_VERSION = 131; // bump on every release: open apps notice and refresh themselves
+var APP_VERSION = 134; // bump on every release: open apps notice and refresh themselves
 var WHATSAPP_NUMBER = "918304880336";   // Ma'am (students / parents chat)
 function SUPPORT_WA(){ var b=(REGI&&REGI.biz)||(SHOP&&SHOP.d&&SHOP.d.biz)||{}; return String(b.wa||"").replace(/\D/g,"")||WHATSAPP_NUMBER; }   // public support line (admin 🛒 → 🏢 Business)
 var SITE_URL = /(^|\.)ekanthi\.(in|com)$|cyberkalari\.com$/.test(location.hostname) ? location.origin : "https://www.ekanthi.in";   // works on the old and the new domain
@@ -1071,7 +1088,7 @@ var $ = function(id){ return document.getElementById(id); };
 function esc(t){ return String(t==null?"":t).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
 function toast(m){ var d=document.createElement("div"); d.className="toast"; d.textContent=m; document.body.appendChild(d); setTimeout(function(){d.remove();},2600); }
 var STATUS = ["Not started","Learning","Done","Revised"];
-function fmtDate(d){ if(!d) return "—"; var t=new Date(d.length===10? d+"T00:00:00" : d); return t.toLocaleDateString("en-IN",{day:"numeric",month:"short"}); }
+function fmtDate(d){ if(!d) return "—"; var t=new Date(d.length===10? d+"T00:00:00" : d), o={day:"numeric",month:"short"}; if(Math.abs(t-new Date())>180*86400000) o.year="numeric"; return t.toLocaleDateString("en-IN",o); }
 function fmtDT(d){ if(!d) return "—"; var t=new Date(d); return t.toLocaleDateString("en-IN",{day:"numeric",month:"short"})+" "+t.toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit"}); }
 function addDays(d,n){ var t=new Date(d+"T00:00:00Z"); t.setUTCDate(t.getUTCDate()+n); return t.toISOString().slice(0,10); }
 function daysBetween(a,b){ return Math.round((new Date(b+"T00:00:00Z")-new Date(a+"T00:00:00Z"))/86400000); }
@@ -1957,8 +1974,9 @@ function diaryCard(){ var ok= role==="student"? !!(S&&S.proFeats&&S.proFeats.dia
   return '<div class="card" onclick="diaryOpen()" style="cursor:pointer;background:linear-gradient(135deg,#4a2e1b,#2e1c10);color:#f3e3bf;border:1px solid #6b4a2b;position:relative;overflow:hidden"><div style="position:absolute;right:18px;top:-2px;width:12px;height:46px;background:linear-gradient(#b91c1c,#7f1d1d);clip-path:polygon(0 0,100% 0,100% 100%,50% 82%,0 100%)"></div><div class="row between"><b style="font-family:Georgia,serif;font-size:17px;color:#f3d48b">📔 '+tr("എന്റെ ഡയറി","मेरी डायरी","My Diary")+'</b><span style="color:#f3d48b">›</span></div><div class="small" style="margin-top:4px;opacity:.85">'+tr("നോട്ടുകൾ, ലക്ഷ്യങ്ങൾ, ഓർമ്മപ്പെടുത്തലുകൾ — നിനക്ക് മാത്രം","नोट्स, लक्ष्य, रिमाइंडर — सिर्फ़ तुम्हारे लिए","Notes, goals and reminders — just for you")+'</div></div>'; }
 window.diaryOpen=diaryOpen;
 function tasteOn(k){ return !!(S&&S.tastes&&S.tastes.indexOf(k)>=0); }
+document.addEventListener("click", function(e){ if(e.target.closest && e.target.closest("[data-mindbuy]")) shopOpen(); });
 function mindCard(){ var a=S&&S.proFeats&&S.proFeats.mind; if(a===true) return '<div class="card" style="background:linear-gradient(135deg,#f5f3ff,#fff);border-color:#ddd6fe;cursor:pointer" onclick="mindOpen()"><div class="row between"><b>💪 '+tr("മൈൻഡ് കോച്ച്","माइंड कोच","Mind coach")+'</b>'+(tasteOn("mind")?' <span class="pill" style="background:#dcfce7;color:#166534">🎁 '+tr("ഇന്ന് free","आज free","Free try today")+'</span>':'<span class="pill" style="background:#ede9fe;color:#5b21b6">'+tr("തുറക്കൂ","खोलो","Open")+' →</span>')+'</div><div class="small muted" style="margin-top:4px">'+tr("ടെൻഷൻ കുറയ്ക്കാം, ദുർബല ഭാഗങ്ങൾ ജയിക്കാം","टेंशन कम करो, कमज़ोर हिस्से जीतो","Beat exam pressure and your weak topics")+'</div></div>';
-  if(a==="locked") return '<div class="card" style="background:linear-gradient(135deg,#fff8e1,#fff);border:1px dashed #f2c14e"><div class="row between"><b>💪 '+tr("മൈൻഡ് കോച്ച്","माइंड कोच","Mind coach")+'</b><span class="pill" style="background:#f2c14e;color:#3b2f00">⭐ Pro</span></div><div class="small muted" style="margin-top:4px">'+tr("പരീക്ഷ ടെൻഷനും ദുർബല ഭാഗങ്ങളും നേരിടാൻ നിനക്കായി ഒരു പ്ലാൻ — Ma'am-നോട് ചോദിക്കൂ.","परीक्षा का तनाव और कमज़ोर हिस्सों के लिए तुम्हारा प्लान — Ma'am से पूछो।","A plan just for you to handle exam pressure and weak topics — ask Ma'am.")+'</div></div>';
+  if(a==="locked") return '<div class="card" '+(S&&S.shopOn?'data-mindbuy style="cursor:pointer;':'style="')+'background:linear-gradient(135deg,#fff8e1,#fff);border:1px dashed #f2c14e"><div class="row between"><b>💪 '+tr("മൈൻഡ് കോച്ച്","माइंड कोच","Mind coach")+'</b><span class="pill" style="background:#f2c14e;color:#3b2f00">⭐ Pro</span></div><div class="small muted" style="margin-top:4px">'+tr("പരീക്ഷ ടെൻഷനും ദുർബല ഭാഗങ്ങളും നേരിടാൻ നിനക്കായി ഒരു പ്ലാൻ — Ma'am-നോട് ചോദിക്കൂ.","परीक्षा का तनाव और कमज़ोर हिस्सों के लिए तुम्हारा प्लान — Ma'am से पूछो।","A plan just for you to handle exam pressure and weak topics — ask Ma'am.")+'</div></div>';
   return ''; }
 function mindOpen(){ var w=document.createElement("div"); w.className="m-sheet"; w.id="mindSheet";
   w.innerHTML='<div class="in" style="max-height:90vh;overflow:auto"><div class="row between"><h2 style="margin:0">💪 '+tr("മൈൻഡ് കോച്ച്","माइंड कोच","Mind coach")+'</h2><button class="btn ghost sm" data-x>✕</button></div><div id="mindPlan" style="margin-top:10px"><span class="spinner"></span></div>'+
@@ -2133,7 +2151,7 @@ function shopDraw(){ var w=$("shopSheet"); if(!w||!SHOP.d) return; var d=SHOP.d,
         '<div style="margin:6px 0">'+limLines(p.limits)+'</div>'+(p.note?'<div class="small muted">'+esc(p.note)+'</div>':'')+
         (cur?'<div class="pill good" style="margin-top:6px">✓ '+tr("നിന്റെ plan","आपका plan","Current")+'</div>':'<button class="btn '+(p.k==="pro"||p.custom?'gold':'')+' sm block" style="margin-top:6px" data-buy="tier:'+p.k+'">'+(app?tr("Ma\'am-നോട് ചോദിക്കൂ","Ma\'am से पूछें","Ask Ma\'am"):tr("ഇത് എടുക്കൂ","यह लें","Choose"))+'</button>')+'</div>'; }).join("")+'</div>';
     if(d.addons.length) h+='<h3 style="margin:14px 0 6px">🎁 '+tr("Extras","Extras","Extras")+'</h3>'+d.addons.map(function(a){ var pr=moneyTxt(a.price);
-      return '<div class="card" style="margin:0 0 8px"><div class="row between" style="gap:8px"><div><b>'+esc(a.name)+'</b>'+(a.desc?'<div class="small muted">'+esc(a.desc)+'</div>':'')+(!app&&pr?'<div class="small" style="margin-top:3px">'+tr("വില","कीमत","Price")+': <b>'+pr+'</b></div>':'')+'</div><button class="btn sm" data-buy="addon:'+esc(a.id)+'">'+(app?tr("ചോദിക്കൂ","पूछें","Ask"):tr("വാങ്ങൂ","लें","Get"))+'</button></div></div>'; }).join("");
+      return '<div class="card" style="margin:0 0 8px"><div class="row between" style="gap:8px"><div><b>'+esc(a.name)+'</b>'+(a.desc?'<div class="small muted">'+esc(a.desc)+'</div>':'')+(!app&&pr?'<div class="small" style="margin-top:3px">'+tr("വില","कीमत","Price")+': <b>'+pr+'</b></div>':'')+(a.till?'<div class="small" style="color:#166534;margin-top:3px">🔓 '+tr("തുറന്നിട്ടുണ്ട് ","खुला है ","Open till ")+fmtDate(a.till)+'</div>':'')+'</div>'+(a.have&&!a.till?'<span class="pill good">✓ '+tr("നിന്റെ plan-ൽ ഉണ്ട്","आपके plan में है","In your plan")+'</span>':'<button class="btn sm" data-buy="addon:'+esc(a.id)+'">'+(a.till?tr("നീട്ടൂ","बढ़ाएं","Extend"):app?tr("ചോദിക്കൂ","पूछें","Ask"):tr("വാങ്ങൂ","लें","Get"))+'</button>')+'</div></div>'; }).join("");
   }
   var files=(d.purchases||[]).filter(function(x){ return x.kind==="file" && x.value; });
   if(files.length) h+='<h3 style="margin:14px 0 6px">📥 '+tr("എന്റെ downloads","मेरे downloads","My downloads")+'</h3>'+files.map(function(f){ return '<div class="row between card" style="margin:0 0 6px"><span>'+esc(f.label)+'</span>'+(/^https:\/\//.test(f.value)?'<a class="btn sm" target="_blank" rel="noopener" href="'+esc(f.value)+'">'+tr("തുറക്കൂ","खोलें","Open")+'</a>':'<span class="small">'+esc(f.value)+'</span>')+'</div>'; }).join("");
@@ -2244,8 +2262,9 @@ function regOpen(kind){ var d=REGI; if(!d) return; if(!d.open){ window.open(waLi
 // ----- 🌐 public landing page -----
 function landShow(){ show("landing"); setTimeout(lnStories, 300); if($("lnLangBox") && !$("lnLangBox").innerHTML) $("lnLangBox").innerHTML=langSel(); pubI18n(); if(REGI) landDraw(REGI); api("/api/register/info").then(function(d){ REGI=d; landDraw(d); }).catch(function(){ if(!REGI) landDraw({classes:[]}); }); }
 // 📚 website: stories written by our readers (first pages only)
-function lnStories(){ var w=$("lnStoriesWrap"); if(!w || w.dataset.done) return; w.dataset.done="1"; fetch(API_URL+"/api/public/stories").then(function(r){ return r.json(); }).then(function(d){ var L=(d&&d.items)||[]; if(!L.length) return; w.classList.remove("hidden");
-  $("lnStories").innerHTML=L.map(function(b,i){ return '<div class="au-bk" data-lns="'+i+'" style="background:linear-gradient(150deg,'+esc(b.color||"#2563eb")+',#0b2239)"><div class="e">'+esc(b.cover||"📘")+'</div><div class="t">'+esc(b.title)+'</div><div class="a">✍️ '+esc(b.author||"")+(b.rating&&b.rating.n?' · ⭐ '+b.rating.avg:'')+(b.reads?' · 📖 '+b.reads:'')+'</div></div>'; }).join("");
+function lnStories(){ var w=$("lnStoriesWrap"); if(!w || w.dataset.done) return; w.dataset.done="1"; fetch(API_URL+"/api/public/stories").then(function(r){ return r.json(); }).then(function(d){ var L=(d&&d.items)||[]; if(!d||!d.show) return; w.classList.remove("hidden"); if(d.reward){ var rw=$("lnAuRw"); if(rw) rw.textContent="It joins the library shelf — and young authors get "+d.reward+" days of Pro as a gift."; }
+  if(!L.length){ $("lnStories").innerHTML=[["📖","Your story here","Be one of our first Young Authors"],["✍️","Write in the app","Up to 20 pages, in any language"],["🌟","Published here","After Ma'am checks it"]].map(function(x){ return '<div class="au-bk blank"><div class="e">'+x[0]+'</div><div class="t">'+x[1]+'</div><div class="a">'+x[2]+'</div></div>'; }).join("")+'<div class="au-cta" style="grid-column:1/-1"><button class="b1" type="button" onclick="var g=document.querySelector(\'[data-go=reg]\'); if(g) g.click();">Join free &amp; start writing</button></div>'; return; }
+  $("lnStories").innerHTML=L.map(function(b,i){ return '<div class="au-bk" data-lns="'+i+'" style="background:linear-gradient(150deg,'+esc(b.color||"#2563eb")+',#0b2239)"><div class="e">'+esc(b.cover||"📘")+'</div><div class="t">'+esc(b.title)+'</div><div class="a">✍️ '+esc(b.author||"")+(b.rating&&b.rating.n?' · ⭐ '+b.rating.avg:'')+(b.reads?' · 📖 '+b.reads:'')+'</div></div>'; }).join("")+(L.length<4?'<div class="au-bk blank"><div class="e">📖</div><div class="t">Your story could be next</div><div class="a">Write it in the Ekanthi app</div></div>':'');
   $("lnStories").querySelectorAll("[data-lns]").forEach(function(x){ x.onclick=function(){ var b=L[Number(x.dataset.lns)]; ekSheet('<div style="text-align:center"><div style="font-size:44px">'+esc(b.cover||"📘")+'</div><h2 style="margin:4px 0;font-family:Georgia,serif">'+esc(b.title)+'</h2><div class="small muted">✍️ '+esc(b.author||"")+' · '+b.pagesTotal+' pages</div></div>'+(b.summary?'<p class="muted" style="text-align:center">'+esc(b.summary)+'</p>':'')+
     b.pages.map(function(p,j){ return '<div class="au-pg">'+(p.e?'<div style="font-size:28px">'+esc(p.e)+'</div>':'')+(p.h?'<b>'+esc(p.h)+'</b>\n':'')+esc(p.t)+'</div>'; }).join("")+
     '<div class="card" style="text-align:center;background:linear-gradient(135deg,#fff8e1,#fff)"><b>📖 Read the whole book in the Ekanthi app</b><div class="small muted" style="margin:4px 0 10px">'+(b.pagesTotal-b.pages.length)+' more page'+(b.pagesTotal-b.pages.length===1?'':'s')+' · free with any Ekanthi account</div><button class="btn gold" data-x id="lnStReg">Join Ekanthi — start free</button></div><button class="btn ghost block" data-x>Close</button>',"lnStSheet");
