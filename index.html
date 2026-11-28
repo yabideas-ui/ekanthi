@@ -849,6 +849,16 @@ th{background:#f8f4ea;color:#7a6a45}
 .dy-tags button{width:28px;height:28px}.dy-tags button.on{box-shadow:0 0 0 3px #2e1c10 inset}
 .dy-search{width:100%;border:1px solid #e7d9b9;background:#fffdf6;border-radius:10px;padding:7px 10px;font:14px system-ui;margin:2px 0 4px}
 .dy-pv{font:11px system-ui;color:#8a6a3a;text-align:center;margin-top:10px}
+
+#landing .aus{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:16px}
+.au-bk{cursor:pointer;border-radius:6px 14px 14px 6px;padding:16px 14px 14px 20px;min-height:190px;color:#fff;position:relative;box-shadow:0 12px 26px rgba(11,34,57,.18);display:flex;flex-direction:column;transition:transform .15s}
+.au-bk:hover{transform:translateY(-3px)}
+.au-bk:before{content:"";position:absolute;left:6px;top:0;bottom:0;width:4px;background:rgba(255,255,255,.35);border-radius:2px}
+.au-bk .e{font-size:40px;line-height:1}.au-bk .t{font:700 17px/1.25 Georgia,serif;margin-top:10px}.au-bk .a{font-size:12px;opacity:.9;margin-top:auto;padding-top:10px}
+.au-pg{background:#fbf6ea;border-radius:10px;padding:14px 16px;margin:8px 0;font:16px/1.7 Georgia,"Noto Serif Malayalam",serif;color:#2f2418;white-space:pre-wrap}
+.au-ed .pg{border:1px solid var(--line);border-radius:12px;padding:10px;margin:8px 0;background:#fffdf6}
+.au-ed textarea{min-height:130px;font:15px/1.6 Georgia,"Noto Serif Malayalam",serif}
+.au-st{font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px}
 </style>
 </head>
 <body>
@@ -895,6 +905,10 @@ th{background:#f8f4ea;color:#7a6a45}
       <div class="st"><span data-i="s2"><b>Get verified</b><span>Ma'am checks your details and opens your account — usually the same day.</span></span></div>
       <div class="st"><span data-i="s3"><b>Study daily</b><span>Open Ekanthi every day for your plan, quiz and tests. Watch your marks climb.</span></span></div>
     </div>
+  </div></section>
+  <section class="s hidden" id="lnStoriesWrap"><div class="lw">
+    <div class="kick">Our readers write too</div><h2 class="h2 serif">📚 Stories by Ekanthi students &amp; parents</h2><p class="sub">Real books written by our young authors and parents — checked by Ma'am and published in the Ekanthi library. Read the first pages here.</p>
+    <div class="aus" id="lnStories"></div>
   </div></section>
   <section class="s" id="lnPlansWrap"><div class="lw">
     <div class="kick">Plans</div><h2 class="h2 serif"><span data-i="plh2">Simple plans. Start free.</span></h2><p class="sub"><span data-i="plsub">Begin on Lite and move up when you are ready. Exam-time boosts are available.</span></p>
@@ -1033,7 +1047,7 @@ var RV={d:null, f:{class_id:null, subject_id:null, chapters:[], who:"class", sid
 var TRACK_BOARD={school:"CBSE", psc:"Kerala PSC", rail:"Railway", exam:"Exam"};
 // ===================== SETTINGS =====================
 var API_URL = "https://ekanthi-tutor.yabideas.workers.dev";
-var APP_VERSION = 130; // bump on every release: open apps notice and refresh themselves
+var APP_VERSION = 131; // bump on every release: open apps notice and refresh themselves
 var WHATSAPP_NUMBER = "918304880336";   // Ma'am (students / parents chat)
 function SUPPORT_WA(){ var b=(REGI&&REGI.biz)||(SHOP&&SHOP.d&&SHOP.d.biz)||{}; return String(b.wa||"").replace(/\D/g,"")||WHATSAPP_NUMBER; }   // public support line (admin 🛒 → 🏢 Business)
 var SITE_URL = /(^|\.)ekanthi\.(in|com)$|cyberkalari\.com$/.test(location.hostname) ? location.origin : "https://www.ekanthi.in";   // works on the old and the new domain
@@ -1829,6 +1843,55 @@ function slUnlockSheet(){ var c=SL.cur; if(!c) return; var w=ekSheet('<h2 style=
 function slEnd(msg){ SL.cur=null; SL.phase=""; SL.rep=false; if(SL.t){ clearInterval(SL.t); SL.t=null; } try{ EkanthiApp.pinStop(); }catch(e){} var b=$("slBar"); if(b) b.remove(); if(msg) toast(msg); }
 function slHelp(){ ekSheet('<h2 style="margin:0 0 6px">📌 '+tr("ഫോണിൽ App pinning ഓൺ ആക്കണം","फ़ोन में App pinning चालू करें","Turn on App pinning on this phone")+'</h2><ol class="small" style="padding-left:18px;line-height:1.6"><li>Settings → Security (or Security &amp; privacy → More) → <b>App pinning</b> → On</li><li><b>Ask for PIN before unpinning</b> → On ('+tr("parent-ന്റെ phone PIN","parent का phone PIN","the parent\'s phone PIN")+')</li><li>'+tr("വീണ്ടും Study Lock തുടങ്ങൂ, “Pin” അമർത്തൂ.","फिर Study Lock शुरू करो, “Pin” दबाओ।","Start Study Lock again and tap “Pin”.")+'</li></ol><button class="btn block" data-x>OK</button>',"slSheet"); }
 function goalMin(){ var g=S&&S.goal; return g&&typeof g==="object"? (g.min||45) : (Number(g)||45); }
+// ----- ✍️ Write a book: students (Young Authors), parents & tutors (Our Stories) -----
+var AU={d:null};
+function auBase(){ return role==="student"? "/api/write" : role==="parent"? "/api/parent/write" : "/api/admin/write"; }
+var AU_ST={draft:["✏️ Draft","#e5e7eb","#374151"], pending:["⏳ With Ma'am","#fef3c7","#92400e"], changes:["✏️ Changes asked","#ffedd5","#9a3412"], published:["✅ Published","#dcfce7","#166534"], rejected:["✖ Not published","#fee2e2","#991b1b"]};
+function auStatus(st){ var x=AU_ST[st]||AU_ST.draft; return '<span class="au-st" style="background:'+x[1]+';color:'+x[2]+'">'+x[0]+'</span>'; }
+function writeCard(){ var ok= role==="student"? !!(S&&S.write) : role==="parent"? !!(PH&&PH.write) : true; if(!ok) return '';
+  return '<div class="card" onclick="auOpen()" style="cursor:pointer;background:linear-gradient(135deg,#eff6ff,#fff);border-color:#bfdbfe"><div class="row between"><b style="font-family:Georgia,serif;font-size:17px">✍️ '+tr("എന്റെ സ്വന്തം ബുക്ക് എഴുതാം","अपनी किताब लिखो","Write your own book")+'</b><span>›</span></div><div class="small muted" style="margin-top:4px">'+(role==="student"? tr("Ma\'am നോക്കി Ekanthi library-ൽ publish ചെയ്യും — Young Authors shelf-ൽ!","Ma\'am देखकर Ekanthi library में publish करेंगी — Young Authors shelf पर!","Ma\'am checks it and publishes it in the Ekanthi library — on the Young Authors shelf!") : tr("നിങ്ങളുടെ കഥ കുട്ടികൾക്കായി — “നമ്മുടെ കഥകൾ” shelf-ൽ.","आपकी कहानी बच्चों के लिए — “Our Stories” shelf पर।","Your story for the children — on the “Our Stories” shelf."))+'</div></div>'; }
+function auOpen(){ api(auBase()).then(function(d){ AU.d=d; auList(); }).catch(function(e){ toast(e.message); }); }
+function auList(){ var d=AU.d, w=ekSheet('<div class="row between"><h2 style="margin:0;font-family:Georgia,serif">✍️ '+tr("എന്റെ ബുക്കുകൾ","मेरी किताबें","My books")+'</h2><button class="btn ghost sm" data-x>✕</button></div><div class="small muted" style="margin:4px 0 10px">'+tr("എഴുതൂ → Ma\'am-ന് അയയ്ക്കൂ → publish ആയാൽ “","लिखो → Ma\'am को भेजो → publish होते ही “","Write → send to Ma'am → once published it's on the “")+esc(d.cfg.shelf)+'” shelf'+(d.cfg.reward?' · 🎁 '+d.cfg.reward+' days Pro':'')+'</div>'+
+    (d.items.length? d.items.map(function(b){ return '<div class="card" data-aue="'+b.id+'" style="cursor:pointer;margin:0 0 8px;display:flex;gap:12px;align-items:center"><div style="width:46px;height:60px;border-radius:4px 8px 8px 4px;background:'+esc(b.color)+';display:flex;align-items:center;justify-content:center;font-size:24px">'+esc(b.cover)+'</div><div style="flex:1;min-width:0"><b>'+esc(b.title||"…")+'</b><div class="small muted">'+b.pages.length+' pages · '+auStatus(b.status)+'</div>'+(b.note&&(b.status==="changes"||b.status==="rejected")?'<div class="small" style="color:#9a3412;margin-top:3px">💬 '+esc(b.note)+'</div>':'')+'</div><span>›</span></div>'; }).join("") : '<div class="empty">'+tr("ഇതുവരെ ബുക്ക് ഇല്ല. ആദ്യത്തേത് എഴുതൂ!","अभी कोई किताब नहीं। पहली लिखो!","No books yet. Write your first one!")+'</div>')+
+    '<button class="btn block" id="auNew" style="margin-top:8px">➕ '+tr("പുതിയ ബുക്ക്","नई किताब","New book")+'</button>',"auSheet");
+  $("auNew").onclick=function(){ auEdit(null); };
+  w.querySelectorAll("[data-aue]").forEach(function(x){ x.onclick=function(){ var b=d.items.filter(function(y){ return y.id===Number(x.dataset.aue); })[0]; auEdit(b); }; }); }
+var AU_COV=["📘","📗","📕","🌈","🐘","🦋","🌳","🚀","🐟","🏰","🌙","⭐","🦁","🐢","🎨","🌊"], AU_COL=["#2563eb","#059669","#db2777","#7c3aed","#ea580c","#0891b2","#b45309","#4b5563"];
+function auEdit(b){ var x=b||{title:"",cover:"📘",color:"#2563eb",lang:(S&&S.lang)||"en",cls_min:0,cls_max:12,summary:"",pages:[{e:"",h:"",t:""}],status:"draft"}, ro= x.status==="pending"||x.status==="published", max=(AU.d&&AU.d.cfg.maxPages)||20, cov=x.cover, col=x.color, pages=JSON.parse(JSON.stringify(x.pages.length?x.pages:[{e:"",h:"",t:""}]));
+  var draw=function(){ var w=ekSheet('<div class="au-ed"><div class="row between"><h2 style="margin:0;font-family:Georgia,serif">'+(b?'📖 ':'✍️ ')+(ro?esc(x.title):tr("ബുക്ക് എഴുതാം","किताब लिखो","Write a book"))+'</h2>'+auStatus(x.status)+'</div>'+
+      (x.note?'<div class="small" style="background:#fff7ed;border-radius:8px;padding:6px 8px;margin-top:6px">💬 Ma\'am: '+esc(x.note)+'</div>':'')+
+      (ro? '<div class="small muted" style="margin:6px 0">'+(x.status==="pending"?tr("Ma\'am നോക്കുന്നു. മാറ്റം വേണമെങ്കിൽ “Take back” അമർത്തൂ.","Ma\'am देख रही हैं। बदलना हो तो “Take back” दबाओ।","Ma'am is checking it. To change something, tap “Take back”."):tr("Library-ൽ ഉണ്ട്! 🎉","Library में है! 🎉","It's in the library! 🎉"))+'</div>'+pages.map(function(p,i){ return '<div class="au-pg"><div class="small muted">'+(i+1)+'</div>'+(p.e?p.e+' ':'')+(p.h?'<b>'+esc(p.h)+'</b>\\n':'')+esc(p.t)+'</div>'; }).join("") :
+      '<input id="auT" maxlength="100" placeholder="'+tr("ബുക്കിന്റെ പേര്","किताब का नाम","Book title")+'" value="'+esc(x.title)+'" style="font:700 18px Georgia,serif;margin-top:8px">'+
+      '<div class="small muted" style="margin-top:8px">Cover</div><div class="row" style="gap:4px;flex-wrap:wrap">'+AU_COV.map(function(c){ return '<button class="chip'+(c===cov?' on':'')+'" data-cv="'+c+'" style="font-size:20px">'+c+'</button>'; }).join("")+'</div><div class="row" style="gap:6px;margin-top:6px">'+AU_COL.map(function(c){ return '<button data-cl="'+c+'" style="width:26px;height:26px;border-radius:50%;border:0;background:'+c+(c===col?';box-shadow:0 0 0 3px #111 inset':'')+'"></button>'; }).join("")+'</div>'+
+      '<div class="row" style="gap:8px;flex-wrap:wrap;margin-top:8px;align-items:flex-end"><div><label class="f">'+tr("ഭാഷ","भाषा","Language")+'</label><select id="auL" style="width:auto"><option value="en">English</option><option value="ml"'+(x.lang==="ml"?' selected':'')+'>മലയാളം</option><option value="hi"'+(x.lang==="hi"?' selected':'')+'>हिन्दी</option></select></div><div><label class="f">'+tr("ആർക്ക്: ക്ലാസ്","किसके लिए: कक्षा","For class")+'</label><span class="row" style="gap:4px;align-items:center"><input id="auC1" type="number" min="0" max="12" value="'+(x.cls_min||0)+'" style="width:58px">–<input id="auC2" type="number" min="0" max="12" value="'+(x.cls_max==null?12:x.cls_max)+'" style="width:58px"></span></div></div>'+
+      '<input id="auSum" maxlength="300" placeholder="'+tr("ഒരു വരിയിൽ കഥ എന്താണ്?","एक लाइन में कहानी क्या है?","What is the book about, in one line?")+'" value="'+esc(x.summary)+'" style="margin-top:8px">'+
+      pages.map(function(p,i){ return '<div class="pg"><div class="row between"><b class="small">'+tr("പേജ് ","पेज ","Page ")+(i+1)+'</b>'+(pages.length>1?'<button class="btn ghost sm" data-pdel="'+i+'">🗑️</button>':'')+'</div><div class="row" style="gap:6px;margin-top:4px"><input data-pe="'+i+'" value="'+esc(p.e||"")+'" placeholder="🙂" maxlength="4" style="width:52px;text-align:center"><input data-ph="'+i+'" value="'+esc(p.h||"")+'" placeholder="'+tr("തലക്കെട്ട് (ഇഷ്ടമുണ്ടെങ്കിൽ)","शीर्षक (चाहें तो)","Heading (optional)")+'" maxlength="100"></div><textarea data-pt="'+i+'" maxlength="4000" style="margin-top:6px" placeholder="'+tr("ഇവിടെ എഴുതൂ…","यहाँ लिखो…","Write here…")+'">'+esc(p.t||"")+'</textarea></div>'; }).join("")+
+      (pages.length<max?'<button class="btn ghost block" id="auAddP">➕ '+tr("പേജ് ചേർക്കുക","पेज जोड़ो","Add a page")+' ('+pages.length+'/'+max+')</button>':''))+
+      '<div class="row" style="gap:6px;margin-top:12px;flex-wrap:wrap">'+(ro? (x.status==="pending"?'<button class="btn ghost" id="auBack">↩️ Take back</button>':'')+'<button class="btn ghost" data-x>'+tr("അടയ്ക്കുക","बंद","Close")+'</button>' :
+        '<button class="btn" id="auSave" style="flex:1">💾 '+tr("സേവ്","सेव","Save")+'</button><button class="btn gold" id="auSend" style="flex:1">📤 '+tr("Ma\'am-ന് അയയ്ക്കൂ","Ma\'am को भेजो","Send to Ma'am")+'</button>'+(b?'<button class="btn ghost" id="auDel">🗑️</button>':''))+'</div></div>',"auEd");
+    var grab=function(){ w.querySelectorAll("[data-pt]").forEach(function(t){ var i=Number(t.dataset.pt); pages[i]={e:w.querySelector('[data-pe="'+i+'"]').value, h:w.querySelector('[data-ph="'+i+'"]').value, t:t.value}; }); if($("auT")){ x.title=$("auT").value; x.lang=$("auL").value; x.cls_min=Number($("auC1").value)||0; x.cls_max=Number($("auC2").value); x.summary=$("auSum").value; } };
+    w.querySelectorAll("[data-cv]").forEach(function(c){ c.onclick=function(){ grab(); cov=c.dataset.cv; draw(); }; });
+    w.querySelectorAll("[data-cl]").forEach(function(c){ c.onclick=function(){ grab(); col=c.dataset.cl; draw(); }; });
+    w.querySelectorAll("[data-pdel]").forEach(function(c){ c.onclick=function(){ grab(); pages.splice(Number(c.dataset.pdel),1); draw(); }; });
+    if($("auAddP")) $("auAddP").onclick=function(){ grab(); pages.push({e:"",h:"",t:""}); draw(); setTimeout(function(){ var t=w.querySelectorAll("[data-pt]"); t[t.length-1].focus(); }, 60); };
+    var save=function(){ grab(); return api(auBase()+"/save",{id:x.id||0, title:x.title, cover:cov, color:col, lang:x.lang, cls_min:x.cls_min, cls_max:x.cls_max, summary:x.summary, pages:pages}).then(function(r){ x.id=r.id; return r; }); };
+    if($("auSave")) $("auSave").onclick=function(){ save().then(function(){ toast("💾 "+tr("സേവ് ആയി","सेव हो गया","Saved")); auRefresh(); }).catch(function(e){ toast(e.message); }); };
+    if($("auSend")) $("auSend").onclick=function(){ save().then(function(){ auConsent(x); }).catch(function(e){ toast(e.message); }); };
+    if($("auDel")) $("auDel").onclick=function(){ if(!confirm(tr("ഈ ബുക്ക് കളയട്ടെ?","यह किताब हटाएँ?","Delete this book?"))) return; api(auBase()+"/delete",{id:x.id}).then(function(){ w.remove(); auRefresh(true); }); };
+    if($("auBack")) $("auBack").onclick=function(){ api(auBase()+"/withdraw",{id:x.id}).then(function(){ w.remove(); x.status="draft"; auRefresh(); auEdit(x); }); };
+  }; draw(); }
+function auConsent(x){ var cfg=(AU.d&&AU.d.cfg)||{}, kid=role==="student";
+  var box=function(id,txt){ return '<label class="small" style="display:flex;gap:8px;align-items:flex-start;margin:6px 0"><input type="checkbox" id="'+id+'" style="width:auto;margin-top:3px"><span>'+txt+'</span></label>'; };
+  var w=ekSheet('<h2 style="margin:0 0 6px">📤 '+tr("Ma\'am-ന് അയയ്ക്കുന്നതിന് മുമ്പ്","Ma\'am को भेजने से पहले","Before you send it")+'</h2>'+
+    box("auC_own", tr("ഇത് എന്റെ സ്വന്തം എഴുത്താണ് — വേറെ ബുക്കിൽ നിന്നോ internet-ൽ നിന്നോ copy അല്ല.","यह मेरा अपना लिखा है — किसी किताब या internet से copy नहीं।","This is my own writing — not copied from a book or the internet."))+
+    (kid? box("auC_par", tr("എന്റെ parent ഈ ബുക്ക് കണ്ടു, സമ്മതിച്ചു.","मेरे parent ने यह किताब देखी और अनुमति दी।","My parent has seen this book and agrees.")) : '')+
+    box("auC_pub", tr("Ekanthi app-ലെ library-ൽ ഇത് publish ചെയ്യാം (പേര്: first name + class മാത്രം).","Ekanthi app की library में publish कर सकते हैं (नाम: सिर्फ़ first name + class)।","Ekanthi may publish it in the app library (name shown: first name + class only)."))+
+    (cfg.web? box("auC_web", tr("ekanthi.in website-ലും ആദ്യത്തെ "+cfg.webPages+" പേജ് കാണിക്കാം. (ഇഷ്ടമുണ്ടെങ്കിൽ)","ekanthi.in website पर पहले "+cfg.webPages+" पेज दिखा सकते हैं। (चाहें तो)","The first "+cfg.webPages+" pages may also be shown on the ekanthi.in website. (optional)")) : '')+
+    '<button class="btn gold block" id="auGo" style="margin-top:10px">📤 '+tr("അയയ്ക്കൂ","भेजो","Send")+'</button><button class="btn ghost block" data-x style="margin-top:6px">'+tr("പിന്നെ","बाद में","Later")+'</button>',"auCons");
+  $("auGo").onclick=function(){ var c={own:$("auC_own").checked, parent:kid? $("auC_par").checked : true, publish:$("auC_pub").checked, web:!!($("auC_web")&&$("auC_web").checked)}; if(!c.own||!c.parent||!c.publish){ toast(tr("എല്ലാ box-ഉം tick ചെയ്യൂ","सभी box tick करो","Please tick the boxes")); return; }
+    api(auBase()+"/submit",{id:x.id, consent:c}).then(function(){ w.remove(); var e=$("auEd"); if(e) e.remove(); toast("📤 "+tr("Ma\'am-ന് അയച്ചു! മറുപടി notification ആയി വരും.","Ma\'am को भेज दिया! जवाब notification में आएगा।","Sent to Ma'am! You'll get a notification.")); auRefresh(true); }).catch(function(e2){ toast(e2.message); }); }; }
+function auRefresh(reopen){ api(auBase()).then(function(d){ AU.d=d; if(reopen||$("auSheet")) auList(); }); }
+window.auOpen=auOpen;
 // ----- 📔 My Diary (students, parents, tutors, owner): private pages, moods, colours, pins and reminders -----
 function dyToday(){ var d=new Date(); return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2); }
 var DY={d:null, m:null, day:null, q:"", tm:null};
@@ -1976,6 +2039,7 @@ function renderToday(){
   h+=mindCard();
   h+=slCard();
   h+=diaryCard();
+  h+=writeCard();
   if(S.goal && S.goal.min){ var gp=Math.min(100, Math.round(S.goal.done/S.goal.min*100)); h+='<div class="card" style="background:linear-gradient(135deg,#f0fdf4,#fff);border-color:#bbf7d0"><div class="row between"><b>🎯 '+tr("Parent വെച്ച ലക്ഷ്യം: "+S.goal.min+" മിനിറ്റ്","Parent का लक्ष्य: "+S.goal.min+" मिनट","Goal from your parent: "+S.goal.min+" min a day")+'</b><b>'+(gp>=100?'✅':gp+'%')+'</b></div><div style="height:8px;border-radius:6px;background:#e5efe8;overflow:hidden;margin-top:6px"><i style="display:block;height:100%;width:'+gp+'%;background:#22c55e"></i></div><div class="small muted" style="margin-top:4px">'+tr("ഇന്ന് "+S.goal.done+" മിനിറ്റ് ആയി","आज "+S.goal.done+" मिनट हुए",S.goal.done+" min done today")+'</div></div>'; }
 
   var gp=Math.min(100,pct(S.studyToday||0,goalMin()));
@@ -2178,7 +2242,14 @@ function regOpen(kind){ var d=REGI; if(!d) return; if(!d.open){ window.open(waLi
   $("rgKind").querySelectorAll("[data-k]").forEach(function(b){ b.onclick=function(){ K=b.dataset.k; body(); }; });
   body(); }
 // ----- 🌐 public landing page -----
-function landShow(){ show("landing"); if($("lnLangBox") && !$("lnLangBox").innerHTML) $("lnLangBox").innerHTML=langSel(); pubI18n(); if(REGI) landDraw(REGI); api("/api/register/info").then(function(d){ REGI=d; landDraw(d); }).catch(function(){ if(!REGI) landDraw({classes:[]}); }); }
+function landShow(){ show("landing"); setTimeout(lnStories, 300); if($("lnLangBox") && !$("lnLangBox").innerHTML) $("lnLangBox").innerHTML=langSel(); pubI18n(); if(REGI) landDraw(REGI); api("/api/register/info").then(function(d){ REGI=d; landDraw(d); }).catch(function(){ if(!REGI) landDraw({classes:[]}); }); }
+// 📚 website: stories written by our readers (first pages only)
+function lnStories(){ var w=$("lnStoriesWrap"); if(!w || w.dataset.done) return; w.dataset.done="1"; fetch(API_URL+"/api/public/stories").then(function(r){ return r.json(); }).then(function(d){ var L=(d&&d.items)||[]; if(!L.length) return; w.classList.remove("hidden");
+  $("lnStories").innerHTML=L.map(function(b,i){ return '<div class="au-bk" data-lns="'+i+'" style="background:linear-gradient(150deg,'+esc(b.color||"#2563eb")+',#0b2239)"><div class="e">'+esc(b.cover||"📘")+'</div><div class="t">'+esc(b.title)+'</div><div class="a">✍️ '+esc(b.author||"")+(b.rating&&b.rating.n?' · ⭐ '+b.rating.avg:'')+(b.reads?' · 📖 '+b.reads:'')+'</div></div>'; }).join("");
+  $("lnStories").querySelectorAll("[data-lns]").forEach(function(x){ x.onclick=function(){ var b=L[Number(x.dataset.lns)]; ekSheet('<div style="text-align:center"><div style="font-size:44px">'+esc(b.cover||"📘")+'</div><h2 style="margin:4px 0;font-family:Georgia,serif">'+esc(b.title)+'</h2><div class="small muted">✍️ '+esc(b.author||"")+' · '+b.pagesTotal+' pages</div></div>'+(b.summary?'<p class="muted" style="text-align:center">'+esc(b.summary)+'</p>':'')+
+    b.pages.map(function(p,j){ return '<div class="au-pg">'+(p.e?'<div style="font-size:28px">'+esc(p.e)+'</div>':'')+(p.h?'<b>'+esc(p.h)+'</b>\n':'')+esc(p.t)+'</div>'; }).join("")+
+    '<div class="card" style="text-align:center;background:linear-gradient(135deg,#fff8e1,#fff)"><b>📖 Read the whole book in the Ekanthi app</b><div class="small muted" style="margin:4px 0 10px">'+(b.pagesTotal-b.pages.length)+' more page'+(b.pagesTotal-b.pages.length===1?'':'s')+' · free with any Ekanthi account</div><button class="btn gold" data-x id="lnStReg">Join Ekanthi — start free</button></div><button class="btn ghost block" data-x>Close</button>',"lnStSheet");
+    var r=$("lnStReg"); if(r) r.addEventListener("click", function(){ var g=document.querySelector('[data-go="reg"]'); if(g) g.click(); }); }; }); }).catch(function(){}); }
 function landDraw(d){ var cls=d.classes||[], exams=cls.filter(function(c){ return EXAM_RE.test((c.board||"")+" "+c.name); }), school=cls.filter(function(c){ return exams.indexOf(c)<0; });
   var has=function(re){ return exams.some(function(c){ return re.test((c.board||"")+" "+c.name); }); };
   var nums=school.map(function(c){ return Number((c.name.match(/\d+/)||[])[0]); }).filter(Boolean), rng=nums.length? "Class "+Math.min.apply(null,nums)+(Math.max.apply(null,nums)>Math.min.apply(null,nums)?"–"+Math.max.apply(null,nums):"") : "Classes 3–12";
