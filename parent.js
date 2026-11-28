@@ -1,4 +1,4 @@
-/*EKA 125*/
+/*EKA 130*/
 // Ekanthi parent code — loaded by the page with parentLoad(). Do not edit: built from src/index.src.html by tools/split.py
 // ---------- parent: what the child read, and arrange the shelf ----------
 function pBooksLoad(child){ var box=$("pBooks"); if(!box) return; api("/api/parent/books?child="+child).then(function(d){ if(!d.state||d.state.state==="off"){ box.innerHTML=""; return; } BK.p=d; BK.pc=child; pBooksDraw(); }).catch(function(){ box.innerHTML=""; }); }
@@ -103,6 +103,7 @@ function pDraw(){ var d=PC.d, r=d.report||{}, P=PH.perms||{}, first=d.name.split
   else if(locked("studied_add")) PRO.push(["✍️","Add what your child studied + make a test on it"]);
   if(PRO.length) h+='<div class="card" style="background:linear-gradient(135deg,#fff8e1,#fff);border:2px solid #f2c14e"><div class="row between"><h2>⭐ Ekanthi Pro — '+tr("മാതാപിതാക്കൾക്ക്","माता-पिता के लिए","for parents")+'</h2></div>'+PRO.map(function(x){ return '<div class="p-row"><span>'+x[0]+'</span><span style="flex:1">'+esc(x[1])+'</span><span>🔒</span></div>'; }).join("")+'<div class="small" style="margin-top:8px">'+tr("ഇവ വേണമെങ്കിൽ Ma\'am-നോട് ചോദിക്കൂ.","ये चाहिए तो Ma\'am से पूछिए।","Want these? Ask Ma\'am.")+'</div></div>';
   if(P.studylock===true) h+='<div class="card" id="pSL"><span class="spinner"></span></div>';
+  if(P.diary===true) h+=diaryCard();
   if(P.message===true) h+='<div class="card"><h2>💬 '+tr("Ma\'am-ന് സന്ദേശം","Ma\'am को संदेश","Message Ma\'am")+'</h2><textarea id="pMsgT" rows="3" maxlength="600" placeholder="'+tr("ഉദാ: ഈ ആഴ്ച കുട്ടിക്ക് സുഖമില്ലായിരുന്നു","जैसे: इस हफ्ते बच्चा बीमार था","e.g. "+first+" was unwell this week")+'"></textarea><button class="btn sm" id="pMsgS" style="margin-top:6px">'+tr("അയയ്ക്കൂ","भेजिए","Send")+'</button></div>';
   h+='<div class="small muted" style="text-align:center;margin:10px 0 30px">Ekanthi · '+tr("എല്ലാ വിവരങ്ങളും live ആണ്","सारी जानकारी live है","All details are live")+' · <a href="#" id="pRef">↻ '+tr("പുതുക്കൂ","रीफ़्रेश","Refresh")+'</a></div>';
   h+='<div class="card row between" style="gap:8px"><span>⭐ '+tr("Plans & extras","Plans और extras","Plans & extras")+' <span class="small muted">— '+esc(first)+'</span></span><button class="btn sm" data-shop="'+PC.id+'">'+tr("കാണൂ","देखें","Open")+'</button></div>';
